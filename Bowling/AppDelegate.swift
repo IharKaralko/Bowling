@@ -12,10 +12,16 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    var navController: UINavigationController?
+    var bowlingViewController: BowlingViewController?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        window = UIWindow(frame:UIScreen.main.bounds)
+        bowlingViewController = BowlingViewController(nibName: "bowlingView", bundle: nil)
+        navController = UINavigationController(rootViewController: bowlingViewController!)
+        window?.rootViewController = navController
+        window?.makeKeyAndVisible()
+        
         return true
     }
 
