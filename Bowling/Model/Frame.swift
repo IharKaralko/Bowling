@@ -8,11 +8,6 @@
 
 import Foundation
 
-enum FrameType: Int {
-    case standart
-    case spare
-    case strike
-}
 class Frame: FrameProtocol {
     var isLast: Bool                   //let?
     var scoreFrame: Int {
@@ -37,23 +32,23 @@ class Frame: FrameProtocol {
     }
 }
 
-// MARK: - FrameProtocol methods
+// MARK: - FrameProtocol 
 extension Frame {
-    func frameThrow(with score: Int) -> Bool {
+    var score: Int {
+        return scoreFrame
+     }
+    var type: FrameType {
+        return typeOfFrame
+    }
+    
+    func bowl(with score: Int) -> Bool {
         return doThrow(with: score)
     }
     
-    func frameAppendAdditionalScore(_ score: Int) {
+    func appendBonus(_ score: Int) {
         appendAdditionalScore(score)
     }
-    
-    func frameIsWaiteForAddScore()-> Bool{
-        return isWaiteForAddScore()
-    }
-    func frameIsOpen() -> Bool{
-        return isOpen()
-    }
-}
+ }
 
 // MARK: - Public Frame methods
 extension Frame {
@@ -62,17 +57,17 @@ extension Frame {
             throwScore.append(score)
             return true
         }
-        if !isLast {                                          //!isLast
+        if !isLast {
             if throwScore.first! + score < 11 {
                 throwScore.append(score)
                 return true
             } else {
                 return false
             }
-        } else {                                                   //isLast
-            if throwScore.count == 1 {                                 //One throw
+        } else {
+            if throwScore.count == 1 {
                 return  doThrowLastFrameSecond(score: score)
-            } else {                                                //second throw
+            } else {                                                
                 return  doThrowLastFrameThird(score: score)
             }
         }
@@ -82,7 +77,7 @@ extension Frame {
         additionalScore.append(score)
     }
     
-    func isWaiteForAddScore()-> Bool {
+    func isWaitForAddScore()-> Bool {
         switch self.typeOfFrame {
         case .strike:
             return 2 - additionalScore.count > 0

@@ -9,9 +9,9 @@
 import Foundation
 
 protocol GameProtocol {
-    var maxFrame: Int { get }
-    var scoreGame: Int { get }
-    var isOpenGame: Bool{ get }
+    var maxFrameCount: Int { get }
+    var score: Int { get }
+    var isOpen: Bool{ get }
     
-    func gameThrow(bowlScore: Int) -> Bool
+    func bowl(bowlScore: Int) -> Bool
 }

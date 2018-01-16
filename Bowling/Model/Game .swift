@@ -8,12 +8,13 @@
 
 import Foundation
 
-public class Game :GameProtocol{
+public class Game {
+    
     public let maxFrame: Int
     public var scoreGame: Int {
         var score = 0
         frames.forEach({ frame in
-            score += frame.scoreFrame
+            score += frame.score
         })
         return score
     }
@@ -40,7 +41,7 @@ private extension Game{
     }
     
     func closeFrame(frame: Frame) {
-        let frameType = frame.typeOfFrame
+        let frameType = frame.type
         if ((frameType == .strike || frameType == .spare) && frame.isLast) || frameType == .standart {
             frames.append(frame)
         } else{
@@ -53,8 +54,8 @@ private extension Game{
         var tempArr: [Frame] = []
         
         waitingToCloseFrames.forEach({frame in
-            frame.appendAdditionalScore(score)
-            if !frame.isWaiteForAddScore() {
+            frame.appendBonus(score)
+            if !frame.isWaitForAddScore() {
                 tempArr.append(frame)
             }
         })
@@ -71,7 +72,7 @@ extension Game {
     func makeBowl(bowlScore: Int) -> Bool {
         if isOpenGame {
             createFrame()
-            if let currentFrame = currentFrame, currentFrame.doThrow(with: bowlScore) {
+            if let currentFrame = currentFrame, currentFrame.bowl(with: bowlScore) {
                 calculateAdditionalScore(with:bowlScore)
                 if !currentFrame.isOpen() {
                     closeFrame(frame:currentFrame)
@@ -82,9 +83,19 @@ extension Game {
         return false
     }
 }
-// MARK: - GameProtocol methods
-extension Game {
-    func gameThrow(bowlScore: Int) -> Bool {
+// MARK: - GameProtocol
+extension Game: GameProtocol {
+    var maxFrameCount: Int {
+        return maxFrame
+    }
+    var score: Int {
+        return scoreGame
+    }
+    var isOpen: Bool{
+        return isOpenGame
+    }
+    
+    func bowl(bowlScore: Int) -> Bool {
         return makeBowl(bowlScore: bowlScore)
     }
 }
