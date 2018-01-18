@@ -12,11 +12,22 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+     var appCoordinator: AppCoordinator!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
         window = UIWindow(frame:UIScreen.main.bounds)
-        window?.rootViewController = UIViewController()
+        appCoordinator = AppCoordinator(window: window!)
+        appCoordinator.start()
         window?.makeKeyAndVisible()
+        
+        //        let countOfPlayerViewController = CountOfPlayerViewController(nibName: "CountOfPlayerView", bundle: nil)
+        //        let viewModel = CountOfPlayerViewModel()
+        //        countOfPlayerViewController.viewModel = viewModel
+        //
+        //        window?.rootViewController = countOfPlayerViewController
+        //        window?.makeKeyAndVisible()
+        
         return true
     }
 
