@@ -8,15 +8,16 @@
 
 import UIKit
 
-class NamesOfPlayersViewController: UIViewController//, UITableViewDelegate, UITableViewDataSource {
-{
-  // @IBOutlet weak var namesTableView: UITableView!
+class NamesOfPlayersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+//{
+    @IBOutlet weak var tableView: UITableView!
+    // @IBOutlet weak var namesTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let nib = UINib.init(nibName: "NamesOfPlayersTableViewCell", bundle: nil)
-//        self.namesTableView.register(nib, forCellReuseIdentifier: "NamesOfPlayersTableViewCell")
-        
+        let nib = UINib.init(nibName: "NamesOfPlayersTableViewCell", bundle: nil)
+        self.tableView.register(nib, forCellReuseIdentifier: "NamesOfPlayersTableViewCell")
+    
         // Do any additional setup after loading the view.
     }
 
@@ -38,24 +39,24 @@ class NamesOfPlayersViewController: UIViewController//, UITableViewDelegate, UIT
 
 
 //// MARK: - UITableView delegate
-//func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//    return 1
+func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 1
+}
+
+//func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//    return 100
 //}
+
+func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+    let cell = tableView.dequeueReusableCell(withIdentifier: "NamesOfPlayersTableViewCell", for: indexPath) as! NamesOfPlayersTableViewCell
+
+//    //let dict = usersArray[indexPath.row]
 //
-////func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-////    return 100
-////}
+//    cell.lblFirstName.text = dict["first_name"]
+//    cell.lblLastName.text = dict["last_name"]
 //
-//func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//
-//    let cell = tableView.dequeueReusableCell(withIdentifier: "NamesOfPlayersTableViewCell", for: indexPath) as! NamesOfPlayersTableViewCell
-//
-////    //let dict = usersArray[indexPath.row]
-////
-////    cell.lblFirstName.text = dict["first_name"]
-////    cell.lblLastName.text = dict["last_name"]
-////
-//    return cell
-//}
+    return cell
+}
 }
 

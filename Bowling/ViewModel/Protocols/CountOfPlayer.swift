@@ -8,8 +8,13 @@
 
 import Foundation
 
+protocol CountOfPlayerViewModelDelegate: class {
+    func countOfPlayerViewModelDidSelect(_ viewModel: CountOfPlayer)
+}
 protocol CountOfPlayer {
     
     var numbersOfPlayer: Int { get set }
+    var coordinatorDelegate: CountOfPlayerViewModelDelegate? { get set}
     func acceptCountOfPlayers(count: Int)
+    
 }

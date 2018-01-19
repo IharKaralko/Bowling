@@ -8,7 +8,6 @@
 
 import Foundation
 
-protocol Coordinator: class
-{
+protocol Coordinator: class {
     func start()
 }

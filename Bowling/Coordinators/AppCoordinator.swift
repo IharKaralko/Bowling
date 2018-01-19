@@ -11,39 +11,48 @@ import UIKit
 class AppCoordinator {
     
     var window: UIWindow
+    var countOfPlayerCoordinator: CountOfPlayerCoordinator?
+    
     init(window: UIWindow)
     {
         self.window = window
     }
-    
 }
+
 // MARK: - Coordinator protocol
 extension AppCoordinator: Coordinator {
     
     func start() {
-        //showCountOfPlayers()
-        showNamesOfPlayers()
-        
+        let navContr = UINavigationController()
+        showCountOfPlayers()
+        // showNamesOfPlayers()
+    }
+}
+extension AppCoordinator {
+ 
+    func showCountOfPlayers()
+    {
+         countOfPlayerCoordinator = CountOfPlayerCoordinator(window: window)
+        countOfPlayerCoordinator?.delegate = self
+        countOfPlayerCoordinator?.start()
     }
 }
 
 extension AppCoordinator: CountOfPlayerCoordinatorDelegate {
-    func showCountOfPlayers()
-    {
-        let countOfPlayerCoordinator = CountOfPlayerCoordinator(window: window)
-       // countOfPlayerCoordinator.delegate = self
-        countOfPlayerCoordinator.start()
-    }
-    func CountOfPlayerCoordinatorDidFinish(countOfPlayerCoordinator: CountOfPlayerCoordinator){
+    func countOfPlayerCoordinatorDidFinish(coordinator: CountOfPlayerCoordinator) {
+         print("Ok")
+        countOfPlayerCoordinator = nil
         // showNamesOfPlayers()
     }
- }
-extension AppCoordinator// : CountOfPlayerCoordinatorDelegate
-{
-    func showNamesOfPlayers(){
-        let namesOfPlayersCoordinator = NamesOfPlayersCoordinator(window: window)
-        // showListOfNameCoordinator.delegate = self
-        namesOfPlayersCoordinator.start()
-        
-    }
 }
+
+//extension AppCoordinator
+//{
+//    func showNamesOfPlayers(){
+//        let namesOfPlayersCoordinator = NamesOfPlayersCoordinator(window: window)
+//        // showListOfNameCoordinator.delegate = self
+//        namesOfPlayersCoordinator.start()
+//
+//    }
+//}
+

@@ -8,30 +8,37 @@
 
 import UIKit
 
-protocol CountOfPlayerCoordinatorDelegate: class
-{
-    func CountOfPlayerCoordinatorDidFinish(countOfPlayerCoordinator: CountOfPlayerCoordinator)
+protocol CountOfPlayerCoordinatorDelegate: class {
+    func countOfPlayerCoordinatorDidFinish(coordinator: CountOfPlayerCoordinator)
 }
 
-class CountOfPlayerCoordinator: Coordinator
-{
-    weak var delegate: CountOfPlayerCoordinatorDelegate?
-    let window: UIWindow
+class CountOfPlayerCoordinator: Coordinator {
     
-    init(window: UIWindow)
-    {
-        self.window = window
+    deinit {
+        print("CountOfPlayerCoordinator deinit")
     }
     
-    func start()
-    {
+    weak var delegate: CountOfPlayerCoordinatorDelegate?
+    weak var window: UIWindow?
+    
+    init(window: UIWindow) {
+        self.window =  window
+        
+    }
+    
+    func start() {
         let countOfPlayerViewController = CountOfPlayerViewController(nibName: "CountOfPlayerView", bundle: nil)
         let viewModel = CountOfPlayerViewModel()
+        viewModel.coordinatorDelegate = self
         countOfPlayerViewController.viewModel = viewModel
         
-        window.rootViewController = countOfPlayerViewController
-        window.makeKeyAndVisible()
-        
+        window?.rootViewController = countOfPlayerViewController
+        window?.makeKeyAndVisible()
     }
 }
 
+extension CountOfPlayerCoordinator: CountOfPlayerViewModelDelegate {
+    func countOfPlayerViewModelDidSelect(_ viewModel: CountOfPlayer) {
+        delegate?.countOfPlayerCoordinatorDidFinish(coordinator: self)
+    }
+}
