@@ -9,14 +9,17 @@
 import UIKit
 
 class NamesOfPlayersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-//{
+    @IBOutlet weak var bootomConstraint: NSLayoutConstraint!
+    //{
     @IBOutlet weak var tableView: UITableView!
     // @IBOutlet weak var namesTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
         let nib = UINib.init(nibName: "NamesOfPlayersTableViewCell", bundle: nil)
-        self.tableView.register(nib, forCellReuseIdentifier: "NamesOfPlayersTableViewCell")
+        self.tableView.register(nib, forCellReuseIdentifier: "Cell")
     
         // Do any additional setup after loading the view.
     }
@@ -40,7 +43,7 @@ class NamesOfPlayersViewController: UIViewController, UITableViewDelegate, UITab
 
 //// MARK: - UITableView delegate
 func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 1
+    return 23
 }
 
 //func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -49,7 +52,7 @@ func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> 
 
 func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-    let cell = tableView.dequeueReusableCell(withIdentifier: "NamesOfPlayersTableViewCell", for: indexPath) as! NamesOfPlayersTableViewCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! NamesOfPlayersTableViewCell
 
 //    //let dict = usersArray[indexPath.row]
 //

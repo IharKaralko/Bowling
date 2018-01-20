@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NamesOfPlayersViewController" customModule="Bowling" customModuleProvider="target">
             <connections>
+                <outlet property="bootomConstraint" destination="ZnV-3b-C6f" id="8EJ-n9-Rdd"/>
                 <outlet property="tableView" destination="SbC-97-qlT" id="EbX-fd-dOd"/>
                 <outlet property="view" destination="iN0-l3-epB" id="j3y-6L-Rlh"/>
             </connections>
@@ -21,19 +22,44 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SbC-97-qlT">
-                    <rect key="frame" x="67" y="181" width="240" height="128"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SbC-97-qlT">
+                    <rect key="frame" x="20" y="87" width="334" height="456"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="334" id="phx-uS-3dc"/>
+                    </constraints>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="9Nd-ZJ-5r8"/>
                         <outlet property="delegate" destination="-1" id="kbb-fI-Ut4"/>
                     </connections>
                 </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Names of players" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eG7-KR-iz9">
+                    <rect key="frame" x="121" y="56" width="133" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZeJ-ul-49O">
+                    <rect key="frame" x="274" y="47" width="80" height="30"/>
+                    <color key="backgroundColor" red="1" green="0.96434547071333687" blue="0.87694470624829068" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="zeX-hu-esK"/>
+                    </constraints>
+                    <state key="normal" title="Input"/>
+                </button>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.4814861585443575" green="1" blue="0.4112803443351577" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="ZeJ-ul-49O" firstAttribute="leading" secondItem="eG7-KR-iz9" secondAttribute="trailing" constant="20" id="QKG-Wb-kE9"/>
+                <constraint firstItem="SbC-97-qlT" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="Wcq-Xa-uRJ"/>
+                <constraint firstItem="SbC-97-qlT" firstAttribute="top" secondItem="eG7-KR-iz9" secondAttribute="bottom" constant="10" id="Y2g-y5-MNI"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="SbC-97-qlT" secondAttribute="bottom" constant="124" id="ZnV-3b-C6f"/>
+                <constraint firstItem="eG7-KR-iz9" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="cNP-JM-LmS"/>
+                <constraint firstItem="SbC-97-qlT" firstAttribute="top" secondItem="ZeJ-ul-49O" secondAttribute="bottom" constant="10" id="rEk-Ej-WKr"/>
+                <constraint firstItem="eG7-KR-iz9" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="36" id="sPU-J7-ppG"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="48" y="-288"/>
+            <point key="canvasLocation" x="47.5" y="-288.5"/>
         </view>
     </objects>
 </document>
