@@ -23,10 +23,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SbC-97-qlT">
-                    <rect key="frame" x="20" y="87" width="334" height="456"/>
+                    <rect key="frame" x="32" y="87" width="310" height="536"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="334" id="phx-uS-3dc"/>
+                        <constraint firstAttribute="width" constant="310" id="phx-uS-3dc"/>
                     </constraints>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="9Nd-ZJ-5r8"/>
@@ -40,23 +40,25 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZeJ-ul-49O">
-                    <rect key="frame" x="274" y="47" width="80" height="30"/>
+                    <rect key="frame" x="274" y="37" width="68" height="33"/>
                     <color key="backgroundColor" red="1" green="0.96434547071333687" blue="0.87694470624829068" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="80" id="zeX-hu-esK"/>
-                    </constraints>
                     <state key="normal" title="Input"/>
+                    <connections>
+                        <action selector="submit:" destination="-1" eventType="touchUpInside" id="9j0-Br-iZS"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.4814861585443575" green="1" blue="0.4112803443351577" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="ZeJ-ul-49O" firstAttribute="leading" secondItem="eG7-KR-iz9" secondAttribute="trailing" constant="20" id="QKG-Wb-kE9"/>
+                <constraint firstItem="ZeJ-ul-49O" firstAttribute="leading" secondItem="eG7-KR-iz9" secondAttribute="trailing" constant="20" id="AAV-iD-JGO"/>
                 <constraint firstItem="SbC-97-qlT" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="Wcq-Xa-uRJ"/>
                 <constraint firstItem="SbC-97-qlT" firstAttribute="top" secondItem="eG7-KR-iz9" secondAttribute="bottom" constant="10" id="Y2g-y5-MNI"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="SbC-97-qlT" secondAttribute="bottom" constant="124" id="ZnV-3b-C6f"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="SbC-97-qlT" secondAttribute="bottom" constant="44" id="ZnV-3b-C6f"/>
                 <constraint firstItem="eG7-KR-iz9" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="cNP-JM-LmS"/>
-                <constraint firstItem="SbC-97-qlT" firstAttribute="top" secondItem="ZeJ-ul-49O" secondAttribute="bottom" constant="10" id="rEk-Ej-WKr"/>
+                <constraint firstItem="ZeJ-ul-49O" firstAttribute="trailing" secondItem="SbC-97-qlT" secondAttribute="trailing" id="oA6-Aw-h8s"/>
+                <constraint firstItem="ZeJ-ul-49O" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="17" id="qO7-CU-r6c"/>
                 <constraint firstItem="eG7-KR-iz9" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="36" id="sPU-J7-ppG"/>
+                <constraint firstItem="SbC-97-qlT" firstAttribute="top" secondItem="ZeJ-ul-49O" secondAttribute="bottom" constant="17" id="z6e-ZC-Lgu"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="47.5" y="-288.5"/>

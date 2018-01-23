@@ -23,7 +23,7 @@ class AppCoordinator {
 extension AppCoordinator: Coordinator {
     
     func start() {
-        let navContr = UINavigationController()
+     //   let navContr = UINavigationController()
         showCountOfPlayers()
         // showNamesOfPlayers()
     }
@@ -40,19 +40,19 @@ extension AppCoordinator {
 
 extension AppCoordinator: CountOfPlayerCoordinatorDelegate {
     func countOfPlayerCoordinatorDidFinish(coordinator: CountOfPlayerCoordinator) {
-         print("Ok")
+       //  print("Ok")
         countOfPlayerCoordinator = nil
-        // showNamesOfPlayers()
+         showNamesOfPlayers()
     }
 }
 
-//extension AppCoordinator
-//{
-//    func showNamesOfPlayers(){
-//        let namesOfPlayersCoordinator = NamesOfPlayersCoordinator(window: window)
-//        // showListOfNameCoordinator.delegate = self
-//        namesOfPlayersCoordinator.start()
-//
-//    }
-//}
+extension AppCoordinator
+{
+    func showNamesOfPlayers(){
+        let namesOfPlayersCoordinator = NamesOfPlayersCoordinator(window: window)
+        // showListOfNameCoordinator.delegate = self
+        namesOfPlayersCoordinator.start()
+
+    }
+}
 

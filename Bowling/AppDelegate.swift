@@ -17,16 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow(frame:UIScreen.main.bounds)
-//        appCoordinator = AppCoordinator(window: window!)
-//        appCoordinator.start()
-//        window?.makeKeyAndVisible()
+        appCoordinator = AppCoordinator(window: window!)
+        appCoordinator.start()
+        window?.makeKeyAndVisible()
         
-                let namesOfPlayersViewController = NamesOfPlayersViewController(nibName: "NamesOfPlayersView", bundle: nil)
+         //       let namesOfPlayersViewController = NamesOfPlayersViewController(nibName: "NamesOfPlayersView", bundle: nil)
                 //let viewModel = CountOfPlayerViewModel()
                 //namesOfPlayersViewController.viewModel = viewModel
         
-                window?.rootViewController = namesOfPlayersViewController
-                window?.makeKeyAndVisible()
+//                window?.rootViewController = namesOfPlayersViewController
+//                window?.makeKeyAndVisible()
         
         return true
     }
