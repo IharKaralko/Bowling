@@ -9,10 +9,10 @@
 import UIKit
 
 protocol CountOfPlayerCoordinatorDelegate: class {
-    func countOfPlayerCoordinatorDidFinish(coordinator: CountOfPlayerCoordinator)
+    func countOfPlayerCoordinatorDidFinish(_ count: Int)
 }
 
-class CountOfPlayerCoordinator: Coordinator {
+class CountOfPlayerCoordinator { 
     
     deinit {
         print("CountOfPlayerCoordinator deinit")
@@ -27,6 +27,9 @@ class CountOfPlayerCoordinator: Coordinator {
     }
     
     func start() {
+        
+        
+        
         let countOfPlayerViewController = CountOfPlayerViewController(nibName: "CountOfPlayerView", bundle: nil)
         let viewModel = CountOfPlayerViewModel()
         viewModel.coordinatorDelegate = self
@@ -38,7 +41,7 @@ class CountOfPlayerCoordinator: Coordinator {
 }
 
 extension CountOfPlayerCoordinator: CountOfPlayerViewModelDelegate {
-    func countOfPlayerViewModelDidSelect(_ viewModel: CountOfPlayer) {
-        delegate?.countOfPlayerCoordinatorDidFinish(coordinator: self)
+    func countOfPlayerViewModelDidSelect(_ count: Int) {
+        delegate?.countOfPlayerCoordinatorDidFinish(count)
     }
 }

@@ -12,7 +12,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NamesOfPlayersViewController" customModule="Bowling" customModuleProvider="target">
             <connections>
-                <outlet property="bootomConstraint" destination="ZnV-3b-C6f" id="8EJ-n9-Rdd"/>
                 <outlet property="tableView" destination="SbC-97-qlT" id="EbX-fd-dOd"/>
                 <outlet property="view" destination="iN0-l3-epB" id="j3y-6L-Rlh"/>
             </connections>

@@ -8,18 +8,16 @@
 
 import UIKit
 
-//MARK: Protocol .
+//MARK: - NamesOfPlayersTableViewCellDelegate
 protocol NamesOfPlayersTableViewCellDelegate: class {
-      // func saveTextField(_ cell: NamesOfPlayersTableViewCell?)
-    func saveTextField(_ nuberString: String, _ namePlayer: String)
+    func saveTextField(_ cell: NamesOfPlayersTableViewCell)
     
 }
 
+class NamesOfPlayersTableViewCell: UITableViewCell {
 
-class NamesOfPlayersTableViewCell: UITableViewCell, UITextFieldDelegate{
-
-    @IBOutlet weak var textFieldPlayer: UITextField!
-    @IBOutlet weak var labelPlayer: UILabel!
+    @IBOutlet  private weak var textFieldPlayer: UITextField!
+    @IBOutlet  private weak var labelPlayer: UILabel!
     
      weak var delegate: NamesOfPlayersTableViewCellDelegate?
     
@@ -27,7 +25,33 @@ class NamesOfPlayersTableViewCell: UITableViewCell, UITextFieldDelegate{
         super.awakeFromNib()
         textFieldPlayer.delegate = self
     }
+}
+    
+ extension NamesOfPlayersTableViewCell {
+    
+    func textFieldIsFull() -> Bool {
+        guard let text = textFieldPlayer.text, !text.isEmpty else {
+            
+            textFieldPlayer.backgroundColor = UIColor.cyan
+            return false
+        }
+        textFieldPlayer.backgroundColor = UIColor.white
+        return true
+    }
+    
+    func textCell() -> String {
+        
+        return textFieldPlayer.text!
+    }
+    
+    func numberOfPlayer(numberString: String){
+        labelPlayer.text = numberString
+    }
+}
 
+//MARK: - UITextFieldDelegate
+extension NamesOfPlayersTableViewCell: UITextFieldDelegate {
+    
     func textField(_ textFieldToChange: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string == " " {
             return false
@@ -37,27 +61,7 @@ class NamesOfPlayersTableViewCell: UITableViewCell, UITextFieldDelegate{
         return (resultString?.count)! < 10
     }
     
-    func textFieldIsFull() -> Bool {
-        guard let text = textFieldPlayer.text, !text.isEmpty else {
-            return false
-        }
-        return true
+    public func textFieldDidEndEditing(_ textField: UITextField){
+        delegate?.saveTextField(self)
     }
-    
-    
-     public func textFieldDidEndEditing(_ textField: UITextField){
-      
-        if textFieldIsFull(){
-             self.textFieldPlayer.backgroundColor = UIColor.clear
-            delegate?.saveTextField(self.labelPlayer.text!, self.textFieldPlayer.text!)
-        }
-    }
-    
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
 }

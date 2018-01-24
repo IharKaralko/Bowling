@@ -20,7 +20,7 @@ class CountOfPlayerViewModel {
 extension CountOfPlayerViewModel: CountOfPlayer {
     func acceptCountOfPlayers(count: Int) {
         numbersOfPlayer = count
-        coordinatorDelegate?.countOfPlayerViewModelDidSelect(self) 
+        coordinatorDelegate?.countOfPlayerViewModelDidSelect(numbersOfPlayer)
     }
 }
 

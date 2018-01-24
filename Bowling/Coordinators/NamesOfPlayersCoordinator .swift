@@ -10,10 +10,10 @@ import UIKit
 
 protocol NamesOfPlayersCoordinatorDelegate: class
 {
-    func NamesOfPlayersCoordinatorDidFinish(showListOfNameCoordinator: NamesOfPlayersCoordinator)
+    func namesOfPlayersCoordinatorDidFinish(collectionOfNames: [String])
 }
 
-class NamesOfPlayersCoordinator: Coordinator
+class NamesOfPlayersCoordinator 
 {
     weak var delegate: NamesOfPlayersCoordinatorDelegate?
     let window: UIWindow
@@ -23,14 +23,21 @@ class NamesOfPlayersCoordinator: Coordinator
         self.window = window
     }
     
-    func start()
+    func start(_ count: Int)
     {
         let namesOfPlayersViewController = NamesOfPlayersViewController(nibName: "NamesOfPlayersView", bundle: nil)
-     //   let viewModel = NamesOfPlayersViewModel()
-       // namesOfPlayersViewController.viewModel = viewModel
+        namesOfPlayersViewController.countPlayers = count
+        let viewModel = NamesOfPlayersViewModel()
+        viewModel.coordinatorDelegate = self
+        namesOfPlayersViewController.viewModel = viewModel
         
         window.rootViewController = namesOfPlayersViewController
         window.makeKeyAndVisible()
         
+    }
+}
+extension NamesOfPlayersCoordinator: NamesOfPlayersViewModelDelegate {
+    func namesOfPlayersViewModelDidSelect(_ collectionOfNames: [String]) {
+        delegate?.namesOfPlayersCoordinatorDidFinish(collectionOfNames: collectionOfNames)
     }
 }

@@ -12,6 +12,7 @@ class AppCoordinator {
     
     var window: UIWindow
     var countOfPlayerCoordinator: CountOfPlayerCoordinator?
+    var namesOfPlayersCoordinator: NamesOfPlayersCoordinator?
     
     init(window: UIWindow)
     {
@@ -20,39 +21,44 @@ class AppCoordinator {
 }
 
 // MARK: - Coordinator protocol
-extension AppCoordinator: Coordinator {
+extension AppCoordinator {
     
     func start() {
-     //   let navContr = UINavigationController()
         showCountOfPlayers()
-        // showNamesOfPlayers()
     }
-}
-extension AppCoordinator {
- 
-    func showCountOfPlayers()
-    {
-         countOfPlayerCoordinator = CountOfPlayerCoordinator(window: window)
+
+    func showCountOfPlayers() {
+        countOfPlayerCoordinator = CountOfPlayerCoordinator(window: window)
         countOfPlayerCoordinator?.delegate = self
         countOfPlayerCoordinator?.start()
     }
+    
+    func showNamesOfPlayers(_ count: Int) {
+        namesOfPlayersCoordinator = NamesOfPlayersCoordinator(window: window)
+        namesOfPlayersCoordinator?.delegate = self
+        print(count)
+        namesOfPlayersCoordinator?.start(count)
+        
+    }
+    
 }
 
 extension AppCoordinator: CountOfPlayerCoordinatorDelegate {
-    func countOfPlayerCoordinatorDidFinish(coordinator: CountOfPlayerCoordinator) {
+    func countOfPlayerCoordinatorDidFinish(_ count: Int) {
        //  print("Ok")
         countOfPlayerCoordinator = nil
-         showNamesOfPlayers()
+         showNamesOfPlayers(count)
     }
 }
 
-extension AppCoordinator
-{
-    func showNamesOfPlayers(){
-        let namesOfPlayersCoordinator = NamesOfPlayersCoordinator(window: window)
-        // showListOfNameCoordinator.delegate = self
-        namesOfPlayersCoordinator.start()
-
+extension AppCoordinator: NamesOfPlayersCoordinatorDelegate {
+    func namesOfPlayersCoordinatorDidFinish(collectionOfNames: [String]) {
+        print("Get")
+        print(collectionOfNames)
+        namesOfPlayersCoordinator = nil
     }
 }
+
+
+
 

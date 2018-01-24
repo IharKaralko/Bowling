@@ -45,7 +45,7 @@ private extension CountOfPlayerViewController {
         }
     }
     
-    func alertIncorrectCounterOfPlayer(){
+    func alertIncorrectCounterOfPlayer() {
         let alertController = UIAlertController(title: "Attention", message: "Incorrect counter of player?", preferredStyle: .alert)
         let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(defaultAction)

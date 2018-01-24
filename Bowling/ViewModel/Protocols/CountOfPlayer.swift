@@ -9,7 +9,7 @@
 import Foundation
 
 protocol CountOfPlayerViewModelDelegate: class {
-    func countOfPlayerViewModelDidSelect(_ viewModel: CountOfPlayer)
+    func countOfPlayerViewModelDidSelect(_ count: Int)
 }
 protocol CountOfPlayer {
     
