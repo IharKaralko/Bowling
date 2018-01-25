@@ -11,7 +11,6 @@ import Foundation
 protocol NamesOfPlayersViewModelDelegate: class {
     func namesOfPlayersViewModelDidSelect(_ collectionOfNames: [String])
     func namesOfPlayersViewModelDoneBack()
-    
 }
 
 protocol NamesOfPlayers {

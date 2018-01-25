@@ -9,13 +9,13 @@
 import Foundation
 
 class CountOfPlayerViewModel {
-    
     var numbersOfPlayer: Int
     weak var coordinatorDelegate: CountOfPlayerViewModelDelegate?
     init(numbersOfPlayer: Int = 10) {
         self.numbersOfPlayer = numbersOfPlayer
     }
 }
+
 // MARK: - CountOfPlayer protocol
 extension CountOfPlayerViewModel: CountOfPlayer {
     func acceptCountOfPlayers(count: Int) {

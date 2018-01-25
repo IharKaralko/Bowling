@@ -9,7 +9,6 @@
 import Foundation
 
 public class Game {
-    
     public let maxFrame: Int
     public var scoreGame: Int {
         var score = 0

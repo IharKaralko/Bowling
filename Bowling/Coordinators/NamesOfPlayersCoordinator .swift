@@ -8,49 +8,37 @@
 
 import UIKit
 
-protocol NamesOfPlayersCoordinatorDelegate: class
-{
-    func namesOfPlayersCoordinatorDidFinish(collectionOfNames: [String])
+protocol NamesOfPlayersCoordinatorDelegate: class {
     func namesOfPlayersCoordinatorCancel()
-    
 }
 
-class NamesOfPlayersCoordinator 
-{
+class NamesOfPlayersCoordinator {
+    
+    deinit {
+        print("NamesOfPlayersCoordinator deinit")
+    }
     weak var delegate: NamesOfPlayersCoordinatorDelegate?
-  //  private  weak var window: UIWindow?
-    var navController: UINavigationController?
-    
-//    init(window: UIWindow)
-//    {
-//        self.window = window
-//    }
-    
-    func start(_ count: Int, nav: UINavigationController)
-    {
-        let namesOfPlayersViewController = NamesOfPlayersViewController(nibName: "NamesOfPlayersView", bundle: nil)
+}
+
+extension NamesOfPlayersCoordinator {
+    func start(_ count: Int, _ nav: UINavigationController) {
+        let namesOfPlayersViewController = NamesOfPlayersViewController()
         namesOfPlayersViewController.countPlayers = count
         let viewModel = NamesOfPlayersViewModel()
         viewModel.coordinatorDelegate = self
         namesOfPlayersViewController.viewModel = viewModel
-        
         nav.pushViewController(namesOfPlayersViewController, animated: true)
-//        window?.rootViewController = navController
-//        window?.makeKeyAndVisible()
-        
     }
 }
 
+// MARK: - NamesOfPlayersViewModelDelegate
 extension NamesOfPlayersCoordinator: NamesOfPlayersViewModelDelegate {
-    
     func namesOfPlayersViewModelDidSelect(_ collectionOfNames: [String]) {
-        delegate?.namesOfPlayersCoordinatorDidFinish(collectionOfNames: collectionOfNames)
-    }
-    func namesOfPlayersViewModelDoneBack(){
-        
-        delegate?.namesOfPlayersCoordinatorCancel()
-        //self.popViewController(animated: true)
-        
+        print("Get")
+        print(collectionOfNames)
     }
     
+    func namesOfPlayersViewModelDoneBack() {
+        delegate?.namesOfPlayersCoordinatorCancel()
+    }
 }

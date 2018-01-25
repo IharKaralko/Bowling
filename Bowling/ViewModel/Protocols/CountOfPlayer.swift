@@ -12,9 +12,7 @@ protocol CountOfPlayerViewModelDelegate: class {
     func countOfPlayerViewModelDidSelect(_ count: Int)
 }
 protocol CountOfPlayer {
-    
     var numbersOfPlayer: Int { get set }
     var coordinatorDelegate: CountOfPlayerViewModelDelegate? { get set}
     func acceptCountOfPlayers(count: Int)
-    
 }

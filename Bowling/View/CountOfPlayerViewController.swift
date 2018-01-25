@@ -28,14 +28,13 @@ class CountOfPlayerViewController: UIViewController {
 private extension CountOfPlayerViewController {
     func bindViewModel() {
         guard isViewLoaded else { return }
-       textFieldName.text = String(viewModel.numbersOfPlayer)
+        textFieldName.text = String(viewModel.numbersOfPlayer)
     }
     
     func startButtonTapped() {
         if let numberString = Int(textFieldName.text!) {
             if numberString > 0 {
                 viewModel.acceptCountOfPlayers(count: numberString)
-               // textFieldName.text = nil
                 textFieldName.resignFirstResponder()
             } else {
                 alertIncorrectCounterOfPlayer()

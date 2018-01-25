@@ -9,7 +9,7 @@
 import Foundation
 
 class Frame: FrameProtocol {
-    var isLast: Bool                   //let?
+    var isLast: Bool                 
     var scoreFrame: Int {
         return throwScore.reduce(0,+) + additionalScore.reduce(0,+)
     }

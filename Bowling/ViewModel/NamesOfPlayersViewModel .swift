@@ -9,19 +9,18 @@
 import Foundation
 
 class NamesOfPlayersViewModel {
-   
-     var collectionOfNames = [String]()
-     weak var coordinatorDelegate: NamesOfPlayersViewModelDelegate?
+    var collectionOfNames = [String]()
+    weak var coordinatorDelegate: NamesOfPlayersViewModelDelegate?
 }
+
 // MARK: - CountOfPlayer protocol
 extension NamesOfPlayersViewModel: NamesOfPlayers {
-    
     func acceptNamesOfPlayers(collectionOfNames: [String]) {
         self.collectionOfNames = collectionOfNames
         coordinatorDelegate?.namesOfPlayersViewModelDidSelect(collectionOfNames)
     }
+    
     func doneBack() {
         coordinatorDelegate?.namesOfPlayersViewModelDoneBack()
-        
     }
 }

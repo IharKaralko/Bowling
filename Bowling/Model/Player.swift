@@ -9,7 +9,6 @@
 import Foundation
 
 class Player: PlayerProtocol {
-    
     public let name: String = ""
     public  var game: Game = Game()
     

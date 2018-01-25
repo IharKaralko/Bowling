@@ -9,6 +9,5 @@
 import Foundation
 
 class GlobalGame {
-    
     public let players: [Player] = []
 }
