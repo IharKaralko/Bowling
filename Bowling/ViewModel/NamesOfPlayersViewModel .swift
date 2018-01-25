@@ -20,4 +20,8 @@ extension NamesOfPlayersViewModel: NamesOfPlayers {
         self.collectionOfNames = collectionOfNames
         coordinatorDelegate?.namesOfPlayersViewModelDidSelect(collectionOfNames)
     }
+    func doneBack() {
+        coordinatorDelegate?.namesOfPlayersViewModelDoneBack()
+        
+    }
 }

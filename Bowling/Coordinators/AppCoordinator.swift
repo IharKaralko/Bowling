@@ -10,14 +10,16 @@ import UIKit
 
 class AppCoordinator {
     
-    var window: UIWindow
-    var countOfPlayerCoordinator: CountOfPlayerCoordinator?
-    var namesOfPlayersCoordinator: NamesOfPlayersCoordinator?
+    private weak var window: UIWindow?
+    private var countOfPlayerCoordinator: CountOfPlayerCoordinator?
+    private var namesOfPlayersCoordinator: NamesOfPlayersCoordinator?
+    private var navCon: UINavigationController?
     
     init(window: UIWindow)
     {
         self.window = window
     }
+    
 }
 
 // MARK: - Coordinator protocol
@@ -26,38 +28,43 @@ extension AppCoordinator {
     func start() {
         showCountOfPlayers()
     }
-
-    func showCountOfPlayers() {
-        countOfPlayerCoordinator = CountOfPlayerCoordinator(window: window)
-        countOfPlayerCoordinator?.delegate = self
-        countOfPlayerCoordinator?.start()
-    }
     
-    func showNamesOfPlayers(_ count: Int) {
-        namesOfPlayersCoordinator = NamesOfPlayersCoordinator(window: window)
-        namesOfPlayersCoordinator?.delegate = self
-        print(count)
-        namesOfPlayersCoordinator?.start(count)
+    func showCountOfPlayers() {
+        countOfPlayerCoordinator = CountOfPlayerCoordinator(window: window!)
+     //   countOfPlayerCoordinator?.delegate = self
+        countOfPlayerCoordinator?.start()
+        
+      //  navCon = countOfPlayerCoordinator?.navController
         
     }
     
+//    func showNamesOfPlayers(_ count: Int) {
+//        namesOfPlayersCoordinator = NamesOfPlayersCoordinator()
+//    //    namesOfPlayersCoordinator?.delegate = self
+//        namesOfPlayersCoordinator?.start(count, nav: navCon!)
+//    }
 }
 
-extension AppCoordinator: CountOfPlayerCoordinatorDelegate {
-    func countOfPlayerCoordinatorDidFinish(_ count: Int) {
-       //  print("Ok")
-        countOfPlayerCoordinator = nil
-         showNamesOfPlayers(count)
-    }
-}
+//extension AppCoordinator: CountOfPlayerCoordinatorDelegate {
+//    func countOfPlayerCoordinatorDidFinish(_ count: Int) {
+//        showNamesOfPlayers(count)
+//    }
+//}
 
-extension AppCoordinator: NamesOfPlayersCoordinatorDelegate {
-    func namesOfPlayersCoordinatorDidFinish(collectionOfNames: [String]) {
-        print("Get")
-        print(collectionOfNames)
-        namesOfPlayersCoordinator = nil
-    }
-}
+//extension AppCoordinator: NamesOfPlayersCoordinatorDelegate {
+//    func namesOfPlayersCoordinatorDidFinish(collectionOfNames: [String]) {
+//        print("Get")
+//        print(collectionOfNames)
+//        //  namesOfPlayersCoordinator = nil
+//    }
+//
+//    func namesOfPlayersCoordinatorCancel() {
+//        if let navCon = navCon {
+//             navCon.popViewController(animated: true)
+//        }
+//    }
+//
+//}
 
 
 

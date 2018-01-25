@@ -10,10 +10,13 @@ import Foundation
 
 protocol NamesOfPlayersViewModelDelegate: class {
     func namesOfPlayersViewModelDidSelect(_ collectionOfNames: [String])
+    func namesOfPlayersViewModelDoneBack()
+    
 }
 
 protocol NamesOfPlayers {
     var collectionOfNames: [String] { get set }
     var coordinatorDelegate: NamesOfPlayersViewModelDelegate? { get set}
     func acceptNamesOfPlayers(collectionOfNames: [String])
+    func doneBack()
 }

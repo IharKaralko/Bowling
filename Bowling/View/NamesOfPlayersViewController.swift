@@ -17,13 +17,25 @@ class NamesOfPlayersViewController: UIViewController {
     var viewModel: NamesOfPlayers! {
         didSet { bindViewModel() }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         let nib = UINib.init(nibName: "NamesOfPlayersTableViewCell", bundle: nil)
         self.tableView.register(nib, forCellReuseIdentifier: "Cell")
         self.hideKeyboard()
+        
+        
+        
+        let done = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(doneBack))
+        navigationItem.setLeftBarButton(done, animated: false)
+   //     navigationItem.backBarButtonItem = done
+        //          navigationItem.backBarButtonItem = UIBarButtonItem(title:"yuyuyu", style:.plain, target:self, action: #selector(doneBack))
+//        let backButton = UIBarButtonItem(title: "Home/Return or nohing", style: .bordered, target: nil, action: nil)
+//        self.navigationItem.backBarButtonItem = backButton
+        
     }
+  
     
     override func viewWillAppear(_ animated: Bool) {
         let notificationCenter = NotificationCenter.default
@@ -72,6 +84,11 @@ private extension NamesOfPlayersViewController {
             print("False")
             
         }
+    }
+    
+    @objc
+    func doneBack(){
+        viewModel.doneBack()
     }
     
     @objc

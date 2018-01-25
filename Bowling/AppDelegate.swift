@@ -12,6 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    //var nv: UINavigationController?
      var appCoordinator: AppCoordinator!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -19,15 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame:UIScreen.main.bounds)
         appCoordinator = AppCoordinator(window: window!)
         appCoordinator.start()
-        window?.makeKeyAndVisible()
-        
-         //       let namesOfPlayersViewController = NamesOfPlayersViewController(nibName: "NamesOfPlayersView", bundle: nil)
-                //let viewModel = CountOfPlayerViewModel()
-                //namesOfPlayersViewController.viewModel = viewModel
-        
-//                window?.rootViewController = namesOfPlayersViewController
-//                window?.makeKeyAndVisible()
-        
+      //  window?.makeKeyAndVisible()
+   
         return true
     }
 

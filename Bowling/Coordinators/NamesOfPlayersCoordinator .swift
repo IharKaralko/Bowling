@@ -11,19 +11,22 @@ import UIKit
 protocol NamesOfPlayersCoordinatorDelegate: class
 {
     func namesOfPlayersCoordinatorDidFinish(collectionOfNames: [String])
+    func namesOfPlayersCoordinatorCancel()
+    
 }
 
 class NamesOfPlayersCoordinator 
 {
     weak var delegate: NamesOfPlayersCoordinatorDelegate?
-    let window: UIWindow
+  //  private  weak var window: UIWindow?
+    var navController: UINavigationController?
     
-    init(window: UIWindow)
-    {
-        self.window = window
-    }
+//    init(window: UIWindow)
+//    {
+//        self.window = window
+//    }
     
-    func start(_ count: Int)
+    func start(_ count: Int, nav: UINavigationController)
     {
         let namesOfPlayersViewController = NamesOfPlayersViewController(nibName: "NamesOfPlayersView", bundle: nil)
         namesOfPlayersViewController.countPlayers = count
@@ -31,13 +34,23 @@ class NamesOfPlayersCoordinator
         viewModel.coordinatorDelegate = self
         namesOfPlayersViewController.viewModel = viewModel
         
-        window.rootViewController = namesOfPlayersViewController
-        window.makeKeyAndVisible()
+        nav.pushViewController(namesOfPlayersViewController, animated: true)
+//        window?.rootViewController = navController
+//        window?.makeKeyAndVisible()
         
     }
 }
+
 extension NamesOfPlayersCoordinator: NamesOfPlayersViewModelDelegate {
+    
     func namesOfPlayersViewModelDidSelect(_ collectionOfNames: [String]) {
         delegate?.namesOfPlayersCoordinatorDidFinish(collectionOfNames: collectionOfNames)
     }
+    func namesOfPlayersViewModelDoneBack(){
+        
+        delegate?.namesOfPlayersCoordinatorCancel()
+        //self.popViewController(animated: true)
+        
+    }
+    
 }
