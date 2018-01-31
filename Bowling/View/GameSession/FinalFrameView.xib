@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FinalFrameView" customModule="Bowling" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="9R4-nn-AWi"/>
+                <outlet property="firstScore" destination="O0K-p7-2as" id="zLQ-4R-Vw4"/>
+                <outlet property="numberFrame" destination="7qn-je-xyY" id="T0L-5w-CCC"/>
+                <outlet property="secondScore" destination="1kT-MQ-Onu" id="jt6-c3-Yrl"/>
+                <outlet property="thirdScore" destination="EmX-09-dIv" id="47b-ke-fxp"/>
+                <outlet property="totalScore" destination="5gb-Bo-gbK" id="HhU-6X-R30"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="703" height="376"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7qn-je-xyY" userLabel="Number Frame">
+                    <rect key="frame" x="0.0" y="0.0" width="703" height="125.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gb-Bo-gbK" userLabel="Total Score">
+                    <rect key="frame" x="0.0" y="250.5" width="703" height="125.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O0K-p7-2as" userLabel="First Score">
+                    <rect key="frame" x="0.0" y="125.5" width="234.5" height="125"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EmX-09-dIv" userLabel="Third Score">
+                    <rect key="frame" x="468.5" y="125.5" width="234.5" height="125"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1kT-MQ-Onu" userLabel="Second Score">
+                    <rect key="frame" x="234.5" y="124.5" width="234" height="125.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="5gb-Bo-gbK" firstAttribute="top" secondItem="O0K-p7-2as" secondAttribute="bottom" id="19A-Ty-KFO"/>
+                <constraint firstItem="7qn-je-xyY" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="4yX-N4-vQY"/>
+                <constraint firstItem="O0K-p7-2as" firstAttribute="width" secondItem="1kT-MQ-Onu" secondAttribute="width" id="73h-qb-Gyx"/>
+                <constraint firstItem="EmX-09-dIv" firstAttribute="width" secondItem="1kT-MQ-Onu" secondAttribute="width" id="9Z9-kd-HDb"/>
+                <constraint firstItem="EmX-09-dIv" firstAttribute="leading" secondItem="1kT-MQ-Onu" secondAttribute="trailing" id="AHx-B7-IHk"/>
+                <constraint firstItem="EmX-09-dIv" firstAttribute="height" secondItem="7qn-je-xyY" secondAttribute="height" id="GSK-9A-uES"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="5gb-Bo-gbK" secondAttribute="bottom" id="GVY-du-7cC"/>
+                <constraint firstItem="EmX-09-dIv" firstAttribute="top" secondItem="7qn-je-xyY" secondAttribute="bottom" id="KeB-V3-uXH"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="7qn-je-xyY" secondAttribute="trailing" id="Lpb-0T-eVW"/>
+                <constraint firstItem="5gb-Bo-gbK" firstAttribute="top" secondItem="1kT-MQ-Onu" secondAttribute="bottom" id="OX1-K0-vu5"/>
+                <constraint firstItem="7qn-je-xyY" firstAttribute="height" secondItem="5gb-Bo-gbK" secondAttribute="height" id="R8m-It-1Py"/>
+                <constraint firstItem="7qn-je-xyY" firstAttribute="height" secondItem="1kT-MQ-Onu" secondAttribute="height" id="Urc-AB-QvB"/>
+                <constraint firstItem="O0K-p7-2as" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="WBO-iA-LTq"/>
+                <constraint firstItem="O0K-p7-2as" firstAttribute="height" secondItem="7qn-je-xyY" secondAttribute="height" id="Z8M-RC-zPA"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="5gb-Bo-gbK" secondAttribute="trailing" id="ZAK-sQ-ZS9"/>
+                <constraint firstItem="O0K-p7-2as" firstAttribute="top" secondItem="7qn-je-xyY" secondAttribute="bottom" id="ZR8-T9-Nr2"/>
+                <constraint firstItem="7qn-je-xyY" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="a5e-af-8Z7"/>
+                <constraint firstItem="5gb-Bo-gbK" firstAttribute="top" secondItem="EmX-09-dIv" secondAttribute="bottom" id="h5m-mn-s16"/>
+                <constraint firstItem="5gb-Bo-gbK" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="sPC-pj-kJr"/>
+                <constraint firstItem="1kT-MQ-Onu" firstAttribute="leading" secondItem="O0K-p7-2as" secondAttribute="trailing" id="tee-oU-O26"/>
+                <constraint firstItem="EmX-09-dIv" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="v1M-aS-VfP"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="-184.5" y="64"/>
+        </view>
+    </objects>
+</document>
