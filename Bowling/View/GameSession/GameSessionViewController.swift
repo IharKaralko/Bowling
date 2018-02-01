@@ -9,39 +9,36 @@
 import UIKit
 
 class GameSessionViewController: UIViewController {
-
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    let countOfPlayers: Int = 10
+    var previuosGame = GameView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let game = GameView()
-        view.addSubview(game)
-        game.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            game.topAnchor.constraint(equalTo:  view.topAnchor, constant: 50),
-            game.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            game.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-            ])
-        
-        
-
-        // Do any additional setup after loading the view.
+        for a in 1 ... countOfPlayers {
+            let game = GameView()
+            scrollView.addSubview(game)
+            game.translatesAutoresizingMaskIntoConstraints = false
+            if a == 1 {
+                NSLayoutConstraint.activate([
+                    game.topAnchor.constraint(equalTo:   scrollView.topAnchor, constant: 10),
+                    game.leadingAnchor.constraint(equalTo:  scrollView.leadingAnchor),
+                    game.trailingAnchor.constraint(equalTo:  scrollView.trailingAnchor),
+                    game.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+                    ])
+            } else {
+                NSLayoutConstraint.activate([
+                    game.topAnchor.constraint(equalTo:   previuosGame.bottomAnchor, constant: 20),
+                    game.leadingAnchor.constraint(equalTo:  scrollView.leadingAnchor),
+                    game.trailingAnchor.constraint(equalTo:  scrollView.trailingAnchor),
+                    game.heightAnchor.constraint(equalTo: previuosGame.heightAnchor),
+                    game.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+                    ])
+                game.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = a == countOfPlayers ? true : false
+            }
+            previuosGame = game
+        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
