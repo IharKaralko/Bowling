@@ -8,6 +8,6 @@
 
 import Foundation
 
-class GlobalGame {
+class GameSession {
     public let players: [Player] = []
 }

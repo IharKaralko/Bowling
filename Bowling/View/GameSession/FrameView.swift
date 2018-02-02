@@ -29,12 +29,26 @@ class FrameView: UIView {
     }
 }
 
-extension FrameView {
+extension FrameView: FrameViewProtocol {
     func configureFrame(frameNumber: Int, firstThrowScore: Int, secondThrowScore: Int, finalScore: Int) {
         numberFrame.text = frameNumber.description
         firstScore.text = firstThrowScore.description
         secondScore.text = secondThrowScore.description
         totalScore.text = finalScore.description
+    }
+    
+    func fillNumberFrame(frameNumber: Int){
+        numberFrame.text = frameNumber.description
+    }
+    func fillFirstScoreFrame(firstThrowScore: Int){
+        firstScore.text = firstThrowScore.description
+    }
+    func fillSecondScoreFrame(secondThrowScore: Int){
+        if secondThrowScore == 11 {
+            secondScore.text = "/"
+        } else {
+            secondScore.text = secondThrowScore == 10 ? "x" : secondThrowScore.description
+        }
     }
 }
 

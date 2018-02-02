@@ -43,7 +43,8 @@ private extension Game{
         let frameType = frame.type
         if ((frameType == .strike || frameType == .spare) && frame.isLast) || frameType == .standart {
             frames.append(frame)
-        } else{
+             print(scoreGame)                                                //print
+            } else {
             waitingToCloseFrames.append(frame)
         }
         self.currentFrame = nil
@@ -60,6 +61,7 @@ private extension Game{
         })
         tempArr.forEach {
             frames.append($0)
+             print(scoreGame)                                                //print
             if  let index = waitingToCloseFrames.index(of: $0) {
                 waitingToCloseFrames.remove(at: index)
             }

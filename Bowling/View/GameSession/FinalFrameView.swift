@@ -31,13 +31,33 @@ class FinalFrameView: UIView {
     }
 }
 
-extension FinalFrameView {
+extension FinalFrameView: FrameViewProtocol {
+    
     func configureFinalFrame(frameNumber: Int, firstThrowScore: Int, secondThrowScore: Int, thirdThrowScore: Int, finalScore: Int) {
         numberFrame.text = frameNumber.description
         firstScore.text = firstThrowScore.description
         secondScore.text = secondThrowScore.description
         thirdScore.text = thirdThrowScore.description
         totalScore.text = finalScore.description
+    }
+    
+    func fillNumberFrame(frameNumber: Int){
+        numberFrame.text = frameNumber.description
+    }
+    
+    func fillFirstScoreFinalFrame(firstThrowScore: Int){
+        firstScore.text = firstThrowScore == 10 ? "x" : firstThrowScore.description
+    }
+    
+    func fillSecondScoreFinalFrame(secondThrowScore: Int){
+        if secondThrowScore == 11 {
+            secondScore.text = "/"
+        } else {
+            secondScore.text = secondThrowScore == 10 ? "x" : secondThrowScore.description
+        }
+    }
+    func fillThirdtScoreFinalFrame(thirdThrowScore: Int){
+        thirdScore.text = thirdThrowScore.description
     }
 }
 

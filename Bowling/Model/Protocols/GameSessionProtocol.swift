@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol GlobalGameProtocol {
+protocol GameSessionProtocol {
     
 }
