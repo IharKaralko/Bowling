@@ -13,6 +13,7 @@
 		433DBA3E200F631C00732B20 /* CountOfPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433DBA3D200F631C00732B20 /* CountOfPlayer.swift */; };
 		4348EC3F2018825800B8E457 /* NamesOfPlayers .swift in Sources */ = {isa = PBXBuildFile; fileRef = 4348EC3E2018825800B8E457 /* NamesOfPlayers .swift */; };
 		4348EC41201885DE00B8E457 /* NamesOfPlayersViewModel .swift in Sources */ = {isa = PBXBuildFile; fileRef = 4348EC40201885DE00B8E457 /* NamesOfPlayersViewModel .swift */; };
+		434B08542029C99B00EE5BB3 /* FinalFrameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434B08532029C99B00EE5BB3 /* FinalFrameViewModel.swift */; };
 		434BDB052021C8500029BB85 /* GameSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434BDB032021C8500029BB85 /* GameSessionViewController.swift */; };
 		434BDB062021C8500029BB85 /* GameSessionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 434BDB042021C8500029BB85 /* GameSessionViewController.xib */; };
 		434BDB082021CC190029BB85 /* FinalFrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434BDB072021CC190029BB85 /* FinalFrameView.swift */; };
@@ -54,6 +55,7 @@
 		433DBA3D200F631C00732B20 /* CountOfPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountOfPlayer.swift; sourceTree = "<group>"; };
 		4348EC3E2018825800B8E457 /* NamesOfPlayers .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NamesOfPlayers .swift"; sourceTree = "<group>"; };
 		4348EC40201885DE00B8E457 /* NamesOfPlayersViewModel .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NamesOfPlayersViewModel .swift"; sourceTree = "<group>"; };
+		434B08532029C99B00EE5BB3 /* FinalFrameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalFrameViewModel.swift; sourceTree = "<group>"; };
 		434BDB032021C8500029BB85 /* GameSessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSessionViewController.swift; sourceTree = "<group>"; };
 		434BDB042021C8500029BB85 /* GameSessionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameSessionViewController.xib; sourceTree = "<group>"; };
 		434BDB072021CC190029BB85 /* FinalFrameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalFrameView.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				4352D849202359240093011C /* GameViewModel.swift */,
 				4352D84B2023595D0093011C /* GameSessionViewModel.swift */,
 				437187102024ABE60069645B /* FrameViewModel.swift */,
+				434B08532029C99B00EE5BB3 /* FinalFrameViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				434C7616200E0B7F00879242 /* AppDelegate.swift in Sources */,
 				433DBA39200F61A200732B20 /* CountOfPlayerViewController.swift in Sources */,
 				4352D84C2023595D0093011C /* GameSessionViewModel.swift in Sources */,
+				434B08542029C99B00EE5BB3 /* FinalFrameViewModel.swift in Sources */,
 				435FBBBB2010952F0087E415 /* Player.swift in Sources */,
 				434C7635200E1D7000879242 /* FrameProtocol.swift in Sources */,
 				4371870F202467F70069645B /* FrameViewProtocol.swift in Sources */,

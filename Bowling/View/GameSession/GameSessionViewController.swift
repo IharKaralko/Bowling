@@ -11,34 +11,39 @@ import UIKit
 class GameSessionViewController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
-    let countOfPlayers: Int = 10
+    let countOfPlayers: Int = 3
     var previuosGame = GameView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         for a in 1 ... countOfPlayers {
-            let game = GameView()
-            scrollView.addSubview(game)
-            game.translatesAutoresizingMaskIntoConstraints = false
+            let gameView = GameView()
+            let gameViewModel = GameViewModel()
+            gameView.viewModel = gameViewModel
+            
+            scrollView.addSubview(gameView)
+            gameView.translatesAutoresizingMaskIntoConstraints = false
             if a == 1 {
                 NSLayoutConstraint.activate([
-                    game.topAnchor.constraint(equalTo:   scrollView.topAnchor, constant: 10),
-                    game.leadingAnchor.constraint(equalTo:  scrollView.leadingAnchor),
-                    game.trailingAnchor.constraint(equalTo:  scrollView.trailingAnchor),
-                    game.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+                    gameView.topAnchor.constraint(equalTo:   scrollView.topAnchor, constant: 10),
+                    gameView.leadingAnchor.constraint(equalTo:  scrollView.leadingAnchor),
+                    gameView.trailingAnchor.constraint(equalTo:  scrollView.trailingAnchor),
+                    gameView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
                     ])
             } else {
                 NSLayoutConstraint.activate([
-                    game.topAnchor.constraint(equalTo:   previuosGame.bottomAnchor, constant: 20),
-                    game.leadingAnchor.constraint(equalTo:  scrollView.leadingAnchor),
-                    game.trailingAnchor.constraint(equalTo:  scrollView.trailingAnchor),
-                    game.heightAnchor.constraint(equalTo: previuosGame.heightAnchor),
-                    game.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+                    gameView.topAnchor.constraint(equalTo:   previuosGame.bottomAnchor, constant: 20),
+                    gameView.leadingAnchor.constraint(equalTo:  scrollView.leadingAnchor),
+                    gameView.trailingAnchor.constraint(equalTo:  scrollView.trailingAnchor),
+                    gameView.heightAnchor.constraint(equalTo: previuosGame.heightAnchor),
+                    gameView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
                     ])
-                game.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = a == countOfPlayers ? true : false
+                if a == countOfPlayers {
+                    gameView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+                }
             }
-            previuosGame = game
+            previuosGame = gameView
         }
     }
 }

@@ -17,7 +17,12 @@ class FinalFrameView: UIView {
     @IBOutlet weak var secondScore: UILabel!
     @IBOutlet weak var thirdScore: UILabel!
     
-
+    var finalFrameViewModel: FinalFrameViewModel! {
+        didSet {
+            //    oldValue.delegate = nil
+            bindViewModel()
+        }
+    }
     override init(frame: CGRect) {
         super.init(frame: frame)
         nibSetup()
@@ -31,7 +36,18 @@ class FinalFrameView: UIView {
     }
 }
 
-extension FinalFrameView: FrameViewProtocol {
+extension FinalFrameView {
+    func bindViewModel() {
+        finalFrameViewModel.delegate = self
+       // fillFrom(frame: frameViewModel.frame)
+    }
+    
+    func fillFrom(frame: Frame?) {
+        
+        firstScore.text = frame?.firstScore?.description
+        secondScore.text = frame?.secondScore?.description
+        thirdScore.text = frame?.thirdScore?.description
+    }
     
     func configureFinalFrame(frameNumber: Int, firstThrowScore: Int, secondThrowScore: Int, thirdThrowScore: Int, finalScore: Int) {
         numberFrame.text = frameNumber.description
@@ -56,8 +72,15 @@ extension FinalFrameView: FrameViewProtocol {
             secondScore.text = secondThrowScore == 10 ? "x" : secondThrowScore.description
         }
     }
+    
     func fillThirdtScoreFinalFrame(thirdThrowScore: Int){
-        thirdScore.text = thirdThrowScore.description
+        
+        thirdScore.text = thirdThrowScore == 10 ? "x" : thirdThrowScore.description
+    }
+    
+    func fillTotalScoreFrame(finalScore: Int){
+        totalScore.text = finalScore.description
+        
     }
 }
 
@@ -82,4 +105,13 @@ private extension FinalFrameView {
             contentView.leftAnchor.constraint(equalTo: leftAnchor)
             ])
     }
+}
+extension FinalFrameView: FinalFrameViewModelProtocol {
+    func frameDidChanged(_ frame: Frame?) {
+        fillFrom(frame: frame)
+    }
+//    func scoreGameDidChanged(_ score: Int) {
+//        fillScoreGame(score: score)
+  //  }
+
 }

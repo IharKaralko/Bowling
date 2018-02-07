@@ -15,3 +15,7 @@ protocol GameProtocol {
     
     func bowl(bowlScore: Int) -> Bool
 }
+
+protocol GameProtocolScoreGame: class {
+    func changeScoreGame()
+}

@@ -16,6 +16,15 @@ class FrameView: UIView {
     @IBOutlet private weak var firstScore: UILabel!
     @IBOutlet private weak var secondScore: UILabel!
 
+    var frameViewModel: FrameViewModel! {
+        willSet {
+            frameViewModel?.delegate = nil
+        }
+         didSet {
+               bindViewModel()
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         nibSetup()
@@ -29,30 +38,24 @@ class FrameView: UIView {
     }
 }
 
-extension FrameView: FrameViewProtocol {
-    func configureFrame(frameNumber: Int, firstThrowScore: Int, secondThrowScore: Int, finalScore: Int) {
-        numberFrame.text = frameNumber.description
-        firstScore.text = firstThrowScore.description
-        secondScore.text = secondThrowScore.description
-        totalScore.text = finalScore.description
+private extension FrameView {
+    func bindViewModel() {
+        frameViewModel.delegate = self
+        fillFrom(frame: frameViewModel.frame)
     }
     
-    func fillNumberFrame(frameNumber: Int){
-        numberFrame.text = frameNumber.description
+    func fillScoreGame(score: Int){
+        totalScore.text = score.description
     }
-    func fillFirstScoreFrame(firstThrowScore: Int){
-        firstScore.text = firstThrowScore.description
+    
+    
+    func fillFrom(frame: Frame?) {
+        
+        firstScore.text = frame?.firstScore?.description
+        secondScore.text = frame?.secondScore?.description
+        //totalScore.text = "\(frame?.scoreFrame ?? 0)"
     }
-    func fillSecondScoreFrame(secondThrowScore: Int){
-        if secondThrowScore == 11 {
-            secondScore.text = "/"
-        } else {
-            secondScore.text = secondThrowScore == 10 ? "x" : secondThrowScore.description
-        }
-    }
-}
-
-private extension FrameView {
+    
     func setupLayout() {
         layer.borderWidth = 0.5
         numberFrame.layer.borderWidth = 0.5
@@ -73,3 +76,55 @@ private extension FrameView {
             ])
     }
 }
+extension FrameView: FrameViewModelProtocol {
+    func frameDidChanged(_ frame: Frame?) {
+        fillFrom(frame: frame)
+    }
+    func scoreGameDidChanged(_ score: Int) {
+        fillScoreGame(score: score)
+    }}
+
+
+
+
+extension FrameView: FrameViewProtocol{
+func fillNumberFrame(frameNumber: Int){
+        numberFrame.text = frameNumber.description
+    }
+}
+
+
+
+
+
+
+
+
+
+
+//extension FrameView: FrameViewProtocol {
+//    func configureFrame(frameNumber: Int, firstThrowScore: Int, secondThrowScore: Int, finalScore: Int) {
+//        numberFrame.text = frameNumber.description
+//        firstScore.text = firstThrowScore.description
+//        secondScore.text = secondThrowScore.description
+//        totalScore.text = finalScore.description
+//    }
+
+//    func fillNumberFrame(frameNumber: Int){
+//        numberFrame.text = frameNumber.description
+//    }
+//    func fillFirstScoreFrame(firstThrowScore: Int){
+//        firstScore.text = firstThrowScore.description
+//    }
+//    func fillSecondScoreFrame(secondThrowScore: Int){
+//        if secondThrowScore == 11 {
+//            secondScore.text = "/"
+//        } else {
+//            secondScore.text = secondThrowScore == 10 ? "x" : secondThrowScore.description
+//        }
+//    }
+//    func fillTotalScoreFrame(finalScore: Int){
+//        totalScore.text = finalScore.description
+//
+//    }
+//}

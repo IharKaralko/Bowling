@@ -9,7 +9,12 @@
 import Foundation
 
 class Frame: FrameProtocol {
-    var isLast: Bool                 
+    
+    var firstScore: Int?
+    var secondScore: Int?
+    var thirdScore: Int?
+    
+    var isLast: Bool
     var scoreFrame: Int {
         return throwScore.reduce(0,+) + additionalScore.reduce(0,+)
     }
@@ -54,11 +59,13 @@ extension Frame {
 extension Frame {
     func doThrow(with score: Int) -> Bool {
         if throwScore.isEmpty {
+            firstScore = score
             throwScore.append(score)
             return true
         }
         if !isLast {
             if throwScore.first! + score < 11 {
+                secondScore = score
                 throwScore.append(score)
                 return true
             } else {
@@ -106,10 +113,12 @@ extension Frame {
 private extension Frame {
     func doThrowLastFrameSecond(score: Int) -> Bool {
         if typeOfFrame == .strike {
+            secondScore = score
             throwScore.append(score)
             return true
         } else {
             if throwScore.first! + score < 11 {
+                secondScore = score
                 throwScore.append(score)
                 return true
             }  else {
@@ -121,14 +130,17 @@ private extension Frame {
     func doThrowLastFrameThird(score: Int) -> Bool {
         if typeOfFrame == .strike {
             if throwScore.reduce(0,+) == 20 {
+                thirdScore = score
                 throwScore.append(score)
                 return true
             } else if throwScore.reduce(0,+) + score < 21 {
+                thirdScore = score
                 throwScore.append(score)
                 return true
             }
             return false
         } else if typeOfFrame == .spare {
+            thirdScore = score
             throwScore.append(score)
             return true
         }
