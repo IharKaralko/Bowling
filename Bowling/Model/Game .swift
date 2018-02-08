@@ -18,14 +18,6 @@ public class Game {
             delegate?.changeScoreGame()
         }
     }
-//    {
-//        var score = 0
-//        frames.forEach({ frame in
-//            score += frame.score
-//        })
-//        return score
-//    }
-    
     weak var delegate: GameProtocolScoreGame?
     
     public var isOpenGame: Bool {
@@ -95,6 +87,7 @@ private extension Game{
 }
 // MARK: - Internal Game method
 extension Game {
+    @discardableResult
     func makeBowl(bowlScore: Int) -> Bool {
         if isOpenGame {
             createFrame()

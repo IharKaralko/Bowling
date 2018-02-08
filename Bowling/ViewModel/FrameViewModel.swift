@@ -19,7 +19,6 @@ class FrameViewModel {
     var scoreGame: Int = 0 {
         didSet {
             delegate?.scoreGameDidChanged(scoreGame)
-            
         }
     }
 }
@@ -27,7 +26,6 @@ class FrameViewModel {
 protocol FrameViewModelProtocol: class {
     func frameDidChanged(_ frame: Frame?)
     func scoreGameDidChanged(_ score: Int)
-    
 }
 
 

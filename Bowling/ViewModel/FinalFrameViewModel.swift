@@ -15,8 +15,14 @@ class FinalFrameViewModel {
         }
     }
     weak var delegate: FinalFrameViewModelProtocol?
+    var scoreGame: Int = 0 {
+        didSet {
+            delegate?.scoreGameDidChanged(scoreGame)
+        }
+    }
 }
 
 protocol FinalFrameViewModelProtocol: class {
     func frameDidChanged(_ frame: Frame?)
+    func scoreGameDidChanged(_ score: Int)
 }

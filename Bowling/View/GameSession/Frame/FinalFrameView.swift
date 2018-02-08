@@ -19,7 +19,7 @@ class FinalFrameView: UIView {
     
     var finalFrameViewModel: FinalFrameViewModel! {
         didSet {
-            //    oldValue.delegate = nil
+            // oldValue?.delegate = nil
             bindViewModel()
         }
     }
@@ -39,48 +39,33 @@ class FinalFrameView: UIView {
 extension FinalFrameView {
     func bindViewModel() {
         finalFrameViewModel.delegate = self
-       // fillFrom(frame: frameViewModel.frame)
+       // fillFrameScore(frame: frameViewModel.frame)
     }
     
-    func fillFrom(frame: Frame?) {
-        
-        firstScore.text = frame?.firstScore?.description
-        secondScore.text = frame?.secondScore?.description
-        thirdScore.text = frame?.thirdScore?.description
-    }
-    
-    func configureFinalFrame(frameNumber: Int, firstThrowScore: Int, secondThrowScore: Int, thirdThrowScore: Int, finalScore: Int) {
-        numberFrame.text = frameNumber.description
-        firstScore.text = firstThrowScore.description
-        secondScore.text = secondThrowScore.description
-        thirdScore.text = thirdThrowScore.description
-        totalScore.text = finalScore.description
-    }
-    
-    func fillNumberFrame(frameNumber: Int){
-        numberFrame.text = frameNumber.description
-    }
-    
-    func fillFirstScoreFinalFrame(firstThrowScore: Int){
-        firstScore.text = firstThrowScore == 10 ? "x" : firstThrowScore.description
-    }
-    
-    func fillSecondScoreFinalFrame(secondThrowScore: Int){
-        if secondThrowScore == 11 {
-            secondScore.text = "/"
+    func fillFrameScore(frame: Frame?) {
+        firstScore.text = (frame?.firstScore)! == 10 ? "x" : frame?.firstScore?.description
+        if let secondBowl = frame?.secondScore {
+            if (frame?.firstScore)! < 10 && (frame?.firstScore)! + secondBowl == 10 {
+                secondScore.text = "/"
+            }  else {
+                secondScore.text = secondBowl == 10 ? "x": secondBowl.description
+            }
+        }  else {
+            secondScore.text = frame?.secondScore?.description
+        }
+        if let thidBowl = frame?.thirdScore {
+            thirdScore.text = thidBowl == 10 ? "x" : thidBowl.description
         } else {
-            secondScore.text = secondThrowScore == 10 ? "x" : secondThrowScore.description
+            thirdScore.text = frame?.thirdScore?.description
         }
     }
-    
-    func fillThirdtScoreFinalFrame(thirdThrowScore: Int){
-        
-        thirdScore.text = thirdThrowScore == 10 ? "x" : thirdThrowScore.description
+
+    func fillNumberFrame(frameNumber: Int) {
+        numberFrame.text = frameNumber.description
     }
-    
-    func fillTotalScoreFrame(finalScore: Int){
+  
+    func  fillScoreGame(finalScore: Int) {
         totalScore.text = finalScore.description
-        
     }
 }
 
@@ -106,12 +91,12 @@ private extension FinalFrameView {
             ])
     }
 }
+
 extension FinalFrameView: FinalFrameViewModelProtocol {
     func frameDidChanged(_ frame: Frame?) {
-        fillFrom(frame: frame)
+        fillFrameScore(frame: frame)
     }
-//    func scoreGameDidChanged(_ score: Int) {
-//        fillScoreGame(score: score)
-  //  }
-
+    func scoreGameDidChanged(_ score: Int) {
+        fillScoreGame(finalScore: score)
+    }
 }
