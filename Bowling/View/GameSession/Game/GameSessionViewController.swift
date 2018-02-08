@@ -10,23 +10,32 @@ import UIKit
 
 class GameSessionViewController: UIViewController {
     
-    @IBOutlet weak var scrollView: UIScrollView!
-    let countOfPlayers: Int = 3
+    deinit {
+        print("GameSessionViewController deinit")
+    }
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    var names: [String] = []
+    var viewModel: GameSessionViewModelProtocol! {
+        didSet { bindViewModel() }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let done = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(doneBack))
+        navigationItem.setLeftBarButton(done, animated: false)
+        
         var previuosGame: GameView?
-        for a in 1 ... countOfPlayers {
+        for player in 0 ..< names.count {
             
             let gameView = GameView()
             let gameViewModel = GameViewModel()
             gameView.viewModel = gameViewModel
-            
+            gameView.namePlayer.text = names[player]
             scrollView.addSubview(gameView)
             gameView.translatesAutoresizingMaskIntoConstraints = false
-            if a == 1 {
+            if player == 0 {
                 NSLayoutConstraint.activate([
                     gameView.topAnchor.constraint(equalTo:   scrollView.topAnchor, constant: 10),
                     gameView.leadingAnchor.constraint(equalTo:  scrollView.leadingAnchor),
@@ -43,11 +52,21 @@ class GameSessionViewController: UIViewController {
                         gameView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
                         ])
                 }
-                if a == countOfPlayers {
+                if player == names.count - 1{
                     gameView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
                 }
             }
             previuosGame = gameView
         }
+    }
+}
+private extension GameSessionViewController {
+      func bindViewModel() {
+        guard isViewLoaded else { return }
+    }
+    
+    @objc
+    func doneBack(){
+         viewModel.doneBack()
     }
 }

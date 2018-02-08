@@ -18,7 +18,7 @@ public class Game {
             delegate?.changeScoreGame()
         }
     }
-    weak var delegate: GameProtocolScoreGame?
+    weak var delegate: GameProtocolChangeScoreGame?
     
     public var isOpenGame: Bool {
         return frames.count < maxFrame

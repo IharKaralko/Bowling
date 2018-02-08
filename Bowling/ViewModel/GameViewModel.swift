@@ -10,9 +10,15 @@ import Foundation
 
 protocol GameViewModelProtocol: class {
     func availableScoreDidChange(_ score: Int)
+    func stateOfGameDidChage()
 }
 
 class GameViewModel {
+    
+    deinit {
+        print("GameViewModel deinit")
+    }
+    
     let game: Game
     let framesViewModel: [FrameViewModel]
     var finalFrameViewModel: FinalFrameViewModel
@@ -22,7 +28,7 @@ class GameViewModel {
     
     init(game: Game = Game(maxFrame: 4)) {
         var frameModels: [FrameViewModel] = []
-        for _ in 0..<game.maxFrame {
+        for _ in 0..<game.maxFrame - 1  {
             let frameViewModel = FrameViewModel()
             frameModels.append(frameViewModel)
         }
@@ -36,25 +42,28 @@ class GameViewModel {
 extension GameViewModel {
     func makeRoll(bowlScore: Int){
         game.makeBowl(bowlScore: bowlScore)
-        if game.indexCurrentFrame < framesViewModel.count - 1{
+        if game.indexCurrentFrame < framesViewModel.count {
             framesViewModel[game.indexCurrentFrame].frame = game.currentFrameForGame
         } else   {
             finalFrameViewModel.frame = game.currentFrameForGame
         }
         let availableScores = activateButton(bowlScore)
         delegate?.availableScoreDidChange(availableScores)
+        if !game.isOpenGame {
+            delegate?.stateOfGameDidChage()
+       }
     }
 }
 
 private extension GameViewModel {
     func activateButton( _ score: Int)-> Int {
-        if game.indexCurrentFrame < framesViewModel.count - 1 {
+        if game.indexCurrentFrame < framesViewModel.count  {
             if (framesViewModel[game.indexCurrentFrame].frame?.isOpen())!{
                 return 10 - score + 1
             } else {
                 return 10
             }
-        } else {
+        } else if game.isOpenGame {
             if let summSecond = finalFrameViewModel.frame?.secondScore {
                 let summ = (finalFrameViewModel.frame?.firstScore)! + summSecond
                 if summ == 20 || summ == 10 {
@@ -67,13 +76,13 @@ private extension GameViewModel {
                     } else { return 10 }
                 } else { return 10 }
             }
-        }
-    }
+        } else {return 0 }
+     }
 }
 
-extension GameViewModel: GameProtocolScoreGame {
+extension GameViewModel: GameProtocolChangeScoreGame {
     func changeScoreGame(){
-        if frameNumber < framesViewModel.count - 1 {
+        if frameNumber < framesViewModel.count  {                                             
             framesViewModel[frameNumber].scoreGame = game.scoreGame
             frameNumber += 1
         } else {

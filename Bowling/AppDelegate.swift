@@ -18,13 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame:UIScreen.main.bounds)
         
-      let gameSessionViewController = GameSessionViewController(nibName: "GameSessionViewController", bundle: nil)
-       // navController = UINavigationController(rootViewController: TestViewController!)
-        window?.rootViewController = gameSessionViewController //navController
-        window?.makeKeyAndVisible()
+//      let gameSessionViewController = GameSessionViewController(nibName: "GameSessionViewController", bundle: nil)
+//       // navController = UINavigationController(rootViewController: TestViewController!)
+//        window?.rootViewController = gameSessionViewController //navController
+//        window?.makeKeyAndVisible()
         
-//        appCoordinator = AppCoordinator(window: window!)
-//        appCoordinator.start()
+        appCoordinator = AppCoordinator(window: window!)
+        appCoordinator.start()
         
         return true
     }

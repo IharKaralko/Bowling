@@ -19,7 +19,6 @@ class FinalFrameView: UIView {
     
     var finalFrameViewModel: FinalFrameViewModel! {
         didSet {
-            // oldValue?.delegate = nil
             bindViewModel()
         }
     }
@@ -39,10 +38,9 @@ class FinalFrameView: UIView {
 extension FinalFrameView {
     func bindViewModel() {
         finalFrameViewModel.delegate = self
-       // fillFrameScore(frame: frameViewModel.frame)
     }
     
-    func fillFrameScore(frame: Frame?) {
+    func fillFrom(frame: Frame?) {
         firstScore.text = (frame?.firstScore)! == 10 ? "x" : frame?.firstScore?.description
         if let secondBowl = frame?.secondScore {
             if (frame?.firstScore)! < 10 && (frame?.firstScore)! + secondBowl == 10 {
@@ -94,7 +92,7 @@ private extension FinalFrameView {
 
 extension FinalFrameView: FinalFrameViewModelProtocol {
     func frameDidChanged(_ frame: Frame?) {
-        fillFrameScore(frame: frame)
+        fillFrom(frame: frame)
     }
     func scoreGameDidChanged(_ score: Int) {
         fillScoreGame(finalScore: score)

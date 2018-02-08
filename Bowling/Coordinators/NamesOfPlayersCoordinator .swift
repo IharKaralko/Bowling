@@ -18,6 +18,9 @@ class NamesOfPlayersCoordinator {
         print("NamesOfPlayersCoordinator deinit")
     }
     weak var delegate: NamesOfPlayersCoordinatorDelegate?
+    
+    private var navigationController: UINavigationController?
+    private var gameSessionCoordinator: GameSessionCoordinator?
 }
 
 extension NamesOfPlayersCoordinator {
@@ -28,14 +31,15 @@ extension NamesOfPlayersCoordinator {
         viewModel.coordinatorDelegate = self
         namesOfPlayersViewController.viewModel = viewModel
         nav.pushViewController(namesOfPlayersViewController, animated: true)
-    }
+        navigationController = nav
+     }
 }
 
 // MARK: - NamesOfPlayersViewModelDelegate
 extension NamesOfPlayersCoordinator: NamesOfPlayersViewModelDelegate {
     func namesOfPlayersViewModelDidSelect(_ collectionOfNames: [String]) {
-        print("Get")
-        print(collectionOfNames)
+        gameSessionCoordinator = GameSessionCoordinator()
+        gameSessionCoordinator?.start(collectionOfNames, navigationController!)
     }
     
     func namesOfPlayersViewModelDoneBack() {

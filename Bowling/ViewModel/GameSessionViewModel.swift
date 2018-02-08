@@ -7,3 +7,19 @@
 //
 
 import Foundation
+
+class GameSessionViewModel {
+    
+    deinit {
+        print("GameSessionViewModel deinit")
+    }
+    
+    weak var coordinatorDelegate: GameSessionViewModelDelegate?
+}
+
+// MARK: - CountOfPlayer protocol
+extension GameSessionViewModel: GameSessionViewModelProtocol {
+    func doneBack() {
+        coordinatorDelegate?.gameSessionViewModelDoneBack()
+    }
+}

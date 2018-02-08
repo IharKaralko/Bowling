@@ -7,3 +7,12 @@
 //
 
 import Foundation
+
+protocol GameSessionViewModelProtocol{
+    var coordinatorDelegate: GameSessionViewModelDelegate? { get set}
+    func doneBack()
+}
+
+protocol GameSessionViewModelDelegate: class {
+    func gameSessionViewModelDoneBack()
+}

@@ -10,6 +10,10 @@ import UIKit
 
 class FrameView: UIView {
     
+    deinit {
+        print("FrameView deinit")
+    }
+    
     @IBOutlet private weak var contentView: UIView!
     @IBOutlet private weak var numberFrame: UILabel!
     @IBOutlet private weak var totalScore: UILabel!
@@ -41,14 +45,13 @@ class FrameView: UIView {
 private extension FrameView {
     func bindViewModel() {
         frameViewModel.delegate = self
-        // fillFrameScore(frame: frameViewModel.frame)
     }
     
     func fillScoreGame(score: Int){
         totalScore.text = score.description
     }
 
-    func fillFrameScore(frame: Frame?) {
+    func fillFrom(frame: Frame?) {
         firstScore.text =  frame?.firstScore?.description
         if let secondBowl = frame?.secondScore {
             if (frame?.firstScore)! < 10 && (frame?.firstScore)! + secondBowl == 10 {
@@ -86,7 +89,7 @@ private extension FrameView {
 
 extension FrameView: FrameViewModelProtocol {
     func frameDidChanged(_ frame: Frame?) {
-        fillFrameScore(frame: frame)
+        fillFrom(frame: frame)
     }
     func scoreGameDidChanged(_ score: Int) {
         fillScoreGame(score: score)

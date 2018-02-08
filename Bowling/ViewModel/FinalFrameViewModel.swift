@@ -9,6 +9,11 @@
 import Foundation
 
 class FinalFrameViewModel {
+    
+    deinit {
+        print("FinalFrameViewModel deinit")
+    }
+    
     var frame: Frame? {
         didSet {
             delegate?.frameDidChanged(frame)
