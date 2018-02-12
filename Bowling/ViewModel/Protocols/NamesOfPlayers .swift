@@ -14,6 +14,7 @@ protocol NamesOfPlayersViewModelDelegate: class {
 }
 
 protocol NamesOfPlayers {
+    var countOfPlayers: Int { get set }
     var collectionOfNames: [String] { get set }
     var coordinatorDelegate: NamesOfPlayersViewModelDelegate? { get set}
     func acceptNamesOfPlayers(collectionOfNames: [String])

@@ -29,7 +29,8 @@ extension AppCoordinator {
     }
     
     func showCountOfPlayers() {
-        countOfPlayerCoordinator = CountOfPlayerCoordinator(navController!)
+        guard let navController = navController else { return }
+        countOfPlayerCoordinator = CountOfPlayerCoordinator(navController)
         countOfPlayerCoordinator?.start()
     }
 }

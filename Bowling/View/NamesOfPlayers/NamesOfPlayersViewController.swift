@@ -9,8 +9,7 @@
 import UIKit
 
 class NamesOfPlayersViewController: UIViewController {
-    
-    var countPlayers = 3
+   
     var collectionOfCell = [Int: String]()
     @IBOutlet weak var tableView: UITableView!
     
@@ -64,7 +63,7 @@ private extension NamesOfPlayersViewController {
     
     func startButtonTapped() {
         view.endEditing(true)
-        if collectionOfCell.count == countPlayers {
+        if collectionOfCell.count == viewModel.countOfPlayers {
             print("Ok")
             let listNames = [String](collectionOfCell.values)
             viewModel.acceptNamesOfPlayers(collectionOfNames: listNames)
@@ -110,7 +109,7 @@ private extension NamesOfPlayersViewController {
 extension NamesOfPlayersViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return countPlayers
+        return viewModel.countOfPlayers
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -52,11 +52,9 @@ extension GameView: GameViewModelProtocol {
         activateButtonCollection(score)
     }
     
-    func stateOfGameDidChage(){
+    func stateOfGameDidChage() {
         scoreGame.text = "Player \(namePlayer.text ?? "Sasha") get \(viewModel.game.scoreGame) "
-        
     }
-    
 }
 
 private extension GameView {

@@ -27,7 +27,7 @@ class NamesOfPlayersTableViewCell: UITableViewCell {
     
 extension NamesOfPlayersTableViewCell {
     func textFieldIsFull() -> Bool {
-        guard let text = textFieldPlayer.text, !text.isEmpty else {
+        guard let text = textFieldPlayer.text, !text.isEmpty  else {
             textFieldPlayer.backgroundColor = UIColor.cyan
             return false
         }

@@ -18,28 +18,30 @@ class NamesOfPlayersCoordinator {
         print("NamesOfPlayersCoordinator deinit")
     }
     weak var delegate: NamesOfPlayersCoordinatorDelegate?
-    
-    private var navigationController: UINavigationController?
+    private weak var navigationController: UINavigationController?
     private var gameSessionCoordinator: GameSessionCoordinator?
+    
+    init(_ navigationController: UINavigationController) {
+        self.navigationController = navigationController
+    }
 }
 
 extension NamesOfPlayersCoordinator {
-    func start(_ count: Int, _ nav: UINavigationController) {
+    func start(_ count: Int) {
         let namesOfPlayersViewController = NamesOfPlayersViewController()
-        namesOfPlayersViewController.countPlayers = count
-        let viewModel = NamesOfPlayersViewModel()
+        let viewModel = NamesOfPlayersViewModel(countOfPlayers: count)
         viewModel.coordinatorDelegate = self
         namesOfPlayersViewController.viewModel = viewModel
-        nav.pushViewController(namesOfPlayersViewController, animated: true)
-        navigationController = nav
-     }
+        navigationController?.pushViewController(namesOfPlayersViewController, animated: true)
+    }
 }
 
 // MARK: - NamesOfPlayersViewModelDelegate
 extension NamesOfPlayersCoordinator: NamesOfPlayersViewModelDelegate {
     func namesOfPlayersViewModelDidSelect(_ collectionOfNames: [String]) {
-        gameSessionCoordinator = GameSessionCoordinator()
-        gameSessionCoordinator?.start(collectionOfNames, navigationController!)
+        guard let navigationController = navigationController else { return }
+        gameSessionCoordinator = GameSessionCoordinator(navigationController)
+        gameSessionCoordinator?.start(collectionOfNames)
     }
     
     func namesOfPlayersViewModelDoneBack() {

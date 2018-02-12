@@ -8,10 +8,14 @@
 
 import Foundation
 
-protocol GameViewModelProtocol: class {
+ protocol GameViewModelProtocol: class {
     func availableScoreDidChange(_ score: Int)
     func stateOfGameDidChage()
 }
+//protocol GameViewModelProtocol: class {
+//    func availableScoreDidChange(_ score: Int)
+//    func stateOfGameDidChage()
+//}
 
 class GameViewModel {
     
@@ -23,9 +27,9 @@ class GameViewModel {
     let framesViewModel: [FrameViewModel]
     var finalFrameViewModel: FinalFrameViewModel
     private var frameNumber: Int = 0
+   
     
     weak var delegate: GameViewModelProtocol?
-    
     init(game: Game = Game(maxFrame: 4)) {
         var frameModels: [FrameViewModel] = []
         for _ in 0..<game.maxFrame - 1  {
@@ -51,7 +55,9 @@ extension GameViewModel {
         delegate?.availableScoreDidChange(availableScores)
         if !game.isOpenGame {
             delegate?.stateOfGameDidChage()
-       }
+            
+            
+          }
     }
 }
 

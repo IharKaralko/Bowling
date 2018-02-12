@@ -12,28 +12,30 @@ class GameSessionCoordinator {
     deinit {
         print("GameSessionCoordinator deinit")
     }
-    private var navigController: UINavigationController?
+    private weak var navigController: UINavigationController?
+    init(_ navigController: UINavigationController) {
+        self.navigController = navigController
+    }
 }
 
 extension  GameSessionCoordinator {
-    func start(_ collectionOfNames: [String], _ nav: UINavigationController) {
+    func start(_ collectionOfNames: [String]) {
         let gameSessionViewController = GameSessionViewController()
-        gameSessionViewController.names = collectionOfNames
-        let viewModel = GameSessionViewModel()
+        let viewModel = GameSessionViewModel(names: collectionOfNames)
+       // viewModel.names = collectionOfNames
         viewModel.coordinatorDelegate = self
         gameSessionViewController.viewModel = viewModel
-        nav.pushViewController(gameSessionViewController, animated: true)
-        navigController = nav
-    }
+        navigController?.pushViewController(gameSessionViewController, animated: true)
+      }
 }
 
 // MARK: - NamesOfPlayersViewModelDelegate
 extension GameSessionCoordinator:  GameSessionViewModelDelegate {
+       
     func gameSessionViewModelDoneBack() {
-        if let navigController = navigController {
-            navigController.popViewController(animated: true)
-        }
-    }
+        guard let navigController = navigController else { return }
+        navigController.popViewController(animated: true)
+     }
 }
 
 

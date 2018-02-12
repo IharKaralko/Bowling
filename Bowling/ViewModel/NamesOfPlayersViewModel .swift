@@ -9,8 +9,12 @@
 import Foundation
 
 class NamesOfPlayersViewModel {
+    var countOfPlayers: Int
     var collectionOfNames = [String]()
     weak var coordinatorDelegate: NamesOfPlayersViewModelDelegate?
+    init (countOfPlayers: Int){
+        self.countOfPlayers  = countOfPlayers
+    }
 }
 
 // MARK: - CountOfPlayer protocol

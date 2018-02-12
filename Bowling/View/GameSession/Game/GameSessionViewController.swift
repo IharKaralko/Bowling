@@ -13,11 +13,11 @@ class GameSessionViewController: UIViewController {
     deinit {
         print("GameSessionViewController deinit")
     }
-    
     @IBOutlet weak var scrollView: UIScrollView!
-    var names: [String] = []
-    var viewModel: GameSessionViewModelProtocol! {
-        didSet { bindViewModel() }
+    var viewModel: GameSessionViewModel! {
+        didSet {
+            bindViewModel()
+        }
     }
     
     override func viewDidLoad() {
@@ -27,12 +27,19 @@ class GameSessionViewController: UIViewController {
         navigationItem.setLeftBarButton(done, animated: false)
         
         var previuosGame: GameView?
-        for player in 0 ..< names.count {
+        for player in 0 ..< viewModel.names.count {
+            
+//            let frameView = FrameView()
+//            let frameViewModel = viewModel.framesViewModel[i]
+//            frameView.frameViewModel = frameViewModel
+            
             
             let gameView = GameView()
-            let gameViewModel = GameViewModel()
+            let gameViewModel = viewModel.gamesModels[player]
+            
             gameView.viewModel = gameViewModel
-            gameView.namePlayer.text = names[player]
+            gameView.namePlayer.text = viewModel.names[player] // TODO: Need refactor
+            
             scrollView.addSubview(gameView)
             gameView.translatesAutoresizingMaskIntoConstraints = false
             if player == 0 {
@@ -52,7 +59,7 @@ class GameSessionViewController: UIViewController {
                         gameView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
                         ])
                 }
-                if player == names.count - 1{
+                if player == viewModel.names.count - 1{
                     gameView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
                 }
             }
