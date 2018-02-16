@@ -7,6 +7,10 @@
 //
 
 import Foundation
+import ReactiveSwift
+import Result
+import ReactiveCocoa
+
 
  protocol GameViewModelProtocol: class {
     func availableScoreDidChange(_ score: Int)
