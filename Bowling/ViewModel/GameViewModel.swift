@@ -12,10 +12,9 @@ import Foundation
     func availableScoreDidChange(_ score: Int)
     func stateOfGameDidChage()
 }
-//protocol GameViewModelProtocol: class {
-//    func availableScoreDidChange(_ score: Int)
-//    func stateOfGameDidChage()
-//}
+protocol GameViewModelStateGame: class {
+        func stateOfGameChange()
+}
 
 class GameViewModel {
     
@@ -23,21 +22,23 @@ class GameViewModel {
         print("GameViewModel deinit")
     }
     
+    let nameOfPlayer: String
     let game: Game
     let framesViewModel: [FrameViewModel]
-    var finalFrameViewModel: FinalFrameViewModel
+    let finalFrameViewModel: FinalFrameViewModel
     private var frameNumber: Int = 0
-   
     
+    weak var delegateGameSession: GameViewModelStateGame?
     weak var delegate: GameViewModelProtocol?
-    init(game: Game = Game(maxFrame: 4)) {
+    init(game: Game = Game(maxFrame: 11), nameOfPlayer: String) {
         var frameModels: [FrameViewModel] = []
-        for _ in 0..<game.maxFrame - 1  {
-            let frameViewModel = FrameViewModel()
+        for index in 0..<game.maxFrame - 1  {
+            let frameViewModel = FrameViewModel(numberOfFrame: index + 1)
             frameModels.append(frameViewModel)
         }
         framesViewModel = frameModels
-        finalFrameViewModel = FinalFrameViewModel()
+        finalFrameViewModel = FinalFrameViewModel(numberLastFrame: game.maxFrame)
+        self.nameOfPlayer = nameOfPlayer
         self.game = game
         game.delegate = self
     }
@@ -51,18 +52,17 @@ extension GameViewModel {
         } else   {
             finalFrameViewModel.frame = game.currentFrameForGame
         }
-        let availableScores = activateButton(bowlScore)
+        let availableScores = availableButtons(bowlScore)
         delegate?.availableScoreDidChange(availableScores)
         if !game.isOpenGame {
             delegate?.stateOfGameDidChage()
-            
-            
+            delegateGameSession?.stateOfGameChange()
           }
     }
 }
 
 private extension GameViewModel {
-    func activateButton( _ score: Int)-> Int {
+    func availableButtons( _ score: Int)-> Int {  // TODO: Need refactor
         if game.indexCurrentFrame < framesViewModel.count  {
             if (framesViewModel[game.indexCurrentFrame].frame?.isOpen())!{
                 return 10 - score + 1
@@ -96,6 +96,3 @@ extension GameViewModel: GameProtocolChangeScoreGame {
         }
     }
 }
-
-
-

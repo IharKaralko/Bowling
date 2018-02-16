@@ -25,6 +25,10 @@ class NamesOfPlayersViewController: UIViewController {
         self.hideKeyboard()
         let done = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(doneBack))
         navigationItem.setLeftBarButton(done, animated: false)
+        self.navigationItem.title = "Names OF PLAYERS"
+        let start = UIBarButtonItem(title: "Start", style: .plain, target: self, action: #selector(startButtonTapped))
+        navigationItem.setRightBarButton(start, animated: false)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -35,10 +39,6 @@ class NamesOfPlayersViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
-    }
-    
-    @IBAction func submit(_ sender: UIButton) {
-        startButtonTapped()
     }
 }
 
@@ -61,14 +61,13 @@ private extension NamesOfPlayersViewController {
         guard isViewLoaded else { return }
     }
     
+    @objc
     func startButtonTapped() {
         view.endEditing(true)
         if collectionOfCell.count == viewModel.countOfPlayers {
-            print("Ok")
             let listNames = [String](collectionOfCell.values)
             viewModel.acceptNamesOfPlayers(collectionOfNames: listNames)
         }  else {
-            print("False")
         }
     }
     

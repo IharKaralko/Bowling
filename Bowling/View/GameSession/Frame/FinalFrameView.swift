@@ -37,6 +37,7 @@ class FinalFrameView: UIView {
 
 extension FinalFrameView {
     func bindViewModel() {
+        numberFrame.text = finalFrameViewModel.numberLastFrame.description
         finalFrameViewModel.delegate = self
     }
     
@@ -58,10 +59,7 @@ extension FinalFrameView {
         }
     }
 
-    func fillNumberFrame(frameNumber: Int) {
-        numberFrame.text = frameNumber.description
-    }
-  
+ 
     func  fillScoreGame(finalScore: Int) {
         totalScore.text = finalScore.description
     }

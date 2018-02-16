@@ -10,10 +10,14 @@ import Foundation
 
 class FrameViewModel {
     
+    let numberOfFrame: Int
     deinit {
         print("FrameViewModel deinit")
     }
-    
+    init(numberOfFrame: Int){
+        self.numberOfFrame = numberOfFrame
+    }
+  
     var frame: Frame? {
         didSet {
             delegate?.frameDidChanged(frame)

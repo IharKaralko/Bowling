@@ -14,6 +14,7 @@ class FinalFrameViewModel {
         print("FinalFrameViewModel deinit")
     }
     
+    let numberLastFrame: Int
     var frame: Frame? {
         didSet {
             delegate?.frameDidChanged(frame)
@@ -24,6 +25,10 @@ class FinalFrameViewModel {
         didSet {
             delegate?.scoreGameDidChanged(scoreGame)
         }
+    }
+    
+    init(numberLastFrame: Int) {
+        self.numberLastFrame = numberLastFrame
     }
 }
 

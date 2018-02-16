@@ -8,31 +8,52 @@
 
 import Foundation
 
+protocol GameSessionViewModelStateGame: class {
+    func alertGameSessionCompleted(_ index: Int)
+}
+
+
 class GameSessionViewModel {
     
     deinit {
         print("GameSessionViewModel deinit")
     }
-    var names: [String]  // TODO: Need refactor
+    
+    weak var delegate: GameSessionViewModelStateGame?
+    var namesOfPlayer: [String]  // TODO: Need refactor
     weak var coordinatorDelegate: GameSessionViewModelDelegate?
     var countOfGameFinish: Int = 0
     let gamesModels: [GameViewModel]
     
-    init (names: [String]){
-        self.names  = names
-        
+    init (namesOfPlayer: [String]){
+        self.namesOfPlayer  = namesOfPlayer
         var gameModels: [GameViewModel] = []
-        for _ in 0..<names.count  {
-            let gameViewModel = GameViewModel()
+        for name in namesOfPlayer  {
+            let gameViewModel = GameViewModel(nameOfPlayer: name)
             gameModels.append(gameViewModel)
         }
-          gamesModels = gameModels
+        gamesModels = gameModels
+        for i in 0..<namesOfPlayer.count  {
+            gamesModels[i].delegateGameSession = self
+        }
     }
 }
 
 // MARK: - CountOfPlayer protocol
 extension GameSessionViewModel: GameSessionViewModelProtocol {
-    func doneBack() {
+        func doneBack() {
         coordinatorDelegate?.gameSessionViewModelDoneBack()
+    }
+}
+extension GameSessionViewModel: GameViewModelStateGame {
+    func stateOfGameChange() {
+        countOfGameFinish += 1
+        if countOfGameFinish == namesOfPlayer.count{
+            let max = gamesModels.max{$0.game.scoreGame  < $1.game.scoreGame}
+            print("Bardzo")
+            if  let index = gamesModels.index(where: {$0 === max}){
+                delegate?.alertGameSessionCompleted(index)
+            }
+        }
     }
 }

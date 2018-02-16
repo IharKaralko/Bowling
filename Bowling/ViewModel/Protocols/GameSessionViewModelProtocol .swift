@@ -10,13 +10,12 @@ import Foundation
 
 protocol GameSessionViewModelProtocol{
     var coordinatorDelegate: GameSessionViewModelDelegate? { get set }
-    var names: [String]{ get set }
+    var namesOfPlayer: [String]{ get set }
     func doneBack()
-   // let gamesModels: [GameViewModel]
+ 
     
 }
 
 protocol GameSessionViewModelDelegate: class {
     func gameSessionViewModelDoneBack()
-    //func gameSessionFinish()
-}
+ }

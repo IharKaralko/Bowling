@@ -44,6 +44,7 @@ class FrameView: UIView {
 
 private extension FrameView {
     func bindViewModel() {
+        numberFrame.text = frameViewModel.numberOfFrame.description
         frameViewModel.delegate = self
     }
     
@@ -96,10 +97,10 @@ extension FrameView: FrameViewModelProtocol {
     }
 }
 
-extension FrameView {
-    func fillNumberFrame(frameNumber: Int){
-        numberFrame.text = frameNumber.description
-    }
-}
+//extension FrameView {
+//    func fillNumberFrame(frameNumber: Int){
+//        numberFrame.text = frameNumber.description
+//    }
+//}
 
 

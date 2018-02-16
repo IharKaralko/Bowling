@@ -25,24 +25,25 @@ class GameSessionViewController: UIViewController {
         
         let done = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(doneBack))
         navigationItem.setLeftBarButton(done, animated: false)
-        
+        viewModel.delegate = self
+        commonInit()
+    }
+}
+
+private extension GameSessionViewController {
+      func bindViewModel() {
+        guard isViewLoaded else { return }
+     }
+    
+    func commonInit(){
         var previuosGame: GameView?
-        for player in 0 ..< viewModel.names.count {
-            
-//            let frameView = FrameView()
-//            let frameViewModel = viewModel.framesViewModel[i]
-//            frameView.frameViewModel = frameViewModel
-            
-            
+        for index in 0 ..< viewModel.namesOfPlayer.count {
             let gameView = GameView()
-            let gameViewModel = viewModel.gamesModels[player]
-            
+            let gameViewModel = viewModel.gamesModels[index]
             gameView.viewModel = gameViewModel
-            gameView.namePlayer.text = viewModel.names[player] // TODO: Need refactor
-            
             scrollView.addSubview(gameView)
             gameView.translatesAutoresizingMaskIntoConstraints = false
-            if player == 0 {
+            if index == 0 {
                 NSLayoutConstraint.activate([
                     gameView.topAnchor.constraint(equalTo:   scrollView.topAnchor, constant: 10),
                     gameView.leadingAnchor.constraint(equalTo:  scrollView.leadingAnchor),
@@ -59,21 +60,25 @@ class GameSessionViewController: UIViewController {
                         gameView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
                         ])
                 }
-                if player == viewModel.names.count - 1{
+                if index == viewModel.namesOfPlayer.count - 1{
                     gameView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
                 }
             }
             previuosGame = gameView
         }
     }
-}
-private extension GameSessionViewController {
-      func bindViewModel() {
-        guard isViewLoaded else { return }
-    }
     
     @objc
     func doneBack(){
          viewModel.doneBack()
+    }
+}
+
+extension GameSessionViewController:  GameSessionViewModelStateGame{
+    func alertGameSessionCompleted(_ index: Int){
+        let alertController = UIAlertController(title: "Game Session is completed", message: "Player \(viewModel.namesOfPlayer[index])  with a score \(viewModel.gamesModels[index].game.scoreGame)  WON!", preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(defaultAction)
+        present(alertController, animated: true, completion: nil)
     }
 }

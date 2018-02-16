@@ -49,7 +49,7 @@ class GameView: UIView {
 
 extension GameView: GameViewModelProtocol {
     func availableScoreDidChange(_ score: Int) {
-        activateButtonCollection(score)
+        availableButtonCollection(score)
     }
     
     func stateOfGameDidChage() {
@@ -70,7 +70,7 @@ private extension GameView {
             ])
     }
     
-    func activateButtonCollection(_ score: Int) {
+    func availableButtonCollection(_ score: Int) {
         if score < 10 {
             for w in score ... 10 {
                 buttonsCollection[w].isEnabled = false
@@ -88,26 +88,24 @@ private extension GameView {
 // MARK: - Create Frames
 private extension GameView {
     func commonInit(){
+        namePlayer.text = viewModel.nameOfPlayer
         var previousFrame: FrameView?
         var frames: [FrameView] = []
-        
-        contentFrame.subviews.forEach {
+         contentFrame.subviews.forEach {
             $0.removeFromSuperview()
         }
         let count = countFrame < countFramesInRow + 1 ? countFrame: countFramesInRow + 1
-        for i in 0 ..< count - 1 {
+        for index in 0 ..< count - 1 {
             let frameView = FrameView()
-            let frameViewModel = viewModel.framesViewModel[i]
+            let frameViewModel = viewModel.framesViewModel[index]
             frameView.frameViewModel = frameViewModel
             frameView.translatesAutoresizingMaskIntoConstraints = false
             contentFrame.addSubview(frameView)
-            frameView.fillNumberFrame(frameNumber:  i + 1)
-            
             frameView.topAnchor.constraint(equalTo:  contentFrame.topAnchor).isActive = true
             if count < countFramesInRow + 1 {
                 frameView.bottomAnchor.constraint(equalTo: contentFrame.bottomAnchor).isActive = true
             }
-            if i == 0 {
+            if index == 0 {
                 frameView.leftAnchor.constraint(equalTo: contentFrame.leftAnchor).isActive = true
             } else {
                 if let previousFrame = previousFrame {
@@ -117,7 +115,7 @@ private extension GameView {
                         frameView.heightAnchor.constraint(equalTo: previousFrame.heightAnchor)
                         ])
                 }
-                if i == countFramesInRow - 1 {
+                if index == countFramesInRow - 1 {
                     frameView.rightAnchor.constraint(equalTo: contentFrame.rightAnchor).isActive = true
                 }
             }
@@ -127,17 +125,16 @@ private extension GameView {
             }
         }
         let rowsOfFrames = countFrame % countFramesInRow == 0 ? countFrame/countFramesInRow : Int(countFrame/countFramesInRow) + 1
-        let framesInLastRow = countFrame > 5 ? countFrame - countFramesInRow*(rowsOfFrames - 1): 0
+        let framesInLastRow = countFrame > countFramesInRow ? countFrame - countFramesInRow*(rowsOfFrames - 1): 0
         if rowsOfFrames > 1 {
             for row in 2 ... rowsOfFrames{
                 let countInRow = row < rowsOfFrames ? countFramesInRow :framesInLastRow - 1
-                for i in 0 ..< countInRow {
+                for i in 0 ..< countInRow  {
                     let frameView = FrameView()
-                    let frameViewModel = viewModel.framesViewModel[5*(row - 1) + i + 1]
+                    let frameViewModel = viewModel.framesViewModel[countFramesInRow * (row - 1) + i]
                     frameView.frameViewModel = frameViewModel
                     frameView.translatesAutoresizingMaskIntoConstraints = false
                     contentFrame.addSubview(frameView)
-                    frameView.fillNumberFrame(frameNumber: 5*(row - 1) + i + 1)
                     NSLayoutConstraint.activate([
                         frameView.topAnchor.constraint(equalTo:  frames[i].bottomAnchor, constant: 10),
                         frameView.heightAnchor.constraint(equalTo: frames[0].heightAnchor)
@@ -169,7 +166,6 @@ private extension GameView {
         finalFrameView.finalFrameViewModel = finalFrameViewModel
         finalFrameView.translatesAutoresizingMaskIntoConstraints = false
         contentFrame.addSubview(finalFrameView)
-        finalFrameView.fillNumberFrame(frameNumber: countFrame)
         NSLayoutConstraint.activate([
             finalFrameView.rightAnchor.constraint(equalTo: contentFrame.rightAnchor),
             finalFrameView.bottomAnchor.constraint(equalTo: contentFrame.bottomAnchor)

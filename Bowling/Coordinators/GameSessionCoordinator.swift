@@ -6,7 +6,7 @@
 //  Copyright © 2018 Ihar_Karalko. All rights reserved.
 //
 
- import UIKit
+import UIKit
 
 class GameSessionCoordinator {
     deinit {
@@ -21,21 +21,20 @@ class GameSessionCoordinator {
 extension  GameSessionCoordinator {
     func start(_ collectionOfNames: [String]) {
         let gameSessionViewController = GameSessionViewController()
-        let viewModel = GameSessionViewModel(names: collectionOfNames)
-       // viewModel.names = collectionOfNames
+        let viewModel = GameSessionViewModel(namesOfPlayer: collectionOfNames)
         viewModel.coordinatorDelegate = self
         gameSessionViewController.viewModel = viewModel
         navigController?.pushViewController(gameSessionViewController, animated: true)
-      }
+    }
 }
 
 // MARK: - NamesOfPlayersViewModelDelegate
 extension GameSessionCoordinator:  GameSessionViewModelDelegate {
-       
+    
     func gameSessionViewModelDoneBack() {
         guard let navigController = navigController else { return }
         navigController.popViewController(animated: true)
-     }
+    }
 }
 
 

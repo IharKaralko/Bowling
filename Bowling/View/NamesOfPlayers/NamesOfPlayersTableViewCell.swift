@@ -28,7 +28,7 @@ class NamesOfPlayersTableViewCell: UITableViewCell {
 extension NamesOfPlayersTableViewCell {
     func textFieldIsFull() -> Bool {
         guard let text = textFieldPlayer.text, !text.isEmpty  else {
-            textFieldPlayer.backgroundColor = UIColor.cyan
+            textFieldPlayer.backgroundColor = UIColor.red
             return false
         }
         textFieldPlayer.backgroundColor = UIColor.white
@@ -47,6 +47,9 @@ extension NamesOfPlayersTableViewCell {
 //MARK: - UITextFieldDelegate
 extension NamesOfPlayersTableViewCell: UITextFieldDelegate {
     func textField(_ textFieldToChange: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+         textFieldPlayer.backgroundColor = UIColor.white
+        
         if string == " " {
             return false
         }
