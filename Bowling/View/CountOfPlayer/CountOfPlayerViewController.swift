@@ -7,38 +7,84 @@
 //
 
 import UIKit
+import ReactiveSwift
+import Result
+import ReactiveCocoa
 
 class CountOfPlayerViewController: UIViewController {
-    
-    var viewModel: CountOfPlayer! {
-        didSet { bindViewModel() }
+   
+    @IBOutlet weak var inputButton: UIButton!
+      var viewModel: CountOfPlayer! {
+        didSet {
+            //bindViewModel()
+            bindViewModelOne()
+        }
     }
-    
-    @IBOutlet weak var textFieldName: UITextField!
-    @IBAction func buttonClick(_ sender: UIButton) {
-        startButtonTapped()
-    }
-    
+   @IBOutlet weak var textFieldName: UITextField!
+   
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindViewModel()
+//       let signal = textFieldName.reactive.continuousTextValues
+//
+//        signal.observeValues{next in
+//            if let nnn = next?.isNumeric  {
+//                print(nnn)
+//            } else {
+//                print("false")
+//            }
+//
+//        }
+        bindViewModelOne()
+       
     }
 }
 
 private extension CountOfPlayerViewController {
     func bindViewModel() {
         guard isViewLoaded else { return }
-        textFieldName.text = String(viewModel.numbersOfPlayer)
+    //   textFieldName.text = String(viewModel.numbersOfPlayer)
+     //   print(textFieldName.text)
+        
     }
     
+    func bindViewModelOne() {
+        guard isViewLoaded else { return }
+        
+        textFieldName.reactive.text <~ viewModel.inputText
+        viewModel.inputText <~ textFieldName.reactive.continuousTextValues
+        
+        self.inputButton.reactive.pressed = CocoaAction(self.viewModel.inputNumbersOfPlayers)
+        { [weak self] (button) -> String?  in
+            self?.startButtonTapped()
+            return self?.textFieldName.text
+            
+        }
+      // signal = self?.textFieldName.reactive.text
+            
+           // signal?.observeValues{next in
+                
+//                if let nnn = signal.value
+//
+//                    next?.isNumeric, Int(next!)! > 0  {
+//                    print(nnn)
+//                } else {
+//                    print("false")
+//                    self?.alertIncorrectCounterOfPlayer()
+//
+//                }
+//
+//            }
+//
+        //   return self?.textFieldName.text
+       // }
+    }
+    
+    
     func startButtonTapped() {
-        if let numberString = Int(textFieldName.text!) {
-            if numberString > 0 {
-                viewModel.acceptCountOfPlayers(count: numberString)
-                textFieldName.resignFirstResponder()
-            } else {
-                alertIncorrectCounterOfPlayer()
-            }
+        if let numberString = Int(textFieldName.text!), numberString > 1 {
+            //print(numberString)
+            // viewModel.acceptCountOfPlayers(count: numberString)
+            textFieldName.resignFirstResponder()
         } else {
             alertIncorrectCounterOfPlayer()
         }
@@ -50,6 +96,14 @@ private extension CountOfPlayerViewController {
         alertController.addAction(defaultAction)
         
         present(alertController, animated: true, completion: nil)
-        textFieldName.text = nil
+      //  textFieldName.text = nil
     }
 }
+//    extension String {
+//        var isNumeric: Bool {
+//            guard self.characters.count > 0 else { return false }
+//            let nums: Set<Character> = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+//            return Set(self.characters).isSubset(of: nums)
+//        }
+//}
+

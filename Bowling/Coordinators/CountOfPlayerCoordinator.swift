@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum ModelAction {
+    case someAction(someParam: Int)
+    case someAction2(someParam: String)
+}
+
 class CountOfPlayerCoordinator {
     private var namesOfPlayersCoordinator: NamesOfPlayersCoordinator?
     private weak var navController: UINavigationController?
@@ -23,8 +28,11 @@ extension CountOfPlayerCoordinator {
         let viewModel = CountOfPlayerViewModel()
         viewModel.coordinatorDelegate = self
         countOfPlayerViewController.viewModel = viewModel
+        // bindViewModel(viewModel)
         guard let navController = navController else { return }
         navController.viewControllers = [countOfPlayerViewController]
+        bindViewModel(viewModel)
+        
     }
 }
 
@@ -44,5 +52,18 @@ extension CountOfPlayerCoordinator: NamesOfPlayersCoordinatorDelegate {
         guard  let navController = navController else { return }
         navController.popViewController(animated: true)
         namesOfPlayersCoordinator = nil
+    }
+}
+private extension CountOfPlayerCoordinator {
+    func bindViewModel(_ viewModel: CountOfPlayerViewModel) {
+        viewModel.output.observeValues {next in
+            switch next{
+            case .someAction(let someParam):
+                self.countOfPlayerViewModelDidSelect(someParam)
+                print(someParam)
+            case .someAction2(let someParam):
+                print(someParam)
+            }
+        }
     }
 }
