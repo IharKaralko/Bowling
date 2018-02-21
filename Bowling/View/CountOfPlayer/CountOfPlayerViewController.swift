@@ -12,79 +12,39 @@ import Result
 import ReactiveCocoa
 
 class CountOfPlayerViewController: UIViewController {
-   
-    @IBOutlet weak var inputButton: UIButton!
-      var viewModel: CountOfPlayer! {
+    
+    @IBOutlet private weak var inputButton: UIButton!
+    @IBOutlet private weak var textFieldName: UITextField!
+    var viewModel: CountOfPlayerProtocol! {
         didSet {
-            //bindViewModel()
-            bindViewModelOne()
+            bindViewModel()
         }
     }
-   @IBOutlet weak var textFieldName: UITextField!
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//       let signal = textFieldName.reactive.continuousTextValues
-//
-//        signal.observeValues{next in
-//            if let nnn = next?.isNumeric  {
-//                print(nnn)
-//            } else {
-//                print("false")
-//            }
-//
-//        }
-        bindViewModelOne()
-       
+        bindViewModel()
     }
 }
 
 private extension CountOfPlayerViewController {
     func bindViewModel() {
         guard isViewLoaded else { return }
-    //   textFieldName.text = String(viewModel.numbersOfPlayer)
-     //   print(textFieldName.text)
+        textFieldName.text = viewModel.numberOfPlayers.description
         
-    }
-    
-    func bindViewModelOne() {
-        guard isViewLoaded else { return }
-        
-        textFieldName.reactive.text <~ viewModel.inputText
-        viewModel.inputText <~ textFieldName.reactive.continuousTextValues
-        
-        self.inputButton.reactive.pressed = CocoaAction(self.viewModel.inputNumbersOfPlayers)
-        { [weak self] (button) -> String?  in
-            self?.startButtonTapped()
-            return self?.textFieldName.text
-            
+        let action: Action< Void, Void, NoError> = Action(){ [weak self] _ in
+            return  SignalProducer<Void, NoError> { observer, _ in
+                self?.startButtonTapped()
+                observer.sendCompleted()
+            }
         }
-      // signal = self?.textFieldName.reactive.text
-            
-           // signal?.observeValues{next in
-                
-//                if let nnn = signal.value
-//
-//                    next?.isNumeric, Int(next!)! > 0  {
-//                    print(nnn)
-//                } else {
-//                    print("false")
-//                    self?.alertIncorrectCounterOfPlayer()
-//
-//                }
-//
-//            }
-//
-        //   return self?.textFieldName.text
-       // }
+        inputButton.reactive.pressed = CocoaAction(action)
     }
-    
     
     func startButtonTapped() {
-        if let numberString = Int(textFieldName.text!), numberString > 1 {
-            //print(numberString)
-            // viewModel.acceptCountOfPlayers(count: numberString)
+        if let numberString = textFieldName.text, let number = Int(numberString), number > 0 {
             textFieldName.resignFirstResponder()
+            self.viewModel.getNumbersOfPlayersAction.apply(number).start()
         } else {
             alertIncorrectCounterOfPlayer()
         }
@@ -94,16 +54,8 @@ private extension CountOfPlayerViewController {
         let alertController = UIAlertController(title: "Attention", message: "Incorrect counter of player?", preferredStyle: .alert)
         let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(defaultAction)
-        
         present(alertController, animated: true, completion: nil)
-      //  textFieldName.text = nil
     }
 }
-//    extension String {
-//        var isNumeric: Bool {
-//            guard self.characters.count > 0 else { return false }
-//            let nums: Set<Character> = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-//            return Set(self.characters).isSubset(of: nums)
-//        }
-//}
+
 

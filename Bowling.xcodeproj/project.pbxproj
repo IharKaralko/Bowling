@@ -10,9 +10,9 @@
 		433DBA37200F603800732B20 /* CountOfPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 433DBA36200F603800732B20 /* CountOfPlayerView.xib */; };
 		433DBA39200F61A200732B20 /* CountOfPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433DBA38200F61A200732B20 /* CountOfPlayerViewController.swift */; };
 		433DBA3B200F627400732B20 /* CountOfPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433DBA3A200F627400732B20 /* CountOfPlayerViewModel.swift */; };
-		433DBA3E200F631C00732B20 /* CountOfPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433DBA3D200F631C00732B20 /* CountOfPlayer.swift */; };
+		433DBA3E200F631C00732B20 /* CountOfPlayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433DBA3D200F631C00732B20 /* CountOfPlayerProtocol.swift */; };
 		4346FD7A202C72F2003768B5 /* GameSessionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4346FD79202C72F2003768B5 /* GameSessionCoordinator.swift */; };
-		4348EC3F2018825800B8E457 /* NamesOfPlayers .swift in Sources */ = {isa = PBXBuildFile; fileRef = 4348EC3E2018825800B8E457 /* NamesOfPlayers .swift */; };
+		4348EC3F2018825800B8E457 /* NamesOfPlayersProtocol .swift in Sources */ = {isa = PBXBuildFile; fileRef = 4348EC3E2018825800B8E457 /* NamesOfPlayersProtocol .swift */; };
 		4348EC41201885DE00B8E457 /* NamesOfPlayersViewModel .swift in Sources */ = {isa = PBXBuildFile; fileRef = 4348EC40201885DE00B8E457 /* NamesOfPlayersViewModel .swift */; };
 		434B08542029C99B00EE5BB3 /* FinalFrameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434B08532029C99B00EE5BB3 /* FinalFrameViewModel.swift */; };
 		434BDB052021C8500029BB85 /* GameSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434BDB032021C8500029BB85 /* GameSessionViewController.swift */; };
@@ -50,9 +50,9 @@
 		433DBA36200F603800732B20 /* CountOfPlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountOfPlayerView.xib; sourceTree = "<group>"; };
 		433DBA38200F61A200732B20 /* CountOfPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountOfPlayerViewController.swift; sourceTree = "<group>"; };
 		433DBA3A200F627400732B20 /* CountOfPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountOfPlayerViewModel.swift; sourceTree = "<group>"; };
-		433DBA3D200F631C00732B20 /* CountOfPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountOfPlayer.swift; sourceTree = "<group>"; };
+		433DBA3D200F631C00732B20 /* CountOfPlayerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountOfPlayerProtocol.swift; sourceTree = "<group>"; };
 		4346FD79202C72F2003768B5 /* GameSessionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSessionCoordinator.swift; sourceTree = "<group>"; };
-		4348EC3E2018825800B8E457 /* NamesOfPlayers .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NamesOfPlayers .swift"; sourceTree = "<group>"; };
+		4348EC3E2018825800B8E457 /* NamesOfPlayersProtocol .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NamesOfPlayersProtocol .swift"; sourceTree = "<group>"; };
 		4348EC40201885DE00B8E457 /* NamesOfPlayersViewModel .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NamesOfPlayersViewModel .swift"; sourceTree = "<group>"; };
 		434B08532029C99B00EE5BB3 /* FinalFrameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalFrameViewModel.swift; sourceTree = "<group>"; };
 		434BDB032021C8500029BB85 /* GameSessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSessionViewController.swift; sourceTree = "<group>"; };
@@ -112,8 +112,8 @@
 		433DBA3C200F62CA00732B20 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				433DBA3D200F631C00732B20 /* CountOfPlayer.swift */,
-				4348EC3E2018825800B8E457 /* NamesOfPlayers .swift */,
+				433DBA3D200F631C00732B20 /* CountOfPlayerProtocol.swift */,
+				4348EC3E2018825800B8E457 /* NamesOfPlayersProtocol .swift */,
 				4352D84D202359A10093011C /* GameViewModelProtocol .swift */,
 				4352D84F202359D80093011C /* GameSessionViewModelProtocol .swift */,
 			);
@@ -407,14 +407,14 @@
 			files = (
 				435FBBD42010F6640087E415 /* NamesOfPlayersCoordinator .swift in Sources */,
 				4346FD7A202C72F2003768B5 /* GameSessionCoordinator.swift in Sources */,
-				4348EC3F2018825800B8E457 /* NamesOfPlayers .swift in Sources */,
+				4348EC3F2018825800B8E457 /* NamesOfPlayersProtocol .swift in Sources */,
 				434DB51220132E3100F3017A /* NamesOfPlayersTableViewCell.swift in Sources */,
 				435FBBC52010AA770087E415 /* NamesOfPlayersViewController.swift in Sources */,
 				434C762F200E142400879242 /* Game .swift in Sources */,
 				435FBBD02010DD780087E415 /* AppCoordinator.swift in Sources */,
 				4352D850202359D80093011C /* GameSessionViewModelProtocol .swift in Sources */,
 				437187112024ABE60069645B /* FrameViewModel.swift in Sources */,
-				433DBA3E200F631C00732B20 /* CountOfPlayer.swift in Sources */,
+				433DBA3E200F631C00732B20 /* CountOfPlayerProtocol.swift in Sources */,
 				434C8CB62020A542003D8E42 /* FrameView.swift in Sources */,
 				434BDB052021C8500029BB85 /* GameSessionViewController.swift in Sources */,
 				434C7633200E168A00879242 /* GameProtocol.swift in Sources */,

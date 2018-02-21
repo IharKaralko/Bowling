@@ -10,7 +10,7 @@ import UIKit
 
 class AppCoordinator {
     private weak var window: UIWindow?
-    private var countOfPlayerCoordinator: CountOfPlayerCoordinator?
+    private var countOfPlayerCoordinator: CountOfPlayerCoordinatorProtocol!
     private var navController: UINavigationController?
     
     init(window: UIWindow)
@@ -31,7 +31,7 @@ extension AppCoordinator {
     func showCountOfPlayers() {
         guard let navController = navController else { return }
         countOfPlayerCoordinator = CountOfPlayerCoordinator(navController)
-        countOfPlayerCoordinator?.start()
+        countOfPlayerCoordinator.start()
     }
 }
 

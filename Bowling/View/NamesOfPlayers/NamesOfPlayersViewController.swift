@@ -17,22 +17,30 @@ class NamesOfPlayersViewController: UIViewController {
     var collectionOfCell = [Int: String]()
     @IBOutlet weak var tableView: UITableView!
     
-    var viewModel: NamesOfPlayers! {
+    var viewModel: NamesOfPlayersProtocol! {
         didSet { bindViewModel() }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindViewModel()
         tableView.dataSource = self
         let nib = UINib.init(nibName: "NamesOfPlayersTableViewCell", bundle: nil)
         self.tableView.register(nib, forCellReuseIdentifier: "NamesOfPlayersTableViewCell")
         self.hideKeyboard()
-        let done = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(doneBack))
-        navigationItem.setLeftBarButton(done, animated: false)
-        self.navigationItem.title = "Names OF PLAYERS"
-        let start = UIBarButtonItem(title: "Start", style: .plain, target: self, action: #selector(startButtonTapped))
-        navigationItem.setRightBarButton(start, animated: false)
         
+        self.navigationItem.title = "Names OF PLAYERS"
+        
+        let done = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
+        done.reactive.pressed = CocoaAction(viewModel.backCancelAction)
+        navigationItem.setLeftBarButton(done, animated: false)
+        
+        let startAction: Action<Void, Void, NoError> = Action() { [weak self] in
+            return SignalProducer<Void, NoError> { observer, _ in self?.startButtonTapped(); observer.sendCompleted() }
+        }
+        let start = UIBarButtonItem(title: "Start", style: .plain, target: self, action: nil)
+        start.reactive.pressed = CocoaAction(startAction)
+        navigationItem.setRightBarButton(start, animated: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,23 +71,17 @@ extension NamesOfPlayersViewController: NamesOfPlayersTableViewCellDelegate {
 private extension NamesOfPlayersViewController {
     func bindViewModel() {
         guard isViewLoaded else { return }
-    }
+     }
     
-    @objc
     func startButtonTapped() {
         view.endEditing(true)
-        if collectionOfCell.count == viewModel.countOfPlayers {
+        if collectionOfCell.count == viewModel.numberOfPlayers {
             let listNames = [String](collectionOfCell.values)
-            viewModel.acceptNamesOfPlayers(collectionOfNames: listNames)
+            viewModel.namesOfPlayersAction.apply(listNames).start()
         }  else {
         }
     }
-    
-    @objc
-    func doneBack(){
-        viewModel.doneBack()
-    }
-    
+
     @objc
     func adjustForKeyboard(notification: Notification) {
         let userInfo = notification.userInfo!
@@ -112,7 +114,7 @@ private extension NamesOfPlayersViewController {
 extension NamesOfPlayersViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.countOfPlayers
+        return viewModel.numberOfPlayers
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

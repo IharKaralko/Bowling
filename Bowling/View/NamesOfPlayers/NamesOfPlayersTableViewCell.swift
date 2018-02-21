@@ -7,15 +7,21 @@
 //
 
 import UIKit
-
+import ReactiveSwift
+import Result
+import ReactiveCocoa
 //MARK: - NamesOfPlayersTableViewCellDelegate
 protocol NamesOfPlayersTableViewCellDelegate: class {
     func saveTextField(_ cell: NamesOfPlayersTableViewCell)
 }
 
+
+
 class NamesOfPlayersTableViewCell: UITableViewCell {
     @IBOutlet  private weak var textFieldPlayer: UITextField!
     @IBOutlet  private weak var labelPlayer: UILabel!
+    
+   private var signalPipe = Signal<NamesOfPlayersCoordinator.Action, NoError>.pipe()
     
     weak var delegate: NamesOfPlayersTableViewCellDelegate?
     
@@ -57,7 +63,7 @@ extension NamesOfPlayersTableViewCell: UITextFieldDelegate {
         return (resultString?.count)! < 10
     }
     
-    public func textFieldDidEndEditing(_ textField: UITextField){
+     func textFieldDidEndEditing(_ textField: UITextField){
         delegate?.saveTextField(self)
     }
 }

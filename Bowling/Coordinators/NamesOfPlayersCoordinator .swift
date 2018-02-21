@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import ReactiveSwift
+import Result
+import ReactiveCocoa
 
-protocol NamesOfPlayersCoordinatorDelegate: class {
-    func namesOfPlayersCoordinatorCancel()
+protocol NamesOfPlayersCoordinatorProtocol {
+    func start(_ count: Int) -> Signal<NamesOfPlayersCoordinator.Output, NoError>
 }
 
 class NamesOfPlayersCoordinator {
@@ -17,34 +20,54 @@ class NamesOfPlayersCoordinator {
     deinit {
         print("NamesOfPlayersCoordinator deinit")
     }
-    weak var delegate: NamesOfPlayersCoordinatorDelegate?
+
     private weak var navigationController: UINavigationController?
     private var gameSessionCoordinator: GameSessionCoordinator?
+    
+    private let _pipe = Signal<NamesOfPlayersCoordinator.Output, NoError>.pipe()
     
     init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
 }
 
-extension NamesOfPlayersCoordinator {
-    func start(_ count: Int) {
-        let namesOfPlayersViewController = NamesOfPlayersViewController()
-        let viewModel = NamesOfPlayersViewModel(countOfPlayers: count)
-        viewModel.coordinatorDelegate = self
-        namesOfPlayersViewController.viewModel = viewModel
-        navigationController?.pushViewController(namesOfPlayersViewController, animated: true)
+extension NamesOfPlayersCoordinator: NamesOfPlayersCoordinatorProtocol {
+    func start(_ count: Int) -> Signal<NamesOfPlayersCoordinator.Output, NoError>{
+        return startCoordinator(count)
     }
 }
 
-// MARK: - NamesOfPlayersViewModelDelegate
-extension NamesOfPlayersCoordinator: NamesOfPlayersViewModelDelegate {
+private extension NamesOfPlayersCoordinator {
+    func startCoordinator(_ count: Int) -> Signal<NamesOfPlayersCoordinator.Output, NoError> {
+        let namesOfPlayersViewController = NamesOfPlayersViewController()
+        let viewModel = NamesOfPlayersViewModel(countOfPlayers: count)
+        namesOfPlayersViewController.viewModel = viewModel
+        
+        viewModel.output.observeValues { [weak self] value in
+            switch value {
+            case .buttonTapped(let names):
+                self?.namesOfPlayersViewModelDidSelect(names)
+            }
+        }
+        viewModel.output.observeCompleted { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+            self?._pipe.input.sendCompleted()
+        }
+        navigationController?.pushViewController(namesOfPlayersViewController, animated: true)
+        return _pipe.output
+    }
+
     func namesOfPlayersViewModelDidSelect(_ collectionOfNames: [String]) {
         guard let navigationController = navigationController else { return }
         gameSessionCoordinator = GameSessionCoordinator(navigationController)
         gameSessionCoordinator?.start(collectionOfNames)
     }
-    
-    func namesOfPlayersViewModelDoneBack() {
-        delegate?.namesOfPlayersCoordinatorCancel()
+}
+
+extension NamesOfPlayersCoordinator {
+    enum Action {
+        case buttonTapped(names: [String])
+    }
+    enum Output {
     }
 }
