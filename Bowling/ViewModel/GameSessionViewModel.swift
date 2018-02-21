@@ -7,6 +7,9 @@
 //
 
 import Foundation
+import ReactiveCocoa
+import ReactiveSwift
+import Result
 
 protocol GameSessionViewModelStateGame: class {
     func alertGameSessionCompleted(_ index: Int)
@@ -16,16 +19,24 @@ protocol GameSessionViewModelStateGame: class {
 class GameSessionViewModel {
     
     deinit {
-        print("GameSessionViewModel deinit")
+        print("GameSessionViewModel deinit----------------------")
     }
     
+    private var _pipe = Signal<Void, NoError>.pipe()
+     var doneBackAction: Action<Void, Void, NoError>!
+    
+    
     weak var delegate: GameSessionViewModelStateGame?
+    
     var namesOfPlayer: [String]  // TODO: Need refactor
-    weak var coordinatorDelegate: GameSessionViewModelDelegate?
+   // weak var coordinatorDelegate: GameSessionViewModelDelegate?
     var countOfGameFinish: Int = 0
     let gamesModels: [GameViewModel]
     
     init (namesOfPlayer: [String]){
+        
+        
+        
         self.namesOfPlayer  = namesOfPlayer
         var gameModels: [GameViewModel] = []
         for name in namesOfPlayer  {
@@ -36,15 +47,23 @@ class GameSessionViewModel {
         for i in 0..<namesOfPlayer.count  {
             gamesModels[i].delegateGameSession = self
         }
+        
+        self.doneBackAction = Action() { [weak self]  in
+            return SignalProducer { observer, _ in
+                self?._pipe.input.sendCompleted()
+                observer.sendCompleted()
+            }
+        }
+        
     }
 }
 
 // MARK: - CountOfPlayer protocol
-extension GameSessionViewModel: GameSessionViewModelProtocol {
-        func doneBack() {
-        coordinatorDelegate?.gameSessionViewModelDoneBack()
-    }
-}
+//extension GameSessionViewModel: GameSessionViewModelProtocol {
+//        func doneBack() {
+//        coordinatorDelegate?.gameSessionViewModelDoneBack()
+//    }
+//}
 extension GameSessionViewModel: GameViewModelStateGame {
     func stateOfGameChange() {
         countOfGameFinish += 1
@@ -56,4 +75,9 @@ extension GameSessionViewModel: GameViewModelStateGame {
             }
         }
     }
+}
+
+// MARK: - NamesOfPlayersCoordinatorProtocol
+extension GameSessionViewModel: GameSessionOutputProtocol {
+    var output: Signal<Void, NoError> { return _pipe.output }
 }

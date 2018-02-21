@@ -10,20 +10,14 @@ import UIKit
 import ReactiveSwift
 import Result
 import ReactiveCocoa
-//MARK: - NamesOfPlayersTableViewCellDelegate
-protocol NamesOfPlayersTableViewCellDelegate: class {
-    func saveTextField(_ cell: NamesOfPlayersTableViewCell)
-}
-
-
 
 class NamesOfPlayersTableViewCell: UITableViewCell {
     @IBOutlet  private weak var textFieldPlayer: UITextField!
     @IBOutlet  private weak var labelPlayer: UILabel!
     
-   private var signalPipe = Signal<NamesOfPlayersCoordinator.Action, NoError>.pipe()
-    
-    weak var delegate: NamesOfPlayersTableViewCellDelegate?
+   var output: Signal<NamesOfPlayersViewController.Actions, NoError> { return _pipe.output }
+   private var _pipe = Signal<NamesOfPlayersViewController.Actions, NoError>.pipe()
+ 
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -54,16 +48,13 @@ extension NamesOfPlayersTableViewCell {
 extension NamesOfPlayersTableViewCell: UITextFieldDelegate {
     func textField(_ textFieldToChange: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-         textFieldPlayer.backgroundColor = UIColor.white
-        
-        if string == " " {
-            return false
-        }
+        textFieldPlayer.backgroundColor = UIColor.white
+        if string == " " { return false }
         let resultString = textFieldPlayer.text
         return (resultString?.count)! < 10
     }
     
-     func textFieldDidEndEditing(_ textField: UITextField){
-        delegate?.saveTextField(self)
+    func textFieldDidEndEditing(_ textField: UITextField){
+        _pipe.input.send(value: NamesOfPlayersViewController.Actions.cellDidEndEditing(cell: self))
     }
 }

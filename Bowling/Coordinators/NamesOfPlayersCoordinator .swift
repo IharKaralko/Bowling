@@ -22,7 +22,7 @@ class NamesOfPlayersCoordinator {
     }
 
     private weak var navigationController: UINavigationController?
-    private var gameSessionCoordinator: GameSessionCoordinator?
+   // private var gameSessionCoordinator: GameSessionCoordinator?
     
     private let _pipe = Signal<NamesOfPlayersCoordinator.Output, NoError>.pipe()
     
@@ -59,8 +59,15 @@ private extension NamesOfPlayersCoordinator {
 
     func namesOfPlayersViewModelDidSelect(_ collectionOfNames: [String]) {
         guard let navigationController = navigationController else { return }
-        gameSessionCoordinator = GameSessionCoordinator(navigationController)
-        gameSessionCoordinator?.start(collectionOfNames)
+        var gameSessionCoordinator: Optional<GameSessionCoordinator> = GameSessionCoordinator(navigationController)
+        
+        let output = gameSessionCoordinator!.start(collectionOfNames)
+        output.observeCompleted {
+            gameSessionCoordinator = nil
+        }
+        
+        
+       // gameSessionCoordinator?.start(collectionOfNames)
     }
 }
 

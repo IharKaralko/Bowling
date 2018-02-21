@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ReactiveCocoa
 import ReactiveSwift
 import Result
 
@@ -19,7 +20,7 @@ class NamesOfPlayersViewModel {
    private var countOfPlayers: Int
 
     
-    private var signalPipe = Signal<NamesOfPlayersCoordinator.Action, NoError>.pipe()
+    private var _pipe = Signal<NamesOfPlayersCoordinator.Action, NoError>.pipe()
     private var inputNamesOfPlayersAction: Action<[String], Void, NoError>!
     private var doneBackAction: Action<Void, Void, NoError>!
     
@@ -28,14 +29,14 @@ class NamesOfPlayersViewModel {
         
         self.doneBackAction = Action() { [weak self]  in
             return SignalProducer { observer, _ in
-                self?.signalPipe.input.sendCompleted()
+                self?._pipe.input.sendCompleted()
                 observer.sendCompleted()
             }
         }
         
         self.inputNamesOfPlayersAction = Action() { [weak self] input in
             return SignalProducer { observer, _ in
-                self?.signalPipe.input.send(value: .buttonTapped(names: input))
+                self?._pipe.input.send(value: .buttonTapped(names: input))
                 observer.sendCompleted()
             }
         }
@@ -51,5 +52,5 @@ extension NamesOfPlayersViewModel: NamesOfPlayersProtocol {
 
 // MARK: - NamesOfPlayersCoordinatorProtocol
 extension NamesOfPlayersViewModel: NamesOfPlayersOutputProtocol {
-    var output: Signal<NamesOfPlayersCoordinator.Action, NoError> { return signalPipe.output }
+    var output: Signal<NamesOfPlayersCoordinator.Action, NoError> { return _pipe.output }
 }

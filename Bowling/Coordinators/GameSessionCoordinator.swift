@@ -7,34 +7,43 @@
 //
 
 import UIKit
+import ReactiveSwift
+import Result
+import ReactiveCocoa
 
 class GameSessionCoordinator {
     deinit {
-        print("GameSessionCoordinator deinit")
+        print("GameSessionCoordinator deinit+++++++++++++")
     }
     private weak var navigController: UINavigationController?
+    
+    private let _pipe = Signal<Void, NoError>.pipe()
+    
     init(_ navigController: UINavigationController) {
         self.navigController = navigController
     }
+    
+    
 }
 
 extension  GameSessionCoordinator {
-    func start(_ collectionOfNames: [String]) {
+    func start(_ collectionOfNames: [String])-> Signal<Void, NoError>{
         let gameSessionViewController = GameSessionViewController()
         let viewModel = GameSessionViewModel(namesOfPlayer: collectionOfNames)
-        viewModel.coordinatorDelegate = self
         gameSessionViewController.viewModel = viewModel
+        
+        viewModel.output.observeCompleted { [weak self] in
+                    self?.navigController?.popViewController(animated: true)
+                    self?._pipe.input.sendCompleted()
+                }
+        
+        
         navigController?.pushViewController(gameSessionViewController, animated: true)
+        
+        return _pipe.output
+            
     }
 }
 
-// MARK: - NamesOfPlayersViewModelDelegate
-extension GameSessionCoordinator:  GameSessionViewModelDelegate {
-    
-    func gameSessionViewModelDoneBack() {
-        guard let navigController = navigController else { return }
-        navigController.popViewController(animated: true)
-    }
-}
 
 

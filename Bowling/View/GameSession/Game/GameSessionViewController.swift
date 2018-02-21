@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import ReactiveSwift
+import Result
+import ReactiveCocoa
 
 class GameSessionViewController: UIViewController {
     
@@ -22,9 +25,10 @@ class GameSessionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupBackButton()
+        //        let done = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(doneBack))
+//        navigationItem.setLeftBarButton(done, animated: false)
         
-        let done = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(doneBack))
-        navigationItem.setLeftBarButton(done, animated: false)
         viewModel.delegate = self
         commonInit()
     }
@@ -34,6 +38,13 @@ private extension GameSessionViewController {
       func bindViewModel() {
         guard isViewLoaded else { return }
      }
+    
+    func setupBackButton(){
+        let done = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
+        done.reactive.pressed = CocoaAction(viewModel.doneBackAction)
+        navigationItem.setLeftBarButton(done, animated: false)
+     }
+    
     
     func commonInit(){
         var previuosGame: GameView?
@@ -68,10 +79,10 @@ private extension GameSessionViewController {
         }
     }
     
-    @objc
-    func doneBack(){
-         viewModel.doneBack()
-    }
+//    @objc
+//    func doneBack(){
+//         viewModel.doneBack()
+//    }
 }
 
 extension GameSessionViewController:  GameSessionViewModelStateGame{

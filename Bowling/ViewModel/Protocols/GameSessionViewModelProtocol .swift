@@ -7,15 +7,22 @@
 //
 
 import Foundation
+import ReactiveCocoa
+import ReactiveSwift
+import Result
 
-protocol GameSessionViewModelProtocol{
-    var coordinatorDelegate: GameSessionViewModelDelegate? { get set }
+protocol GameSessionViewModelProtocol {
+  //  var coordinatorDelegate: GameSessionViewModelDelegate? { get set }
     var namesOfPlayer: [String]{ get set }
     func doneBack()
  
     
 }
 
-protocol GameSessionViewModelDelegate: class {
-    func gameSessionViewModelDoneBack()
- }
+//protocol GameSessionViewModelDelegate: class {
+//    func gameSessionViewModelDoneBack()
+// }
+
+protocol GameSessionOutputProtocol {
+    var output: Signal<Void, NoError> { get }
+}

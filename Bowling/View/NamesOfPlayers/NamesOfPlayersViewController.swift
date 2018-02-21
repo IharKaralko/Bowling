@@ -13,7 +13,11 @@ import ReactiveCocoa
 
 
 class NamesOfPlayersViewController: UIViewController {
-   
+    deinit {
+        print("GameSessionViewController deinit--------")
+    }
+    
+    
     var collectionOfCell = [Int: String]()
     @IBOutlet weak var tableView: UITableView!
     
@@ -24,11 +28,36 @@ class NamesOfPlayersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
+        commonInit()
+        setupBarButton()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+}
+
+// MARK: - Private methods
+private extension NamesOfPlayersViewController {
+    func bindViewModel() {
+        guard isViewLoaded else { return }
+    }
+    
+    func commonInit() {
         tableView.dataSource = self
         let nib = UINib.init(nibName: "NamesOfPlayersTableViewCell", bundle: nil)
         self.tableView.register(nib, forCellReuseIdentifier: "NamesOfPlayersTableViewCell")
         self.hideKeyboard()
         
+    }
+    
+    func setupBarButton(){
         self.navigationItem.title = "Names OF PLAYERS"
         
         let done = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
@@ -43,20 +72,8 @@ class NamesOfPlayersViewController: UIViewController {
         navigationItem.setRightBarButton(start, animated: false)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
-    }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self)
-    }
-}
-
-// MARK: - NamesOfPlayersTableViewCellDelegate
-extension NamesOfPlayersViewController: NamesOfPlayersTableViewCellDelegate {
-    func saveTextField(_ cell: NamesOfPlayersTableViewCell) {
+    func saveTextOfCell(_ cell: NamesOfPlayersTableViewCell) {
         if let IndexPath = tableView.indexPath(for: cell) {
             if cell.textFieldIsFull() {
                 collectionOfCell[IndexPath.row] = cell.textCell()
@@ -65,13 +82,6 @@ extension NamesOfPlayersViewController: NamesOfPlayersTableViewCellDelegate {
             }
         }
     }
-}
-
-// MARK: - Private methods
-private extension NamesOfPlayersViewController {
-    func bindViewModel() {
-        guard isViewLoaded else { return }
-     }
     
     func startButtonTapped() {
         view.endEditing(true)
@@ -81,7 +91,7 @@ private extension NamesOfPlayersViewController {
         }  else {
         }
     }
-
+    
     @objc
     func adjustForKeyboard(notification: Notification) {
         let userInfo = notification.userInfo!
@@ -100,7 +110,7 @@ private extension NamesOfPlayersViewController {
     func hideKeyboard() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer (
             target: self,
-            action: #selector(NamesOfPlayersViewController.dismissKeyboard))
+            action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
     
@@ -119,8 +129,19 @@ extension NamesOfPlayersViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NamesOfPlayersTableViewCell", for: indexPath) as! NamesOfPlayersTableViewCell
-        cell.delegate = self
+       
+        cell.output.observeValues { [weak self] value in
+            switch value {
+            case .cellDidEndEditing(let cell):
+                self?.saveTextOfCell(cell)
+            }
+        }
         cell.numberOfPlayer(numberString: String(indexPath.row + 1))
         return cell
+    }
+}
+extension NamesOfPlayersViewController {
+    enum Actions {
+        case cellDidEndEditing(cell: NamesOfPlayersTableViewCell)
     }
 }
