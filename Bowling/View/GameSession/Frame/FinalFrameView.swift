@@ -38,7 +38,17 @@ class FinalFrameView: UIView {
 extension FinalFrameView {
     func bindViewModel() {
         numberFrame.text = finalFrameViewModel.numberLastFrame.description
-        finalFrameViewModel.delegate = self
+        
+        finalFrameViewModel.output.observeValues {[weak self] value in
+            switch value {
+            case .frameDidChanged(let frame):
+                self?.frameDidChanged(frame)
+            case .fillScoreGame(let finalScore):
+                self?.scoreGameDidChanged(finalScore)
+            }
+        }
+        
+        //finalFrameViewModel.delegate = self
     }
     
     func fillFrom(frame: Frame?) {
@@ -94,5 +104,12 @@ extension FinalFrameView: FinalFrameViewModelProtocol {
     }
     func scoreGameDidChanged(_ score: Int) {
         fillScoreGame(finalScore: score)
+    }
+}
+
+extension FinalFrameView {
+    enum Action {
+        case frameDidChanged(frame: Frame?)
+        case  fillScoreGame(finalScore: Int)
     }
 }

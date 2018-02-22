@@ -7,6 +7,9 @@
 //
 
 import Foundation
+import ReactiveSwift
+import Result
+import ReactiveCocoa
 
 protocol GameProtocol {
     var maxFrameCount: Int { get }
@@ -16,6 +19,8 @@ protocol GameProtocol {
     func bowl(bowlScore: Int) -> Bool
 }
 
-protocol GameProtocolChangeScoreGame: class {
-    func changeScoreGame()
+
+
+protocol GameOutputProtocol {
+    var output: Signal<Int, NoError> { get }
 }

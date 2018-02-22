@@ -18,6 +18,11 @@ class NamesOfPlayersTableViewCell: UITableViewCell {
    var output: Signal<NamesOfPlayersViewController.Actions, NoError> { return _pipe.output }
    private var _pipe = Signal<NamesOfPlayersViewController.Actions, NoError>.pipe()
  
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        textFieldPlayer.text = nil
+        labelPlayer.text = nil
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

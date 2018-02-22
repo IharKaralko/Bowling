@@ -26,18 +26,22 @@ class GameSessionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBackButton()
-        //        let done = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(doneBack))
-//        navigationItem.setLeftBarButton(done, animated: false)
-        
-        viewModel.delegate = self
         commonInit()
+        bindViewModel()
     }
 }
 
 private extension GameSessionViewController {
-      func bindViewModel() {
+    func bindViewModel() {
         guard isViewLoaded else { return }
-     }
+        
+        viewModel.output.observeValues{ [weak self] value in
+            switch value {
+            case .gameSessionCompleted(let index):
+                self?.alertGameSessionCompleted(index)
+            }
+        }
+    }
     
     func setupBackButton(){
         let done = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
@@ -79,17 +83,19 @@ private extension GameSessionViewController {
         }
     }
     
-//    @objc
-//    func doneBack(){
-//         viewModel.doneBack()
-//    }
+
 }
 
-extension GameSessionViewController:  GameSessionViewModelStateGame{
-    func alertGameSessionCompleted(_ index: Int){
+extension GameSessionViewController { 
+    func alertGameSessionCompleted(_ index: Int){        
         let alertController = UIAlertController(title: "Game Session is completed", message: "Player \(viewModel.namesOfPlayer[index])  with a score \(viewModel.gamesModels[index].game.scoreGame)  WON!", preferredStyle: .alert)
         let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(defaultAction)
         present(alertController, animated: true, completion: nil)
+    }
+}
+extension GameSessionViewController {
+    enum Action {
+        case gameSessionCompleted(index: Int)
     }
 }

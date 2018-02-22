@@ -7,8 +7,14 @@
 //
 
 import Foundation
+import ReactiveSwift
+import Result
+import ReactiveCocoa
 
 class FinalFrameViewModel {
+    
+    
+    private var _pipe = Signal<FinalFrameView.Action, NoError>.pipe()
     
     deinit {
         print("FinalFrameViewModel deinit")
@@ -17,13 +23,17 @@ class FinalFrameViewModel {
     let numberLastFrame: Int
     var frame: Frame? {
         didSet {
-            delegate?.frameDidChanged(frame)
+            
+              _pipe.input.send(value: FinalFrameView.Action.frameDidChanged(frame: frame))
+            
+            //delegate?.frameDidChanged(frame)
         }
     }
-    weak var delegate: FinalFrameViewModelProtocol?
+  //  weak var delegate: FinalFrameViewModelProtocol?
     var scoreGame: Int = 0 {
         didSet {
-            delegate?.scoreGameDidChanged(scoreGame)
+             _pipe.input.send(value: FinalFrameView.Action.fillScoreGame(finalScore: scoreGame))
+          //  delegate?.scoreGameDidChanged(scoreGame)
         }
     }
     
@@ -36,3 +46,8 @@ protocol FinalFrameViewModelProtocol: class {
     func frameDidChanged(_ frame: Frame?)
     func scoreGameDidChanged(_ score: Int)
 }
+// MARK: - FinalFrameOutputProtocol
+extension  FinalFrameViewModel:  FinalFrameOutputProtocol {
+     var output: Signal<FinalFrameView.Action, NoError> { return _pipe.output }
+}
+

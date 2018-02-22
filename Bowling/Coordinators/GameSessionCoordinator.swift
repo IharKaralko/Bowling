@@ -13,7 +13,7 @@ import ReactiveCocoa
 
 class GameSessionCoordinator {
     deinit {
-        print("GameSessionCoordinator deinit+++++++++++++")
+        print("GameSessionCoordinator deinit+")
     }
     private weak var navigController: UINavigationController?
     

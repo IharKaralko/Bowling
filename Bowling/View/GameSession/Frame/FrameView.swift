@@ -22,7 +22,7 @@ class FrameView: UIView {
     
     var frameViewModel: FrameViewModel! {
         willSet {
-            frameViewModel?.delegate = nil
+            //frameViewModel?.delegate = nil
         }
         didSet {
             bindViewModel()
@@ -45,7 +45,15 @@ class FrameView: UIView {
 private extension FrameView {
     func bindViewModel() {
         numberFrame.text = frameViewModel.numberOfFrame.description
-        frameViewModel.delegate = self
+        frameViewModel.output.observeValues {[weak self] value in
+            switch value {
+            case .frameDidChanged(let frame):
+                self?.frameDidChanged(frame)
+            case .fillScoreGame(let score):
+                self?.scoreGameDidChanged(score)
+            }
+        }
+     // frameViewModel.delegate = self
     }
     
     func fillScoreGame(score: Int){
@@ -88,7 +96,7 @@ private extension FrameView {
     }
 }
 
-extension FrameView: FrameViewModelProtocol {
+extension FrameView { //}: FrameViewModelProtocol {
     func frameDidChanged(_ frame: Frame?) {
         fillFrom(frame: frame)
     }
@@ -97,10 +105,11 @@ extension FrameView: FrameViewModelProtocol {
     }
 }
 
-//extension FrameView {
-//    func fillNumberFrame(frameNumber: Int){
-//        numberFrame.text = frameNumber.description
-//    }
-//}
+extension FrameView {
+    enum Action {
+        case frameDidChanged(frame: Frame?)
+        case  fillScoreGame(score: Int)
+    }
+}
 
 

@@ -12,13 +12,14 @@ import Result
 import ReactiveCocoa
 
 
- protocol GameViewModelProtocol: class {
-    func availableScoreDidChange(_ score: Int)
-    func stateOfGameDidChage()
-}
-protocol GameViewModelStateGame: class {
-        func stateOfGameChange()
-}
+// protocol GameViewModelProtocol: class {
+//    func availableScoreDidChange(_ score: Int)
+//    func stateOfGameDidChage()
+//}
+
+//protocol GameViewModelStateGame: class {
+//        func stateOfGameChange()
+//}
 
 class GameViewModel {
     
@@ -32,9 +33,13 @@ class GameViewModel {
     let finalFrameViewModel: FinalFrameViewModel
     private var frameNumber: Int = 0
     
-    weak var delegateGameSession: GameViewModelStateGame?
-    weak var delegate: GameViewModelProtocol?
-    init(game: Game = Game(maxFrame: 11), nameOfPlayer: String) {
+  // weak var delegateGameSession: GameViewModelStateGame?
+   
+   
+    private var _pipe = Signal<GameView.Action, NoError>.pipe()
+     var output: Signal<GameView.Action, NoError> { return _pipe.output }
+    
+    init(game: Game = Game(maxFrame: 5), nameOfPlayer: String) {
         var frameModels: [FrameViewModel] = []
         for index in 0..<game.maxFrame - 1  {
             let frameViewModel = FrameViewModel(numberOfFrame: index + 1)
@@ -44,7 +49,11 @@ class GameViewModel {
         finalFrameViewModel = FinalFrameViewModel(numberLastFrame: game.maxFrame)
         self.nameOfPlayer = nameOfPlayer
         self.game = game
-        game.delegate = self
+        game.output.observeValues { [weak self] value in
+            if value == 1 {
+                self?.changeScoreGame()
+            }
+        }
     }
 }
 
@@ -57,10 +66,13 @@ extension GameViewModel {
             finalFrameViewModel.frame = game.currentFrameForGame
         }
         let availableScores = availableButtons(bowlScore)
-        delegate?.availableScoreDidChange(availableScores)
+       
+          _pipe.input.send(value: GameView.Action.trowDidEnding(score: availableScores))
+      
+       
         if !game.isOpenGame {
-            delegate?.stateOfGameDidChage()
-            delegateGameSession?.stateOfGameChange()
+            
+            _pipe.input.sendCompleted()
           }
     }
 }
@@ -90,7 +102,7 @@ private extension GameViewModel {
      }
 }
 
-extension GameViewModel: GameProtocolChangeScoreGame {
+extension GameViewModel { //}:  GameProtocolChangeScoreGame {
     func changeScoreGame(){
         if frameNumber < framesViewModel.count  {                                             
             framesViewModel[frameNumber].scoreGame = game.scoreGame

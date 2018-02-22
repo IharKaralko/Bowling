@@ -24,5 +24,5 @@ protocol GameSessionViewModelProtocol {
 // }
 
 protocol GameSessionOutputProtocol {
-    var output: Signal<Void, NoError> { get }
+    var output: Signal<GameSessionViewController.Action, NoError> { get }
 }

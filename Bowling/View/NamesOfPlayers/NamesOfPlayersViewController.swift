@@ -32,8 +32,9 @@ class NamesOfPlayersViewController: UIViewController {
         setupBarButton()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {        
         let notificationCenter = NotificationCenter.default
+        
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
@@ -140,6 +141,7 @@ extension NamesOfPlayersViewController: UITableViewDataSource {
         return cell
     }
 }
+
 extension NamesOfPlayersViewController {
     enum Actions {
         case cellDidEndEditing(cell: NamesOfPlayersTableViewCell)

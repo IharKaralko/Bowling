@@ -7,8 +7,13 @@
 //
 
 import Foundation
+import ReactiveSwift
+import Result
+import ReactiveCocoa
 
 class FrameViewModel {
+    
+     private var _pipe = Signal<FrameView.Action, NoError>.pipe()
     
     let numberOfFrame: Int
     deinit {
@@ -20,19 +25,29 @@ class FrameViewModel {
   
     var frame: Frame? {
         didSet {
-            delegate?.frameDidChanged(frame)
+            guard let frame = frame else { return }
+            _pipe.input.send(value: FrameView.Action.frameDidChanged(frame: frame))
+            
+          //  delegate?.frameDidChanged(frame)
         }
     }
-    weak var delegate: FrameViewModelProtocol?
+  //  weak var delegate: FrameViewModelProtocol?
     
     var scoreGame: Int = 0 {
         didSet {
-            delegate?.scoreGameDidChanged(scoreGame)
+           _pipe.input.send(value: FrameView.Action.fillScoreGame(score: scoreGame))
+            
+            //delegate?.scoreGameDidChanged(scoreGame)
         }
     }
 }
-
-protocol FrameViewModelProtocol: class {
-    func frameDidChanged(_ frame: Frame?)
-    func scoreGameDidChanged(_ score: Int)
+// MARK: - FrameOutputProtocol
+extension  FrameViewModel:  FrameOutputProtocol {
+    var output: Signal<FrameView.Action, NoError> { return _pipe.output }
 }
+
+//protocol FrameViewModelProtocol: class {
+//    func frameDidChanged(_ frame: Frame?)
+//    func scoreGameDidChanged(_ score: Int)
+//}
+

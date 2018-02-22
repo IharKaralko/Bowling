@@ -7,18 +7,23 @@
 //
 
 import Foundation
+import ReactiveSwift
+import Result
+import ReactiveCocoa
 
 public class Game {
     
+    private var _pipe = Signal<Int, NoError>.pipe()
     
     public var indexCurrentFrame: Int = -1
     public let maxFrame: Int
     public var scoreGame: Int = 0 {
         didSet {
-            delegate?.changeScoreGame()
+          _pipe.input.send(value: 1)
+         
         }
     }
-    weak var delegate: GameProtocolChangeScoreGame?
+  
     
     public var isOpenGame: Bool {
         return frames.count < maxFrame
@@ -118,6 +123,9 @@ extension Game: GameProtocol {
         return makeBowl(bowlScore: bowlScore)
     }
 }
-
-
+// MARK: - GameOtputProtocol
+extension Game: GameOutputProtocol {
+     var output: Signal<Int, NoError> {return _pipe.output }
+    
+}
 

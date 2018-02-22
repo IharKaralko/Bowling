@@ -20,7 +20,7 @@ class NamesOfPlayersCoordinator {
     deinit {
         print("NamesOfPlayersCoordinator deinit")
     }
-
+    
     private weak var navigationController: UINavigationController?
    // private var gameSessionCoordinator: GameSessionCoordinator?
     
