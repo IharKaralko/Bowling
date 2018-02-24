@@ -7,21 +7,26 @@
 //
 
 import UIKit
+import ReactiveSwift
+import Result
+import ReactiveCocoa
 
 class FinalFrameView: UIView {
     
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var numberFrame: UILabel!
-    @IBOutlet weak var totalScore: UILabel!
-    @IBOutlet weak var firstScore: UILabel!
-    @IBOutlet weak var secondScore: UILabel!
-    @IBOutlet weak var thirdScore: UILabel!
+    @IBOutlet private weak var contentView: UIView!
+    @IBOutlet private weak var numberFrame: UILabel!
+    @IBOutlet private weak var totalScore: UILabel!
+    @IBOutlet private weak var firstScore: UILabel!
+    @IBOutlet private weak var secondScore: UILabel!
+    @IBOutlet private weak var thirdScore: UILabel!
     
+    private let bag =  CompositeDisposable()
     var finalFrameViewModel: FinalFrameViewModel! {
         didSet {
             bindViewModel()
         }
     }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         nibSetup()
@@ -35,20 +40,17 @@ class FinalFrameView: UIView {
     }
 }
 
-extension FinalFrameView {
+private extension FinalFrameView {
     func bindViewModel() {
         numberFrame.text = finalFrameViewModel.numberLastFrame.description
-        
-        finalFrameViewModel.output.observeValues {[weak self] value in
+         bag += finalFrameViewModel.output.observeValues {[weak self] value in
             switch value {
             case .frameDidChanged(let frame):
-                self?.frameDidChanged(frame)
+                self?.fillFrom(frame: frame)
             case .fillScoreGame(let finalScore):
-                self?.scoreGameDidChanged(finalScore)
+                self?.fillScoreGame(finalScore: finalScore)
             }
         }
-        
-        //finalFrameViewModel.delegate = self
     }
     
     func fillFrom(frame: Frame?) {
@@ -68,14 +70,11 @@ extension FinalFrameView {
             thirdScore.text = frame?.thirdScore?.description
         }
     }
-
  
     func  fillScoreGame(finalScore: Int) {
         totalScore.text = finalScore.description
     }
-}
-
-private extension FinalFrameView {
+    
     func setupLayout() {
         layer.borderWidth = 0.5
         numberFrame.layer.borderWidth = 0.5
@@ -95,15 +94,6 @@ private extension FinalFrameView {
             contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
             contentView.leftAnchor.constraint(equalTo: leftAnchor)
             ])
-    }
-}
-
-extension FinalFrameView: FinalFrameViewModelProtocol {
-    func frameDidChanged(_ frame: Frame?) {
-        fillFrom(frame: frame)
-    }
-    func scoreGameDidChanged(_ score: Int) {
-        fillScoreGame(finalScore: score)
     }
 }
 

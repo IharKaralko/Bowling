@@ -16,14 +16,10 @@ class GameSessionCoordinator {
         print("GameSessionCoordinator deinit+")
     }
     private weak var navigController: UINavigationController?
-    
     private let _pipe = Signal<Void, NoError>.pipe()
-    
     init(_ navigController: UINavigationController) {
         self.navigController = navigController
     }
-    
-    
 }
 
 extension  GameSessionCoordinator {
@@ -31,17 +27,12 @@ extension  GameSessionCoordinator {
         let gameSessionViewController = GameSessionViewController()
         let viewModel = GameSessionViewModel(namesOfPlayer: collectionOfNames)
         gameSessionViewController.viewModel = viewModel
-        
         viewModel.output.observeCompleted { [weak self] in
-                    self?.navigController?.popViewController(animated: true)
-                    self?._pipe.input.sendCompleted()
-                }
-        
-        
+            self?.navigController?.popViewController(animated: true)
+            self?._pipe.input.sendCompleted()
+        }
         navigController?.pushViewController(gameSessionViewController, animated: true)
-        
         return _pipe.output
-            
     }
 }
 

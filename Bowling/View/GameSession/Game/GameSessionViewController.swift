@@ -82,11 +82,7 @@ private extension GameSessionViewController {
             previuosGame = gameView
         }
     }
-    
 
-}
-
-extension GameSessionViewController { 
     func alertGameSessionCompleted(_ index: Int){        
         let alertController = UIAlertController(title: "Game Session is completed", message: "Player \(viewModel.namesOfPlayer[index])  with a score \(viewModel.gamesModels[index].game.scoreGame)  WON!", preferredStyle: .alert)
         let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -94,6 +90,7 @@ extension GameSessionViewController {
         present(alertController, animated: true, completion: nil)
     }
 }
+
 extension GameSessionViewController {
     enum Action {
         case gameSessionCompleted(index: Int)

@@ -13,13 +13,13 @@ import ReactiveCocoa
 
 public class Game {
     
-    private var _pipe = Signal<Int, NoError>.pipe()
+    private var _pipe = Signal<(), NoError>.pipe()
     
     public var indexCurrentFrame: Int = -1
     public let maxFrame: Int
     public var scoreGame: Int = 0 {
         didSet {
-          _pipe.input.send(value: 1)
+          _pipe.input.send(value: ())
          
         }
     }
@@ -125,7 +125,7 @@ extension Game: GameProtocol {
 }
 // MARK: - GameOtputProtocol
 extension Game: GameOutputProtocol {
-     var output: Signal<Int, NoError> {return _pipe.output }
+     var output: Signal<(), NoError> {return _pipe.output }
     
 }
 

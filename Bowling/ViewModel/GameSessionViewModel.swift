@@ -11,10 +11,6 @@ import ReactiveCocoa
 import ReactiveSwift
 import Result
 
-protocol GameSessionViewModelStateGame: class {
-    func alertGameSessionCompleted(_ index: Int)
-}
-
 
 class GameSessionViewModel {
     
@@ -23,19 +19,12 @@ class GameSessionViewModel {
     }
     
     private var _pipe = Signal<GameSessionViewController.Action, NoError>.pipe()
-     var doneBackAction: Action<Void, Void, NoError>!
-    
-    
-    weak var delegate: GameSessionViewModelStateGame?
-    
+    var doneBackAction: Action<Void, Void, NoError>!
     var namesOfPlayer: [String]
-    var countOfGameFinish: Int = 0
+    private var countOfGameFinish: Int = 0
     let gamesModels: [GameViewModel]
     
     init (namesOfPlayer: [String]){
-        
-        
-        
         self.namesOfPlayer  = namesOfPlayer
         var gameModels: [GameViewModel] = []
         for name in namesOfPlayer  {

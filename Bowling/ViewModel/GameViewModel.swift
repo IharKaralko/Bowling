@@ -12,14 +12,7 @@ import Result
 import ReactiveCocoa
 
 
-// protocol GameViewModelProtocol: class {
-//    func availableScoreDidChange(_ score: Int)
-//    func stateOfGameDidChage()
-//}
 
-//protocol GameViewModelStateGame: class {
-//        func stateOfGameChange()
-//}
 
 class GameViewModel {
     
@@ -32,11 +25,7 @@ class GameViewModel {
     let framesViewModel: [FrameViewModel]
     let finalFrameViewModel: FinalFrameViewModel
     private var frameNumber: Int = 0
-    
-  // weak var delegateGameSession: GameViewModelStateGame?
-   
-   
-    private var _pipe = Signal<GameView.Action, NoError>.pipe()
+     private var _pipe = Signal<GameView.Action, NoError>.pipe()
      var output: Signal<GameView.Action, NoError> { return _pipe.output }
     
     init(game: Game = Game(maxFrame: 5), nameOfPlayer: String) {
@@ -49,11 +38,9 @@ class GameViewModel {
         finalFrameViewModel = FinalFrameViewModel(numberLastFrame: game.maxFrame)
         self.nameOfPlayer = nameOfPlayer
         self.game = game
-        game.output.observeValues { [weak self] value in
-            if value == 1 {
-                self?.changeScoreGame()
-            }
-        }
+        game.output.observeValues { [weak self] in
+            self?.changeScoreGame()
+          }
     }
 }
 
@@ -66,13 +53,9 @@ extension GameViewModel {
             finalFrameViewModel.frame = game.currentFrameForGame
         }
         let availableScores = availableButtons(bowlScore)
-       
-          _pipe.input.send(value: GameView.Action.trowDidEnding(score: availableScores))
-      
-       
-        if !game.isOpenGame {
-            
-            _pipe.input.sendCompleted()
+            _pipe.input.send(value: GameView.Action.trowDidEnding(score: availableScores))
+          if !game.isOpenGame {
+             _pipe.input.sendCompleted()
           }
     }
 }
@@ -102,7 +85,7 @@ private extension GameViewModel {
      }
 }
 
-extension GameViewModel { //}:  GameProtocolChangeScoreGame {
+extension GameViewModel {
     func changeScoreGame(){
         if frameNumber < framesViewModel.count  {                                             
             framesViewModel[frameNumber].scoreGame = game.scoreGame

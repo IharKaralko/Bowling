@@ -39,17 +39,17 @@ private extension CountOfPlayerCoordinator {
         navController.viewControllers = [countOfPlayerViewController]
         bindViewModel(viewModel)
     }
-
+    
     func bindViewModel(_ viewModel: CountOfPlayerOutputProtocol) {
         viewModel.output.observeValues { [weak self] value in
             switch value {
             case .inputCountOfPlayers(let count):
-                self?.countOfPlayerViewModelDidSelect(count)
+                self?.countOfPlayerDidSelect(count)
             }
         }
     }
     
-    func countOfPlayerViewModelDidSelect(_ count: Int) {
+    func countOfPlayerDidSelect(_ count: Int) {
         guard let navController = navController else { return }
         var namesOfPlayersCoordinator: Optional<NamesOfPlayersCoordinator> = NamesOfPlayersCoordinator(navController)
         let output = namesOfPlayersCoordinator!.start(count)

@@ -36,7 +36,7 @@ class NamesOfPlayersViewModel {
         
         self.inputNamesOfPlayersAction = Action() { [weak self] input in
             return SignalProducer { observer, _ in
-                self?._pipe.input.send(value: .buttonTapped(names: input))
+                self?._pipe.input.send(value: .namesOfPlayersDidSelect(names: input))
                 observer.sendCompleted()
             }
         }

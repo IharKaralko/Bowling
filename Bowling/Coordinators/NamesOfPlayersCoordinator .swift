@@ -20,10 +20,7 @@ class NamesOfPlayersCoordinator {
     deinit {
         print("NamesOfPlayersCoordinator deinit")
     }
-    
     private weak var navigationController: UINavigationController?
-   // private var gameSessionCoordinator: GameSessionCoordinator?
-    
     private let _pipe = Signal<NamesOfPlayersCoordinator.Output, NoError>.pipe()
     
     init(_ navigationController: UINavigationController) {
@@ -45,8 +42,8 @@ private extension NamesOfPlayersCoordinator {
         
         viewModel.output.observeValues { [weak self] value in
             switch value {
-            case .buttonTapped(let names):
-                self?.namesOfPlayersViewModelDidSelect(names)
+            case .namesOfPlayersDidSelect(let names):
+                self?.namesOfPlayersDidSelect(names)
             }
         }
         viewModel.output.observeCompleted { [weak self] in
@@ -56,24 +53,20 @@ private extension NamesOfPlayersCoordinator {
         navigationController?.pushViewController(namesOfPlayersViewController, animated: true)
         return _pipe.output
     }
-
-    func namesOfPlayersViewModelDidSelect(_ collectionOfNames: [String]) {
+    
+    func namesOfPlayersDidSelect(_ collectionOfNames: [String]) {
         guard let navigationController = navigationController else { return }
         var gameSessionCoordinator: Optional<GameSessionCoordinator> = GameSessionCoordinator(navigationController)
-        
         let output = gameSessionCoordinator!.start(collectionOfNames)
         output.observeCompleted {
             gameSessionCoordinator = nil
         }
-        
-        
-       // gameSessionCoordinator?.start(collectionOfNames)
     }
 }
 
 extension NamesOfPlayersCoordinator {
     enum Action {
-        case buttonTapped(names: [String])
+        case namesOfPlayersDidSelect(names: [String])
     }
     enum Output {
     }

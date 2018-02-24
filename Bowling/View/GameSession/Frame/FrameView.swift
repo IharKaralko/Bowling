@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import ReactiveSwift
+import Result
+import ReactiveCocoa
+
 
 class FrameView: UIView {
     
@@ -20,9 +24,11 @@ class FrameView: UIView {
     @IBOutlet private weak var firstScore: UILabel!
     @IBOutlet private weak var secondScore: UILabel!
     
+    private var bag =  CompositeDisposable()
+    
     var frameViewModel: FrameViewModel! {
         willSet {
-            //frameViewModel?.delegate = nil
+            bag =  CompositeDisposable()
         }
         didSet {
             bindViewModel()
@@ -45,22 +51,21 @@ class FrameView: UIView {
 private extension FrameView {
     func bindViewModel() {
         numberFrame.text = frameViewModel.numberOfFrame.description
-        frameViewModel.output.observeValues {[weak self] value in
+        bag += frameViewModel.output.observeValues {[weak self] value in
             switch value {
             case .frameDidChanged(let frame):
-                self?.frameDidChanged(frame)
+                self?.fillFrom(frame)
             case .fillScoreGame(let score):
-                self?.scoreGameDidChanged(score)
+                self?.fillScoreGame(score)
             }
         }
-     // frameViewModel.delegate = self
     }
     
-    func fillScoreGame(score: Int){
+    func fillScoreGame(_ score: Int){
         totalScore.text = score.description
     }
 
-    func fillFrom(frame: Frame?) {
+    func fillFrom(_ frame: Frame?) {
         firstScore.text =  frame?.firstScore?.description
         if let secondBowl = frame?.secondScore {
             if (frame?.firstScore)! < 10 && (frame?.firstScore)! + secondBowl == 10 {
@@ -93,15 +98,6 @@ private extension FrameView {
             contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
             contentView.leftAnchor.constraint(equalTo: leftAnchor)
             ])
-    }
-}
-
-extension FrameView { //}: FrameViewModelProtocol {
-    func frameDidChanged(_ frame: Frame?) {
-        fillFrom(frame: frame)
-    }
-    func scoreGameDidChanged(_ score: Int) {
-        fillScoreGame(score: score)
     }
 }
 

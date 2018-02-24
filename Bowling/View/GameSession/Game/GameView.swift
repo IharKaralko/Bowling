@@ -16,11 +16,9 @@ class GameView: UIView {
     deinit {
         print("GameView deinit")
     }
-    
     var viewModel: GameViewModel! {
         didSet {
-            setObservationFromViewModelOutput()
-            setupActionForButtonsCollection()
+            setupObservationOfViewModelOutput()
             commonInit()
         }
     }
@@ -29,75 +27,28 @@ class GameView: UIView {
     
     @IBOutlet private weak var contentView: UIView!
     @IBOutlet private weak var contentFrame: UIView!
-    @IBOutlet  weak var namePlayer: UILabel!
+    @IBOutlet private weak var namePlayer: UILabel!
     @IBOutlet private weak var scoreGame: UILabel!
     @IBOutlet private var buttonsCollection: [UIButton]!
     
-//    let startAction: Action< UIButton, Void, NoError> = Action() { [weak self] input in
-//        return SignalProducer<Void, NoError> { observer, _ in
-//            guard let index =  self?.buttonCollection.index(of: input) else { return }
-//            print(index)
-//            //self?.startButtonTapped();
-//            observer.sendCompleted()
-//        }
-//    }
-//
-//    for index in 0 ..< buttonCollection.count {
-//
-//    self.buttonCollection[index].reactive.pressed = CocoaAction(startAction){ [weak self] (button) -> (UIButton) in
-//    return (self?.buttonCollection[index])!
-//    }
-//    }
-    
-    
-//    @IBAction func tappedButton(_ sender: UIButton) {
-//        guard let index =  buttonsCollection.index(of: sender) else { return }
-//        scoreGame.text = "Playing Game"
-//        viewModel.makeRoll(bowlScore: index)
-//    }
-    
+    @IBAction func buttonTapped(_ sender: UIButton) {
+        guard let index =  buttonsCollection.index(of: sender) else { return }
+        scoreGame.text = "Playing Game"
+        viewModel.makeRoll(bowlScore: index)
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         nibSetup()
-       // setupActionForButtonsCollection()
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         nibSetup()
-       // setupActionForButtonsCollection()
-     }
-}
-
-extension GameView  { //}: GameViewModelProtocol {
-    func availableScoreDidChange(_ score: Int) {
-        availableButtonCollection(score)
-    }
-    
-    func stateOfGameDidChage() {
-        scoreGame.text = "Player \(namePlayer.text ?? "Sasha") get \(viewModel.game.scoreGame) "
     }
 }
 
 private extension GameView {
-    func setupActionForButtonsCollection(){
-        let startAction: ReactiveSwift.Action< UIButton, Void, NoError> = ReactiveSwift.Action() { [weak self] input in
-            return SignalProducer<Void, NoError> { observer, _ in
-                guard let index =  self?.buttonsCollection.index(of: input) else { return }
-                self?.viewModel.makeRoll(bowlScore: index)
-                observer.sendCompleted()
-            }
-        }
-        for index in 0 ..< buttonsCollection.count {
-            
-            self.buttonsCollection[index].reactive.pressed = CocoaAction(startAction){ [weak self] (button) -> (UIButton) in
-                return (self?.buttonsCollection[index])!
-            }
-        }
-        
-    }
-    
     func nibSetup() {
         Bundle.main.loadNibNamed("GameView", owner: self, options: nil)
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -110,7 +61,19 @@ private extension GameView {
             ])
     }
     
-    func availableButtonCollection(_ score: Int) {
+    func setupObservationOfViewModelOutput(){
+        viewModel.output.observeValues { [weak self] value in
+            switch value {
+            case .trowDidEnding(let score):
+                self?.availableButtonsDidChange(score)
+            }
+        }
+        viewModel.output.observeCompleted {[weak self] in
+            self?.stateOfGameDidChage()
+        }
+    }
+    
+    func availableButtonsDidChange(_ score: Int) {
         if score < 10 {
             for w in score ... 10 {
                 buttonsCollection[w].isEnabled = false
@@ -123,32 +86,19 @@ private extension GameView {
             }
         }
     }
+    
+    func stateOfGameDidChage() {
+        scoreGame.text = "Player \(namePlayer.text ?? "Sasha") get \(viewModel.game.scoreGame) "
+    }
 }
 
 // MARK: - Create Frames
 private extension GameView {
-    
-    
-    
-    
-    
-    func setObservationFromViewModelOutput(){
-        viewModel.output.observeValues { [weak self] value in
-            switch value {
-            case .trowDidEnding(let score):
-                self?.availableScoreDidChange(score)
-            }
-        }
-        viewModel.output.observeCompleted {[weak self] in
-            self?.stateOfGameDidChage()
-        }
-    }
-    
     func commonInit(){
         namePlayer.text = viewModel.nameOfPlayer
         var previousFrame: FrameView?
         var frames: [FrameView] = []
-         contentFrame.subviews.forEach {
+        contentFrame.subviews.forEach {
             $0.removeFromSuperview()
         }
         let count = countFrame < countFramesInRow + 1 ? countFrame: countFramesInRow + 1
@@ -243,6 +193,7 @@ private extension GameView {
         }
     }
 }
+
 extension GameView {
     enum Action {
         case trowDidEnding(score: Int)

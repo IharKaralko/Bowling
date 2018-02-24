@@ -22,5 +22,5 @@ protocol GameProtocol {
 
 
 protocol GameOutputProtocol {
-    var output: Signal<Int, NoError> { get }
+    var output: Signal<(), NoError> { get }
 }

@@ -12,19 +12,13 @@ import Result
 import ReactiveCocoa
 
 class NamesOfPlayersTableViewCell: UITableViewCell {
-    @IBOutlet  private weak var textFieldPlayer: UITextField!
-    @IBOutlet  private weak var labelPlayer: UILabel!
+    @IBOutlet private weak var textFieldPlayer: UITextField!
+    @IBOutlet private weak var labelPlayer: UILabel!
     
-   var output: Signal<NamesOfPlayersViewController.Actions, NoError> { return _pipe.output }
-   private var _pipe = Signal<NamesOfPlayersViewController.Actions, NoError>.pipe()
+   var output: Signal<NamesOfPlayersViewController.Action, NoError> { return _pipe.output }
+   private var _pipe = Signal<NamesOfPlayersViewController.Action, NoError>.pipe()
  
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        textFieldPlayer.text = nil
-        labelPlayer.text = nil
-    }
-    
-    override func awakeFromNib() {
+     override func awakeFromNib() {
         super.awakeFromNib()
         textFieldPlayer.delegate = self
     }
@@ -40,12 +34,23 @@ extension NamesOfPlayersTableViewCell {
         return true
     }
     
-    func textCell() -> String {
-        return textFieldPlayer.text!
+    func returnTextOfCell()-> String? {
+        return  textFieldPlayer.text
     }
     
-    func numberOfPlayer(numberString: String){
-        labelPlayer.text = numberString
+    func saveTextOfCell(_ name: String?){
+        textFieldPlayer.text = name
+        
+        if textFieldIsFull(){
+            textFieldPlayer.backgroundColor = UIColor.white
+            
+        } else {
+            textFieldPlayer.backgroundColor = UIColor.red
+        }
+    }
+    
+    func showNumberOfPlayer(_ number: String){
+        labelPlayer.text = number
     }
 }
 
@@ -60,6 +65,6 @@ extension NamesOfPlayersTableViewCell: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField){
-        _pipe.input.send(value: NamesOfPlayersViewController.Actions.cellDidEndEditing(cell: self))
+        _pipe.input.send(value: NamesOfPlayersViewController.Action.cellDidEndEditing(cell: self))
     }
 }
