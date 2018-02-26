@@ -12,7 +12,7 @@ import Result
 import ReactiveCocoa
 
 protocol NamesOfPlayersCoordinatorProtocol {
-    func start(_ count: Int) -> Signal<NamesOfPlayersCoordinator.Output, NoError>
+    func start() -> Signal<NamesOfPlayersCoordinator.Output, NoError>
 }
 
 class NamesOfPlayersCoordinator {
@@ -22,22 +22,24 @@ class NamesOfPlayersCoordinator {
     }
     private weak var navigationController: UINavigationController?
     private let _pipe = Signal<NamesOfPlayersCoordinator.Output, NoError>.pipe()
+    private let countOfPlayers: Int
     
-    init(_ navigationController: UINavigationController) {
+    init(_ navigationController: UINavigationController, _ countOfPlayers: Int) {
         self.navigationController = navigationController
-    }
+        self.countOfPlayers = countOfPlayers
+     }
 }
 
 extension NamesOfPlayersCoordinator: NamesOfPlayersCoordinatorProtocol {
-    func start(_ count: Int) -> Signal<NamesOfPlayersCoordinator.Output, NoError>{
-        return startCoordinator(count)
+    func start() -> Signal<NamesOfPlayersCoordinator.Output, NoError> {
+        return startCoordinator()
     }
 }
 
 private extension NamesOfPlayersCoordinator {
-    func startCoordinator(_ count: Int) -> Signal<NamesOfPlayersCoordinator.Output, NoError> {
+    func startCoordinator() -> Signal<NamesOfPlayersCoordinator.Output, NoError> {
         let namesOfPlayersViewController = NamesOfPlayersViewController()
-        let viewModel = NamesOfPlayersViewModel(countOfPlayers: count)
+        let viewModel = NamesOfPlayersViewModel(countOfPlayers: countOfPlayers)
         namesOfPlayersViewController.viewModel = viewModel
         
         viewModel.output.observeValues { [weak self] value in
@@ -56,8 +58,9 @@ private extension NamesOfPlayersCoordinator {
     
     func namesOfPlayersDidSelect(_ collectionOfNames: [String]) {
         guard let navigationController = navigationController else { return }
-        var gameSessionCoordinator: Optional<GameSessionCoordinator> = GameSessionCoordinator(navigationController)
-        let output = gameSessionCoordinator!.start(collectionOfNames)
+        
+        var gameSessionCoordinator: Optional<GameSessionCoordinator> = GameSessionCoordinator(navigationController, collectionOfNames)
+        let output = gameSessionCoordinator!.start()
         output.observeCompleted {
             gameSessionCoordinator = nil
         }

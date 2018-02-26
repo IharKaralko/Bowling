@@ -17,12 +17,11 @@ class GameSessionViewModel {
     deinit {
         print("GameSessionViewModel deinit-")
     }
-    
-    private var _pipe = Signal<GameSessionViewController.Action, NoError>.pipe()
-    var doneBackAction: Action<Void, Void, NoError>!
-    var namesOfPlayer: [String]
+    private let _pipe = Signal<GameSessionViewController.Action, NoError>.pipe()
+    private var  doneBackAction: Action<Void, Void, NoError>!
+    private let namesOfPlayer: [String]
     private var countOfGameFinish: Int = 0
-    let gamesModels: [GameViewModel]
+    private let  gamesModels: [GameViewModel]
     
     init (namesOfPlayer: [String]){
         self.namesOfPlayer  = namesOfPlayer
@@ -37,33 +36,31 @@ class GameSessionViewModel {
                 self?.stateOfGameChange()
             }          
         }
-        
         self.doneBackAction = Action() { [weak self]  in
             return SignalProducer { observer, _ in
                 self?._pipe.input.sendCompleted()
                 observer.sendCompleted()
             }
         }
-        
     }
 }
 
-
-extension GameSessionViewModel {
+private extension GameSessionViewModel {
     func stateOfGameChange() {
         countOfGameFinish += 1
         if countOfGameFinish == namesOfPlayer.count{
-            let max = gamesModels.max{$0.game.scoreGame  < $1.game.scoreGame}
-            print("Bardzo")
+            let max = gamesModels.max{$0.currentGame.scoreGame  < $1.currentGame.scoreGame}
             if  let index = gamesModels.index(where: {$0 === max}){
-               _pipe.input.send(value: GameSessionViewController.Action.gameSessionCompleted(index: index))
-               
+                _pipe.input.send(value: GameSessionViewController.Action.gameSessionCompleted(index: index))
             }
         }
     }
 }
 
-// MARK: - NamesOfPlayersCoordinatorProtocol
-extension GameSessionViewModel: GameSessionOutputProtocol {
+// MARK: - GameSessionViewModelProtocol
+extension GameSessionViewModel:  GameSessionViewModelProtocol {
+    var listNamesOfPlayer: [String] { return  namesOfPlayer }
+    var gamesModelsOfGameSession: [GameViewModel] { return gamesModels }
     var output: Signal<GameSessionViewController.Action, NoError> { return _pipe.output }
+    var doneCancelAction: Action<Void, Void, NoError> { return  doneBackAction }
 }

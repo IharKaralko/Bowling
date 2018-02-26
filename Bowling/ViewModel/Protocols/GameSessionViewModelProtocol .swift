@@ -12,17 +12,11 @@ import ReactiveSwift
 import Result
 
 protocol GameSessionViewModelProtocol {
-  //  var coordinatorDelegate: GameSessionViewModelDelegate? { get set }
-    var namesOfPlayer: [String]{ get set }
-    func doneBack()
- 
-    
-}
-
-//protocol GameSessionViewModelDelegate: class {
-//    func gameSessionViewModelDoneBack()
-// }
-
-protocol GameSessionOutputProtocol {
+    var listNamesOfPlayer: [String]{ get }
+    var gamesModelsOfGameSession: [GameViewModel] { get }
     var output: Signal<GameSessionViewController.Action, NoError> { get }
+    var doneCancelAction: Action<Void, Void, NoError> { get }
 }
+
+
+

@@ -13,13 +13,14 @@ import ReactiveCocoa
 
 class FrameViewModel {
     
-     private var _pipe = Signal<FrameView.Action, NoError>.pipe()
-    
-    let numberOfFrame: Int
     deinit {
         print("FrameViewModel deinit")
     }
-    init(numberOfFrame: Int){
+    
+    let numberOfFrame: Int
+    private var _pipe = Signal<FrameView.Action, NoError>.pipe()
+    
+    init(numberOfFrame: Int) {
         self.numberOfFrame = numberOfFrame
     }
   
@@ -27,27 +28,18 @@ class FrameViewModel {
         didSet {
             guard let frame = frame else { return }
             _pipe.input.send(value: FrameView.Action.frameDidChanged(frame: frame))
-            
-          //  delegate?.frameDidChanged(frame)
         }
     }
-  //  weak var delegate: FrameViewModelProtocol?
     
     var scoreGame: Int = 0 {
         didSet {
            _pipe.input.send(value: FrameView.Action.fillScoreGame(score: scoreGame))
-            
-            //delegate?.scoreGameDidChanged(scoreGame)
         }
     }
 }
+
 // MARK: - FrameOutputProtocol
 extension  FrameViewModel:  FrameOutputProtocol {
     var output: Signal<FrameView.Action, NoError> { return _pipe.output }
 }
-
-//protocol FrameViewModelProtocol: class {
-//    func frameDidChanged(_ frame: Frame?)
-//    func scoreGameDidChanged(_ score: Int)
-//}
 

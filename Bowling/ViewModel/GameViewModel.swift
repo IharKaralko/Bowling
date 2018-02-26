@@ -11,24 +11,21 @@ import ReactiveSwift
 import Result
 import ReactiveCocoa
 
-
-
-
 class GameViewModel {
     
     deinit {
         print("GameViewModel deinit")
     }
     
-    let nameOfPlayer: String
-    let game: Game
-    let framesViewModel: [FrameViewModel]
-    let finalFrameViewModel: FinalFrameViewModel
+    private let nameOfPlayer: String
+    private let game: Game
+    private let framesViewModel: [FrameViewModel]
+    private let finalFrameViewModel: FinalFrameViewModel
     private var frameNumber: Int = 0
-     private var _pipe = Signal<GameView.Action, NoError>.pipe()
-     var output: Signal<GameView.Action, NoError> { return _pipe.output }
+    private var _pipe = Signal<GameView.Action, NoError>.pipe()
     
-    init(game: Game = Game(maxFrame: 5), nameOfPlayer: String) {
+    
+    init(game: Game = Game(), nameOfPlayer: String) {
         var frameModels: [FrameViewModel] = []
         for index in 0..<game.maxFrame - 1  {
             let frameViewModel = FrameViewModel(numberOfFrame: index + 1)
@@ -43,8 +40,8 @@ class GameViewModel {
           }
     }
 }
-
-extension GameViewModel {
+// MARK: - private methods
+private extension GameViewModel {
     func makeRoll(bowlScore: Int){
         game.makeBowl(bowlScore: bowlScore)
         if game.indexCurrentFrame < framesViewModel.count {
@@ -58,10 +55,8 @@ extension GameViewModel {
              _pipe.input.sendCompleted()
           }
     }
-}
 
-private extension GameViewModel {
-    func availableButtons( _ score: Int)-> Int {  // TODO: Need refactor
+    func availableButtons( _ score: Int)-> Int {
         if game.indexCurrentFrame < framesViewModel.count  {
             if (framesViewModel[game.indexCurrentFrame].frame?.isOpen())!{
                 return 10 - score + 1
@@ -82,16 +77,27 @@ private extension GameViewModel {
                 } else { return 10 }
             }
         } else {return 0 }
-     }
-}
-
-extension GameViewModel {
-    func changeScoreGame(){
+    }
+    
+    func changeScoreGame() {
         if frameNumber < framesViewModel.count  {                                             
             framesViewModel[frameNumber].scoreGame = game.scoreGame
             frameNumber += 1
         } else {
             finalFrameViewModel.scoreGame = game.scoreGame
         }
+    }
+}
+
+// MARK: - GameViewModelProtocol
+extension GameViewModel: GameViewModelProtocol {
+    var nameOfPlayerCurrentGame: String { return nameOfPlayer }
+    var currentGame: Game { return game }
+    var collectionFramesViewModel: [FrameViewModel] { return framesViewModel }
+    var currentFinalFrameViewModel: FinalFrameViewModel { return finalFrameViewModel }
+    var output: Signal<GameView.Action, NoError> { return  _pipe.output}
+    
+    func makeBowl(bowlScore: Int){
+        makeRoll(bowlScore: bowlScore)
     }
 }

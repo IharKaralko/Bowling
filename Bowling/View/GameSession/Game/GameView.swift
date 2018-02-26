@@ -16,13 +16,13 @@ class GameView: UIView {
     deinit {
         print("GameView deinit")
     }
-    var viewModel: GameViewModel! {
+    var viewModel: GameViewModelProtocol! {
         didSet {
             setupObservationOfViewModelOutput()
             commonInit()
         }
     }
-    var countFrame: Int { return viewModel.game.maxFrame }
+    var countFrame: Int { return viewModel.currentGame.maxFrame }
     let countFramesInRow = 5
     
     @IBOutlet private weak var contentView: UIView!
@@ -34,7 +34,7 @@ class GameView: UIView {
     @IBAction func buttonTapped(_ sender: UIButton) {
         guard let index =  buttonsCollection.index(of: sender) else { return }
         scoreGame.text = "Playing Game"
-        viewModel.makeRoll(bowlScore: index)
+        viewModel.makeBowl(bowlScore: index)
     }
 
     override init(frame: CGRect) {
@@ -88,14 +88,14 @@ private extension GameView {
     }
     
     func stateOfGameDidChage() {
-        scoreGame.text = "Player \(namePlayer.text ?? "Sasha") get \(viewModel.game.scoreGame) "
+        scoreGame.text = "Player \(namePlayer.text ?? "Sasha") got \(viewModel.currentGame.scoreGame) "
     }
 }
 
 // MARK: - Create Frames
 private extension GameView {
     func commonInit(){
-        namePlayer.text = viewModel.nameOfPlayer
+        namePlayer.text = viewModel.nameOfPlayerCurrentGame
         var previousFrame: FrameView?
         var frames: [FrameView] = []
         contentFrame.subviews.forEach {
@@ -104,7 +104,7 @@ private extension GameView {
         let count = countFrame < countFramesInRow + 1 ? countFrame: countFramesInRow + 1
         for index in 0 ..< count - 1 {
             let frameView = FrameView()
-            let frameViewModel = viewModel.framesViewModel[index]
+            let frameViewModel = viewModel.collectionFramesViewModel[index]
             frameView.frameViewModel = frameViewModel
             frameView.translatesAutoresizingMaskIntoConstraints = false
             contentFrame.addSubview(frameView)
@@ -138,7 +138,7 @@ private extension GameView {
                 let countInRow = row < rowsOfFrames ? countFramesInRow :framesInLastRow - 1
                 for i in 0 ..< countInRow  {
                     let frameView = FrameView()
-                    let frameViewModel = viewModel.framesViewModel[countFramesInRow * (row - 1) + i]
+                    let frameViewModel = viewModel.collectionFramesViewModel[countFramesInRow * (row - 1) + i]
                     frameView.frameViewModel = frameViewModel
                     frameView.translatesAutoresizingMaskIntoConstraints = false
                     contentFrame.addSubview(frameView)
@@ -169,7 +169,7 @@ private extension GameView {
             }
         }
         let finalFrameView = FinalFrameView()
-        let finalFrameViewModel = viewModel.finalFrameViewModel
+        let finalFrameViewModel = viewModel.currentFinalFrameViewModel
         finalFrameView.finalFrameViewModel = finalFrameViewModel
         finalFrameView.translatesAutoresizingMaskIntoConstraints = false
         contentFrame.addSubview(finalFrameView)

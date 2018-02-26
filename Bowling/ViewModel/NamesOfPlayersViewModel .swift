@@ -17,9 +17,7 @@ class NamesOfPlayersViewModel {
         print("NamesOfPlayersViewModel deinit")
     }
     
-   private var countOfPlayers: Int
-
-    
+    private var countOfPlayers: Int
     private var _pipe = Signal<NamesOfPlayersCoordinator.Action, NoError>.pipe()
     private var inputNamesOfPlayersAction: Action<[String], Void, NoError>!
     private var doneBackAction: Action<Void, Void, NoError>!
@@ -50,7 +48,7 @@ extension NamesOfPlayersViewModel: NamesOfPlayersProtocol {
     var backCancelAction: Action< Void, Void, NoError>  { return doneBackAction }
 }
 
-// MARK: - NamesOfPlayersCoordinatorProtocol
+// MARK: - NamesOfPlayersOutputProtocol
 extension NamesOfPlayersViewModel: NamesOfPlayersOutputProtocol {
     var output: Signal<NamesOfPlayersCoordinator.Action, NoError> { return _pipe.output }
 }

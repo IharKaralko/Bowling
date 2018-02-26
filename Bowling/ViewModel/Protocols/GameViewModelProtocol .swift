@@ -7,7 +7,16 @@
 //
 
 import Foundation
+import ReactiveSwift
+import Result
+import ReactiveCocoa
 
-protocol GameViewModelProtocolScoreGame: class {
-    func changeViewModelScoreGame()
+protocol GameViewModelProtocol {
+    var nameOfPlayerCurrentGame: String { get }
+    var currentGame: Game { get }
+    var collectionFramesViewModel: [FrameViewModel] { get }
+    var currentFinalFrameViewModel: FinalFrameViewModel { get }
+    var output: Signal<GameView.Action, NoError> { get }
+    func makeBowl(bowlScore: Int)
+    
 }

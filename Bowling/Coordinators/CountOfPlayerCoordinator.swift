@@ -32,12 +32,14 @@ extension CountOfPlayerCoordinator: CountOfPlayerCoordinatorProtocol {
 
 private extension CountOfPlayerCoordinator {
     func startCoordinator() {
+        guard let navController = navController else { return }
+        
         let countOfPlayerViewController = CountOfPlayerViewController()
         let viewModel = CountOfPlayerViewModel()
         countOfPlayerViewController.viewModel = viewModel
-        guard let navController = navController else { return }
-        navController.viewControllers = [countOfPlayerViewController]
+        
         bindViewModel(viewModel)
+        navController.viewControllers = [countOfPlayerViewController]
     }
     
     func bindViewModel(_ viewModel: CountOfPlayerOutputProtocol) {
@@ -51,8 +53,9 @@ private extension CountOfPlayerCoordinator {
     
     func countOfPlayerDidSelect(_ count: Int) {
         guard let navController = navController else { return }
-        var namesOfPlayersCoordinator: Optional<NamesOfPlayersCoordinator> = NamesOfPlayersCoordinator(navController)
-        let output = namesOfPlayersCoordinator!.start(count)
+        
+        var namesOfPlayersCoordinator: Optional<NamesOfPlayersCoordinator> = NamesOfPlayersCoordinator(navController, count)
+        let output = namesOfPlayersCoordinator!.start()
         output.observeCompleted {
             namesOfPlayersCoordinator = nil
         }

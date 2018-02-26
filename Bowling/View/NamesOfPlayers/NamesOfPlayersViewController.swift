@@ -37,21 +37,15 @@ class NamesOfPlayersViewController: UIViewController {
         let bag = CompositeDisposable()
         let notificationCenter = NotificationCenter.default.reactive
         
-        
         bag += notificationCenter.notifications(forName: Notification.Name.UIKeyboardWillHide)
             .observeValues{ [weak self] notification in self?.adjustForKeyboard(notification: notification )}
-        
         bag += notificationCenter.notifications(forName: Notification.Name.UIKeyboardWillChangeFrame)
             .observeValues { [weak self] notification in self?.adjustForKeyboard(notification: notification )}
-        
-        _pipe.output.observeValues({bag.dispose()})
+        _pipe.output.observeValues { bag.dispose() }
     }
     
-    
     override func viewDidDisappear(_ animated: Bool) {
-       _pipe.input.send(value: ())
-       
-       
+        _pipe.input.send(value: ())
     }
 }
 
@@ -142,8 +136,8 @@ extension NamesOfPlayersViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NamesOfPlayersTableViewCell", for: indexPath) as! NamesOfPlayersTableViewCell
-        cell.saveTextOfCell(collectionOfCell[indexPath.row])
-        cell.showNumberOfPlayer(String(indexPath.row + 1))
+        // TODO: need to refactor
+        cell.configureCell(collectionOfCell[indexPath.row], String(indexPath.row + 1))
         return cell
     }
 }

@@ -38,8 +38,9 @@ extension NamesOfPlayersTableViewCell {
         return  textFieldPlayer.text
     }
     
-    func saveTextOfCell(_ name: String?){
+    func configureCell(_ name: String?, _ number: String){
         textFieldPlayer.text = name
+        labelPlayer.text = number
         
         if textFieldIsFull(){
             textFieldPlayer.backgroundColor = UIColor.white
@@ -47,10 +48,6 @@ extension NamesOfPlayersTableViewCell {
         } else {
             textFieldPlayer.backgroundColor = UIColor.red
         }
-    }
-    
-    func showNumberOfPlayer(_ number: String){
-        labelPlayer.text = number
     }
 }
 

@@ -16,8 +16,10 @@ class GameSessionViewController: UIViewController {
     deinit {
         print("GameSessionViewController deinit")
     }
+    
     @IBOutlet weak var scrollView: UIScrollView!
-    var viewModel: GameSessionViewModel! {
+    
+    var viewModel: GameSessionViewModelProtocol! {
         didSet {
             bindViewModel()
         }
@@ -45,16 +47,15 @@ private extension GameSessionViewController {
     
     func setupBackButton(){
         let done = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
-        done.reactive.pressed = CocoaAction(viewModel.doneBackAction)
+        done.reactive.pressed = CocoaAction(viewModel.doneCancelAction)
         navigationItem.setLeftBarButton(done, animated: false)
      }
     
-    
     func commonInit(){
         var previuosGame: GameView?
-        for index in 0 ..< viewModel.namesOfPlayer.count {
+        for index in 0 ..< viewModel.listNamesOfPlayer.count {
             let gameView = GameView()
-            let gameViewModel = viewModel.gamesModels[index]
+            let gameViewModel = viewModel.gamesModelsOfGameSession[index]
             gameView.viewModel = gameViewModel
             scrollView.addSubview(gameView)
             gameView.translatesAutoresizingMaskIntoConstraints = false
@@ -75,7 +76,7 @@ private extension GameSessionViewController {
                         gameView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
                         ])
                 }
-                if index == viewModel.namesOfPlayer.count - 1{
+                if index == viewModel.listNamesOfPlayer.count - 1{
                     gameView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
                 }
             }
@@ -84,7 +85,7 @@ private extension GameSessionViewController {
     }
 
     func alertGameSessionCompleted(_ index: Int){        
-        let alertController = UIAlertController(title: "Game Session is completed", message: "Player \(viewModel.namesOfPlayer[index])  with a score \(viewModel.gamesModels[index].game.scoreGame)  WON!", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Game Session is completed", message: "Player \(viewModel.listNamesOfPlayer[index])  with a score \(viewModel.gamesModelsOfGameSession[index].currentGame.scoreGame)  WON!", preferredStyle: .alert)
         let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(defaultAction)
         present(alertController, animated: true, completion: nil)
