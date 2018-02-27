@@ -11,6 +11,8 @@
 		433DBA39200F61A200732B20 /* CountOfPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433DBA38200F61A200732B20 /* CountOfPlayerViewController.swift */; };
 		433DBA3B200F627400732B20 /* CountOfPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433DBA3A200F627400732B20 /* CountOfPlayerViewModel.swift */; };
 		433DBA3E200F631C00732B20 /* CountOfPlayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433DBA3D200F631C00732B20 /* CountOfPlayerProtocol.swift */; };
+		4342F33220453B2D00D89C84 /* FrameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4342F33120453B2D00D89C84 /* FrameTests.swift */; };
+		4342F33420454F8300D89C84 /* GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4342F33320454F8300D89C84 /* GameTests.swift */; };
 		4346FD7A202C72F2003768B5 /* GameSessionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4346FD79202C72F2003768B5 /* GameSessionCoordinator.swift */; };
 		4348EC3F2018825800B8E457 /* NamesOfPlayersProtocol .swift in Sources */ = {isa = PBXBuildFile; fileRef = 4348EC3E2018825800B8E457 /* NamesOfPlayersProtocol .swift */; };
 		4348EC41201885DE00B8E457 /* NamesOfPlayersViewModel .swift in Sources */ = {isa = PBXBuildFile; fileRef = 4348EC40201885DE00B8E457 /* NamesOfPlayersViewModel .swift */; };
@@ -47,12 +49,24 @@
 		B94A91A75D03B5E1215A9E4D /* Pods_Bowling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36160B32C118AE7053BDB6AB /* Pods_Bowling.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		436BA3E320443DE800C5DF30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 434C760A200E0B7F00879242 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 434C7611200E0B7F00879242;
+			remoteInfo = Bowling;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		36160B32C118AE7053BDB6AB /* Pods_Bowling.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bowling.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		433DBA36200F603800732B20 /* CountOfPlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountOfPlayerView.xib; sourceTree = "<group>"; };
 		433DBA38200F61A200732B20 /* CountOfPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountOfPlayerViewController.swift; sourceTree = "<group>"; };
 		433DBA3A200F627400732B20 /* CountOfPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountOfPlayerViewModel.swift; sourceTree = "<group>"; };
 		433DBA3D200F631C00732B20 /* CountOfPlayerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountOfPlayerProtocol.swift; sourceTree = "<group>"; };
+		4342F33120453B2D00D89C84 /* FrameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameTests.swift; sourceTree = "<group>"; };
+		4342F33320454F8300D89C84 /* GameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTests.swift; sourceTree = "<group>"; };
 		4346FD79202C72F2003768B5 /* GameSessionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSessionCoordinator.swift; sourceTree = "<group>"; };
 		4348EC3E2018825800B8E457 /* NamesOfPlayersProtocol .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NamesOfPlayersProtocol .swift"; sourceTree = "<group>"; };
 		4348EC40201885DE00B8E457 /* NamesOfPlayersViewModel .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NamesOfPlayersViewModel .swift"; sourceTree = "<group>"; };
@@ -86,6 +100,8 @@
 		435FBBCF2010DD780087E415 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		435FBBD12010EC140087E415 /* CountOfPlayerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountOfPlayerCoordinator.swift; sourceTree = "<group>"; };
 		435FBBD32010F6640087E415 /* NamesOfPlayersCoordinator .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NamesOfPlayersCoordinator .swift"; sourceTree = "<group>"; };
+		436BA3DE20443DE800C5DF30 /* BowlingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BowlingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		436BA3E220443DE800C5DF30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		437187102024ABE60069645B /* FrameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameViewModel.swift; sourceTree = "<group>"; };
 		43A71562203EE9E200DFA516 /*  FinalFrameViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " FinalFrameViewModelProtocol.swift"; sourceTree = "<group>"; };
 		9C81CE5FD2CA97B1D9439D8C /* Pods-Bowling.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bowling.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bowling/Pods-Bowling.release.xcconfig"; sourceTree = "<group>"; };
@@ -98,6 +114,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B94A91A75D03B5E1215A9E4D /* Pods_Bowling.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		436BA3DB20443DE800C5DF30 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				434C7614200E0B7F00879242 /* Bowling */,
+				436BA3DF20443DE800C5DF30 /* BowlingTests */,
 				434C7613200E0B7F00879242 /* Products */,
 				F0DE33E2A13F98BDC1086A6D /* Pods */,
 				BD6CC9596BCB8DDC928BE189 /* Frameworks */,
@@ -162,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				434C7612200E0B7F00879242 /* Bowling.app */,
+				436BA3DE20443DE800C5DF30 /* BowlingTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -255,6 +280,16 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
+		436BA3DF20443DE800C5DF30 /* BowlingTests */ = {
+			isa = PBXGroup;
+			children = (
+				4342F33120453B2D00D89C84 /* FrameTests.swift */,
+				4342F33320454F8300D89C84 /* GameTests.swift */,
+				436BA3E220443DE800C5DF30 /* Info.plist */,
+			);
+			path = BowlingTests;
+			sourceTree = "<group>";
+		};
 		BD6CC9596BCB8DDC928BE189 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -295,6 +330,24 @@
 			productReference = 434C7612200E0B7F00879242 /* Bowling.app */;
 			productType = "com.apple.product-type.application";
 		};
+		436BA3DD20443DE800C5DF30 /* BowlingTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 436BA3E720443DE800C5DF30 /* Build configuration list for PBXNativeTarget "BowlingTests" */;
+			buildPhases = (
+				436BA3DA20443DE800C5DF30 /* Sources */,
+				436BA3DB20443DE800C5DF30 /* Frameworks */,
+				436BA3DC20443DE800C5DF30 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				436BA3E420443DE800C5DF30 /* PBXTargetDependency */,
+			);
+			name = BowlingTests;
+			productName = BowlingTests;
+			productReference = 436BA3DE20443DE800C5DF30 /* BowlingTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -308,6 +361,11 @@
 					434C7611200E0B7F00879242 = {
 						CreatedOnToolsVersion = 9.1;
 						ProvisioningStyle = Automatic;
+					};
+					436BA3DD20443DE800C5DF30 = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 434C7611200E0B7F00879242;
 					};
 				};
 			};
@@ -325,6 +383,7 @@
 			projectRoot = "";
 			targets = (
 				434C7611200E0B7F00879242 /* Bowling */,
+				436BA3DD20443DE800C5DF30 /* BowlingTests */,
 			);
 		};
 /* End PBXProject section */
@@ -343,6 +402,13 @@
 				434C761D200E0B8000879242 /* Assets.xcassets in Resources */,
 				434DB51320132E3100F3017A /* NamesOfPlayersTableViewCell.xib in Resources */,
 				434BDB0A2021CC390029BB85 /* FinalFrameView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		436BA3DC20443DE800C5DF30 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,7 +508,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		436BA3DA20443DE800C5DF30 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4342F33420454F8300D89C84 /* GameTests.swift in Sources */,
+				4342F33220453B2D00D89C84 /* FrameTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		436BA3E420443DE800C5DF30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 434C7611200E0B7F00879242 /* Bowling */;
+			targetProxy = 436BA3E320443DE800C5DF30 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		434C761E200E0B8000879242 /* LaunchScreen.storyboard */ = {
@@ -593,6 +676,36 @@
 			};
 			name = Release;
 		};
+		436BA3E520443DE800C5DF30 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = BowlingTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = senla.BowlingTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bowling.app/Bowling";
+			};
+			name = Debug;
+		};
+		436BA3E620443DE800C5DF30 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = BowlingTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = senla.BowlingTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bowling.app/Bowling";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -610,6 +723,15 @@
 			buildConfigurations = (
 				434C7625200E0B8000879242 /* Debug */,
 				434C7626200E0B8000879242 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		436BA3E720443DE800C5DF30 /* Build configuration list for PBXNativeTarget "BowlingTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				436BA3E520443DE800C5DF30 /* Debug */,
+				436BA3E620443DE800C5DF30 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

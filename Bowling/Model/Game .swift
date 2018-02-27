@@ -14,34 +14,29 @@ import ReactiveCocoa
 public class Game {
     
     private var _pipe = Signal<(), NoError>.pipe()
-    
-    public var indexCurrentFrame: Int = -1
-    public let maxFrame: Int
-    public var scoreGame: Int = 0 {
+    private var indexActualFrame: Int = -1
+    private let maxFrameCount: Int
+    private var scoreGame: Int = 0 {
         didSet {
           _pipe.input.send(value: ())
          
         }
     }
-  
-    
-    public var isOpenGame: Bool {
+     private var isOpenGame: Bool {
         return frames.count < maxFrame
     }
-    
     private(set) var currentFrameForGame: Frame?
-    
     private var currentFrame: Frame?
     private var waitingToCloseFrames: [Frame] = []
     private var frames: [Frame] = []
     
-    init(maxFrame: Int = 10) {
-        self.maxFrame = maxFrame
+    init(maxFrameCount: Int = 10) {
+        self.maxFrameCount = maxFrameCount
     }
 }
 
 // MARK: - Private Game methods
-private extension Game{
+private extension Game {
         func calculateScoreGame() -> Int{
         var score = 0
         frames.forEach({ frame in
@@ -53,9 +48,9 @@ private extension Game{
     func createFrame() {
         if currentFrame == nil {
             let count = frames.count + waitingToCloseFrames.count
-            currentFrame = Frame(isLast: count == maxFrame - 1)
+            currentFrame = Frame(isLastFrame: count == maxFrame - 1)
             currentFrameForGame = currentFrame
-            indexCurrentFrame += 1
+             indexActualFrame += 1
         }
     }
     
@@ -109,19 +104,12 @@ extension Game {
 }
 // MARK: - GameProtocol
 extension Game: GameProtocol {
-    var maxFrameCount: Int {
-        return maxFrame
-    }
-    var score: Int {
-        return scoreGame
-    }
-    var isOpen: Bool{
-        return isOpenGame
-    }
-    
-    func bowl(bowlScore: Int) -> Bool {
-        return makeBowl(bowlScore: bowlScore)
-    }
+    var maxFrame: Int { return maxFrameCount }
+    var score: Int { return scoreGame }
+    var isOpen: Bool{ return isOpenGame }
+    var indexCurrentFrame: Int { return indexActualFrame }
+    @discardableResult
+    func bowl(bowlScore: Int) -> Bool { return makeBowl(bowlScore: bowlScore) }
 }
 // MARK: - GameOtputProtocol
 extension Game: GameOutputProtocol {

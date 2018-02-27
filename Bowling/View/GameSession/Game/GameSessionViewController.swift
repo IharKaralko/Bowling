@@ -85,7 +85,7 @@ private extension GameSessionViewController {
     }
 
     func alertGameSessionCompleted(_ index: Int){        
-        let alertController = UIAlertController(title: "Game Session is completed", message: "Player \(viewModel.listNamesOfPlayer[index])  with a score \(viewModel.gamesModelsOfGameSession[index].currentGame.scoreGame)  WON!", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Game Session is completed", message: "Player \(viewModel.listNamesOfPlayer[index])  with a score \(viewModel.gamesModelsOfGameSession[index].currentGame.score)  WON!", preferredStyle: .alert)
         let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(defaultAction)
         present(alertController, animated: true, completion: nil)

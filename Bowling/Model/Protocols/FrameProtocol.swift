@@ -9,9 +9,13 @@
 import Foundation
 
 protocol FrameProtocol {
-    var isLast: Bool { get set }
+    var isLast: Bool { get }
     var score: Int { get }
     var type: FrameType { get }
+    
+    var firstScore: Int?  { get }
+    var secondScore: Int? { get }
+    var thirdScore: Int?  { get }
     
     func bowl(with score: Int) -> Bool
     func appendBonus(_ score: Int)

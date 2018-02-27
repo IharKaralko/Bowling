@@ -88,7 +88,7 @@ private extension GameView {
     }
     
     func stateOfGameDidChage() {
-        scoreGame.text = "Player \(namePlayer.text ?? "Sasha") got \(viewModel.currentGame.scoreGame) "
+        scoreGame.text = "Player \(namePlayer.text ?? "Sasha") got \(viewModel.currentGame.score) "
     }
 }
 

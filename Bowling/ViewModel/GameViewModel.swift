@@ -51,7 +51,7 @@ private extension GameViewModel {
         }
         let availableScores = availableButtons(bowlScore)
             _pipe.input.send(value: GameView.Action.trowDidEnding(score: availableScores))
-          if !game.isOpenGame {
+          if !game.isOpen {
              _pipe.input.sendCompleted()
           }
     }
@@ -63,7 +63,7 @@ private extension GameViewModel {
             } else {
                 return 10
             }
-        } else if game.isOpenGame {
+        } else if game.isOpen {
             if let summSecond = finalFrameViewModel.frame?.secondScore {
                 let summ = (finalFrameViewModel.frame?.firstScore)! + summSecond
                 if summ == 20 || summ == 10 {
@@ -81,10 +81,10 @@ private extension GameViewModel {
     
     func changeScoreGame() {
         if frameNumber < framesViewModel.count  {                                             
-            framesViewModel[frameNumber].scoreGame = game.scoreGame
+            framesViewModel[frameNumber].scoreGame = game.score
             frameNumber += 1
         } else {
-            finalFrameViewModel.scoreGame = game.scoreGame
+            finalFrameViewModel.scoreGame = game.score
         }
     }
 }

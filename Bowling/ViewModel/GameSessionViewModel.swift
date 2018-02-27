@@ -49,7 +49,7 @@ private extension GameSessionViewModel {
     func stateOfGameChange() {
         countOfGameFinish += 1
         if countOfGameFinish == namesOfPlayer.count{
-            let max = gamesModels.max{$0.currentGame.scoreGame  < $1.currentGame.scoreGame}
+            let max = gamesModels.max{$0.currentGame.score  < $1.currentGame.score}
             if  let index = gamesModels.index(where: {$0 === max}){
                 _pipe.input.send(value: GameSessionViewController.Action.gameSessionCompleted(index: index))
             }

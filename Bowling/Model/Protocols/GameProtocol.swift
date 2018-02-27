@@ -12,10 +12,10 @@ import Result
 import ReactiveCocoa
 
 protocol GameProtocol {
-    var maxFrameCount: Int { get }
+    var maxFrame: Int { get }
     var score: Int { get }
     var isOpen: Bool{ get }
-    
+    var indexCurrentFrame: Int { get }
     func bowl(bowlScore: Int) -> Bool
 }
 
