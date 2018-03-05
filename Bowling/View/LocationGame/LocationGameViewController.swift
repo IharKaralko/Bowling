@@ -56,6 +56,15 @@ private extension LocationGameViewController {
     func createAnnotation(_ press: UILongPressGestureRecognizer){
         let location = press.location(in: mapView)
         let coordinates = mapView.convert(location, toCoordinateFrom: mapView)
+        
+//        let userLat = String(format: "%f", coordinates.latitude)
+//        let userLong = String(format: "%f", coordinates.longitude)
+//        let locationGame  = "latitude: \(userLat) + longitude: \(userLong)"
+//        print(userLat)
+//        print(userLong)
+//        print(stringLocation)
+      //  print(locationGame)
+       
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinates
         let coordinateLocation = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)

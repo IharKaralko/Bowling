@@ -57,6 +57,8 @@
 		4376D5E6204ABF870088AE58 /* LocationGameCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4376D5E5204ABF870088AE58 /* LocationGameCoordinator.swift */; };
 		4376D5EA204AE2290088AE58 /* СalloutLegView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4376D5E9204AE2290088AE58 /* СalloutLegView.swift */; };
 		43A71563203EE9E200DFA516 /*  FinalFrameViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A71562203EE9E200DFA516 /*  FinalFrameViewModelProtocol.swift */; };
+		43F91C89204D941C00659858 /* Bowling.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 43F91C87204D941C00659858 /* Bowling.xcdatamodeld */; };
+		43F91C8B204D946A00659858 /* CoreDataManager .swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F91C8A204D946A00659858 /* CoreDataManager .swift */; };
 		B94A91A75D03B5E1215A9E4D /* Pods_Bowling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36160B32C118AE7053BDB6AB /* Pods_Bowling.framework */; };
 /* End PBXBuildFile section */
 
@@ -126,6 +128,8 @@
 		4376D5E5204ABF870088AE58 /* LocationGameCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationGameCoordinator.swift; sourceTree = "<group>"; };
 		4376D5E9204AE2290088AE58 /* СalloutLegView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "СalloutLegView.swift"; sourceTree = "<group>"; };
 		43A71562203EE9E200DFA516 /*  FinalFrameViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " FinalFrameViewModelProtocol.swift"; sourceTree = "<group>"; };
+		43F91C88204D941C00659858 /* Bowling.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bowling.xcdatamodel; sourceTree = "<group>"; };
+		43F91C8A204D946A00659858 /* CoreDataManager .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataManager .swift"; sourceTree = "<group>"; };
 		9C81CE5FD2CA97B1D9439D8C /* Pods-Bowling.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bowling.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bowling/Pods-Bowling.release.xcconfig"; sourceTree = "<group>"; };
 		9E4C36FC439530462EA0329E /* Pods-Bowling.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bowling.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bowling/Pods-Bowling.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -217,6 +221,7 @@
 		434C7614200E0B7F00879242 /* Bowling */ = {
 			isa = PBXGroup;
 			children = (
+				43F91C86204D93D300659858 /* CoreData */,
 				4376D5DE204A870B0088AE58 /* Serviсe */,
 				435FBBCC2010DB530087E415 /* Coordinators */,
 				434C7629200E0BF700879242 /* View */,
@@ -345,6 +350,15 @@
 				4376D5DF204A87570088AE58 /* Service.swift */,
 			);
 			path = "Serviсe";
+			sourceTree = "<group>";
+		};
+		43F91C86204D93D300659858 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				43F91C87204D941C00659858 /* Bowling.xcdatamodeld */,
+				43F91C8A204D946A00659858 /* CoreDataManager .swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		BD6CC9596BCB8DDC928BE189 /* Frameworks */ = {
@@ -545,6 +559,7 @@
 			files = (
 				435FBBD42010F6640087E415 /* NamesOfPlayersCoordinator .swift in Sources */,
 				4346FD7A202C72F2003768B5 /* GameSessionCoordinator.swift in Sources */,
+				43F91C89204D941C00659858 /* Bowling.xcdatamodeld in Sources */,
 				4348EC3F2018825800B8E457 /* NamesOfPlayersProtocol .swift in Sources */,
 				4376D5E6204ABF870088AE58 /* LocationGameCoordinator.swift in Sources */,
 				434DB51220132E3100F3017A /* NamesOfPlayersTableViewCell.swift in Sources */,
@@ -559,6 +574,7 @@
 				4376D5EA204AE2290088AE58 /* СalloutLegView.swift in Sources */,
 				434C8CB62020A542003D8E42 /* FrameView.swift in Sources */,
 				434BDB052021C8500029BB85 /* GameSessionViewController.swift in Sources */,
+				43F91C8B204D946A00659858 /* CoreDataManager .swift in Sources */,
 				434D6840203EE30800133E51 /* FrameViewModelProtocol.swift in Sources */,
 				434C7633200E168A00879242 /* GameProtocol.swift in Sources */,
 				4352D84A202359240093011C /* GameViewModel.swift in Sources */,
@@ -810,6 +826,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		43F91C87204D941C00659858 /* Bowling.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				43F91C88204D941C00659858 /* Bowling.xcdatamodel */,
+			);
+			currentVersion = 43F91C88204D941C00659858 /* Bowling.xcdatamodel */;
+			path = Bowling.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 434C760A200E0B7F00879242 /* Project object */;
 }
