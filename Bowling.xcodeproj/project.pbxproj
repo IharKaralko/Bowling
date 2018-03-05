@@ -13,6 +13,10 @@
 		433DBA3E200F631C00732B20 /* CountOfPlayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433DBA3D200F631C00732B20 /* CountOfPlayerProtocol.swift */; };
 		4342F33220453B2D00D89C84 /* FrameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4342F33120453B2D00D89C84 /* FrameTests.swift */; };
 		4342F33420454F8300D89C84 /* GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4342F33320454F8300D89C84 /* GameTests.swift */; };
+		4345753C2049361300838CC9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4345753B2049361300838CC9 /* MapKit.framework */; };
+		4345754620495F0900838CC9 /* LocationGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4345754520495F0900838CC9 /* LocationGameViewModel.swift */; };
+		434575492049643C00838CC9 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434575472049643C00838CC9 /* DemoViewController.swift */; };
+		4345754A2049643C00838CC9 /* DemoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 434575482049643C00838CC9 /* DemoViewController.xib */; };
 		4346FD7A202C72F2003768B5 /* GameSessionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4346FD79202C72F2003768B5 /* GameSessionCoordinator.swift */; };
 		4348EC3F2018825800B8E457 /* NamesOfPlayersProtocol .swift in Sources */ = {isa = PBXBuildFile; fileRef = 4348EC3E2018825800B8E457 /* NamesOfPlayersProtocol .swift */; };
 		4348EC41201885DE00B8E457 /* NamesOfPlayersViewModel .swift in Sources */ = {isa = PBXBuildFile; fileRef = 4348EC40201885DE00B8E457 /* NamesOfPlayersViewModel .swift */; };
@@ -39,12 +43,19 @@
 		4352D84C2023595D0093011C /* GameSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4352D84B2023595D0093011C /* GameSessionViewModel.swift */; };
 		4352D84E202359A10093011C /* GameViewModelProtocol .swift in Sources */ = {isa = PBXBuildFile; fileRef = 4352D84D202359A10093011C /* GameViewModelProtocol .swift */; };
 		4352D850202359D80093011C /* GameSessionViewModelProtocol .swift in Sources */ = {isa = PBXBuildFile; fileRef = 4352D84F202359D80093011C /* GameSessionViewModelProtocol .swift */; };
+		435B2F1320482F6E005B564C /* LocationGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435B2F1120482F6E005B564C /* LocationGameViewController.swift */; };
+		435B2F1420482F6E005B564C /* LocationGameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 435B2F1220482F6E005B564C /* LocationGameViewController.xib */; };
+		435B2F18204830BD005B564C /* CustomCalloutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 435B2F17204830BD005B564C /* CustomCalloutView.xib */; };
+		435B2F1A204830EB005B564C /* CustomCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435B2F19204830EB005B564C /* CustomCalloutView.swift */; };
 		435FBBC52010AA770087E415 /* NamesOfPlayersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435FBBC42010AA770087E415 /* NamesOfPlayersViewController.swift */; };
 		435FBBCB2010CA8C0087E415 /* NamesOfPlayersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 435FBBCA2010CA8C0087E415 /* NamesOfPlayersView.xib */; };
 		435FBBD02010DD780087E415 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435FBBCF2010DD780087E415 /* AppCoordinator.swift */; };
 		435FBBD22010EC140087E415 /* CountOfPlayerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435FBBD12010EC140087E415 /* CountOfPlayerCoordinator.swift */; };
 		435FBBD42010F6640087E415 /* NamesOfPlayersCoordinator .swift in Sources */ = {isa = PBXBuildFile; fileRef = 435FBBD32010F6640087E415 /* NamesOfPlayersCoordinator .swift */; };
 		437187112024ABE60069645B /* FrameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437187102024ABE60069645B /* FrameViewModel.swift */; };
+		4376D5E0204A87570088AE58 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4376D5DF204A87570088AE58 /* Service.swift */; };
+		4376D5E6204ABF870088AE58 /* LocationGameCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4376D5E5204ABF870088AE58 /* LocationGameCoordinator.swift */; };
+		4376D5EA204AE2290088AE58 /* СalloutLegView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4376D5E9204AE2290088AE58 /* СalloutLegView.swift */; };
 		43A71563203EE9E200DFA516 /*  FinalFrameViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A71562203EE9E200DFA516 /*  FinalFrameViewModelProtocol.swift */; };
 		B94A91A75D03B5E1215A9E4D /* Pods_Bowling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36160B32C118AE7053BDB6AB /* Pods_Bowling.framework */; };
 /* End PBXBuildFile section */
@@ -67,6 +78,10 @@
 		433DBA3D200F631C00732B20 /* CountOfPlayerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountOfPlayerProtocol.swift; sourceTree = "<group>"; };
 		4342F33120453B2D00D89C84 /* FrameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameTests.swift; sourceTree = "<group>"; };
 		4342F33320454F8300D89C84 /* GameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTests.swift; sourceTree = "<group>"; };
+		4345753B2049361300838CC9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		4345754520495F0900838CC9 /* LocationGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationGameViewModel.swift; sourceTree = "<group>"; };
+		434575472049643C00838CC9 /* DemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
+		434575482049643C00838CC9 /* DemoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DemoViewController.xib; sourceTree = "<group>"; };
 		4346FD79202C72F2003768B5 /* GameSessionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSessionCoordinator.swift; sourceTree = "<group>"; };
 		4348EC3E2018825800B8E457 /* NamesOfPlayersProtocol .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NamesOfPlayersProtocol .swift"; sourceTree = "<group>"; };
 		4348EC40201885DE00B8E457 /* NamesOfPlayersViewModel .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NamesOfPlayersViewModel .swift"; sourceTree = "<group>"; };
@@ -95,6 +110,10 @@
 		4352D84B2023595D0093011C /* GameSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSessionViewModel.swift; sourceTree = "<group>"; };
 		4352D84D202359A10093011C /* GameViewModelProtocol .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameViewModelProtocol .swift"; sourceTree = "<group>"; };
 		4352D84F202359D80093011C /* GameSessionViewModelProtocol .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameSessionViewModelProtocol .swift"; sourceTree = "<group>"; };
+		435B2F1120482F6E005B564C /* LocationGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationGameViewController.swift; sourceTree = "<group>"; };
+		435B2F1220482F6E005B564C /* LocationGameViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationGameViewController.xib; sourceTree = "<group>"; };
+		435B2F17204830BD005B564C /* CustomCalloutView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomCalloutView.xib; sourceTree = "<group>"; };
+		435B2F19204830EB005B564C /* CustomCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalloutView.swift; sourceTree = "<group>"; };
 		435FBBC42010AA770087E415 /* NamesOfPlayersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamesOfPlayersViewController.swift; sourceTree = "<group>"; };
 		435FBBCA2010CA8C0087E415 /* NamesOfPlayersView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NamesOfPlayersView.xib; sourceTree = "<group>"; };
 		435FBBCF2010DD780087E415 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
@@ -103,6 +122,9 @@
 		436BA3DE20443DE800C5DF30 /* BowlingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BowlingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		436BA3E220443DE800C5DF30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		437187102024ABE60069645B /* FrameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameViewModel.swift; sourceTree = "<group>"; };
+		4376D5DF204A87570088AE58 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		4376D5E5204ABF870088AE58 /* LocationGameCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationGameCoordinator.swift; sourceTree = "<group>"; };
+		4376D5E9204AE2290088AE58 /* СalloutLegView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "СalloutLegView.swift"; sourceTree = "<group>"; };
 		43A71562203EE9E200DFA516 /*  FinalFrameViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " FinalFrameViewModelProtocol.swift"; sourceTree = "<group>"; };
 		9C81CE5FD2CA97B1D9439D8C /* Pods-Bowling.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bowling.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bowling/Pods-Bowling.release.xcconfig"; sourceTree = "<group>"; };
 		9E4C36FC439530462EA0329E /* Pods-Bowling.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bowling.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bowling/Pods-Bowling.debug.xcconfig"; sourceTree = "<group>"; };
@@ -113,6 +135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4345753C2049361300838CC9 /* MapKit.framework in Frameworks */,
 				B94A91A75D03B5E1215A9E4D /* Pods_Bowling.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -194,6 +217,7 @@
 		434C7614200E0B7F00879242 /* Bowling */ = {
 			isa = PBXGroup;
 			children = (
+				4376D5DE204A870B0088AE58 /* Serviсe */,
 				435FBBCC2010DB530087E415 /* Coordinators */,
 				434C7629200E0BF700879242 /* View */,
 				434C7628200E0BCF00879242 /* ViewModel */,
@@ -226,6 +250,7 @@
 				4352D84B2023595D0093011C /* GameSessionViewModel.swift */,
 				437187102024ABE60069645B /* FrameViewModel.swift */,
 				434B08532029C99B00EE5BB3 /* FinalFrameViewModel.swift */,
+				4345754520495F0900838CC9 /* LocationGameViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -233,6 +258,7 @@
 		434C7629200E0BF700879242 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				435B2F1520482F75005B564C /* LocationGame */,
 				434C8CB42020A179003D8E42 /* GameSession */,
 				434C8CB32020A133003D8E42 /* NamesOfPlayers */,
 				434C8CB22020A108003D8E42 /* CountOfPlayer */,
@@ -269,12 +295,35 @@
 			path = GameSession;
 			sourceTree = "<group>";
 		};
+		435B2F1520482F75005B564C /* LocationGame */ = {
+			isa = PBXGroup;
+			children = (
+				435B2F162048305D005B564C /* CustomCallout */,
+				435B2F1120482F6E005B564C /* LocationGameViewController.swift */,
+				435B2F1220482F6E005B564C /* LocationGameViewController.xib */,
+				434575472049643C00838CC9 /* DemoViewController.swift */,
+				434575482049643C00838CC9 /* DemoViewController.xib */,
+				4376D5E9204AE2290088AE58 /* СalloutLegView.swift */,
+			);
+			path = LocationGame;
+			sourceTree = "<group>";
+		};
+		435B2F162048305D005B564C /* CustomCallout */ = {
+			isa = PBXGroup;
+			children = (
+				435B2F17204830BD005B564C /* CustomCalloutView.xib */,
+				435B2F19204830EB005B564C /* CustomCalloutView.swift */,
+			);
+			path = CustomCallout;
+			sourceTree = "<group>";
+		};
 		435FBBCC2010DB530087E415 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
 				435FBBCF2010DD780087E415 /* AppCoordinator.swift */,
 				435FBBD12010EC140087E415 /* CountOfPlayerCoordinator.swift */,
 				435FBBD32010F6640087E415 /* NamesOfPlayersCoordinator .swift */,
+				4376D5E5204ABF870088AE58 /* LocationGameCoordinator.swift */,
 				4346FD79202C72F2003768B5 /* GameSessionCoordinator.swift */,
 			);
 			path = Coordinators;
@@ -290,9 +339,18 @@
 			path = BowlingTests;
 			sourceTree = "<group>";
 		};
+		4376D5DE204A870B0088AE58 /* Serviсe */ = {
+			isa = PBXGroup;
+			children = (
+				4376D5DF204A87570088AE58 /* Service.swift */,
+			);
+			path = "Serviсe";
+			sourceTree = "<group>";
+		};
 		BD6CC9596BCB8DDC928BE189 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4345753B2049361300838CC9 /* MapKit.framework */,
 				36160B32C118AE7053BDB6AB /* Pods_Bowling.framework */,
 			);
 			name = Frameworks;
@@ -361,6 +419,11 @@
 					434C7611200E0B7F00879242 = {
 						CreatedOnToolsVersion = 9.1;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					436BA3DD20443DE800C5DF30 = {
 						CreatedOnToolsVersion = 9.1;
@@ -398,6 +461,9 @@
 				434C8CB82020A557003D8E42 /* FrameView.xib in Resources */,
 				434BDB062021C8500029BB85 /* GameSessionViewController.xib in Resources */,
 				434C8CBC2020B1F1003D8E42 /* GameView.xib in Resources */,
+				435B2F18204830BD005B564C /* CustomCalloutView.xib in Resources */,
+				435B2F1420482F6E005B564C /* LocationGameViewController.xib in Resources */,
+				4345754A2049643C00838CC9 /* DemoViewController.xib in Resources */,
 				435FBBCB2010CA8C0087E415 /* NamesOfPlayersView.xib in Resources */,
 				434C761D200E0B8000879242 /* Assets.xcassets in Resources */,
 				434DB51320132E3100F3017A /* NamesOfPlayersTableViewCell.xib in Resources */,
@@ -480,6 +546,7 @@
 				435FBBD42010F6640087E415 /* NamesOfPlayersCoordinator .swift in Sources */,
 				4346FD7A202C72F2003768B5 /* GameSessionCoordinator.swift in Sources */,
 				4348EC3F2018825800B8E457 /* NamesOfPlayersProtocol .swift in Sources */,
+				4376D5E6204ABF870088AE58 /* LocationGameCoordinator.swift in Sources */,
 				434DB51220132E3100F3017A /* NamesOfPlayersTableViewCell.swift in Sources */,
 				43A71563203EE9E200DFA516 /*  FinalFrameViewModelProtocol.swift in Sources */,
 				435FBBC52010AA770087E415 /* NamesOfPlayersViewController.swift in Sources */,
@@ -488,6 +555,8 @@
 				4352D850202359D80093011C /* GameSessionViewModelProtocol .swift in Sources */,
 				437187112024ABE60069645B /* FrameViewModel.swift in Sources */,
 				433DBA3E200F631C00732B20 /* CountOfPlayerProtocol.swift in Sources */,
+				4376D5E0204A87570088AE58 /* Service.swift in Sources */,
+				4376D5EA204AE2290088AE58 /* СalloutLegView.swift in Sources */,
 				434C8CB62020A542003D8E42 /* FrameView.swift in Sources */,
 				434BDB052021C8500029BB85 /* GameSessionViewController.swift in Sources */,
 				434D6840203EE30800133E51 /* FrameViewModelProtocol.swift in Sources */,
@@ -496,10 +565,14 @@
 				435FBBD22010EC140087E415 /* CountOfPlayerCoordinator.swift in Sources */,
 				434C7631200E146B00879242 /* Frame.swift in Sources */,
 				434C8CBA2020B1D4003D8E42 /* GameView.swift in Sources */,
+				435B2F1320482F6E005B564C /* LocationGameViewController.swift in Sources */,
 				433DBA3B200F627400732B20 /* CountOfPlayerViewModel.swift in Sources */,
+				4345754620495F0900838CC9 /* LocationGameViewModel.swift in Sources */,
 				4352D84E202359A10093011C /* GameViewModelProtocol .swift in Sources */,
 				434BDB082021CC190029BB85 /* FinalFrameView.swift in Sources */,
 				4348EC41201885DE00B8E457 /* NamesOfPlayersViewModel .swift in Sources */,
+				435B2F1A204830EB005B564C /* CustomCalloutView.swift in Sources */,
+				434575492049643C00838CC9 /* DemoViewController.swift in Sources */,
 				434C7616200E0B7F00879242 /* AppDelegate.swift in Sources */,
 				433DBA39200F61A200732B20 /* CountOfPlayerViewController.swift in Sources */,
 				4352D84C2023595D0093011C /* GameSessionViewModel.swift in Sources */,

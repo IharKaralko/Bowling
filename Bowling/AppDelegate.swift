@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        appCoordinator.start()
         let locationGameViewController = LocationGameViewController()
         let navController = UINavigationController(rootViewController: locationGameViewController)
+//        let demoViewController = DemoViewController()
+//        let navController = UINavigationController(rootViewController: demoViewController)
         window?.rootViewController = navController
         window?.makeKeyAndVisible()
         return true

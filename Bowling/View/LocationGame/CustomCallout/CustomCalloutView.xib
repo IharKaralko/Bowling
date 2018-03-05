@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomCalloutView" customModule="Bowling" customModuleProvider="target">
+            <connections>
+                <outlet property="adressLabel" destination="1QH-PD-TG7" id="tDD-YT-2ju"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="aJj-Q5-iv4"/>
+                <outlet property="image" destination="YGC-ht-VqC" id="v1M-it-kkE"/>
+                <outlet property="placeLabel" destination="M0H-WZ-be6" id="Me9-p7-Kvi"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="738" height="416"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YGC-ht-VqC">
+                    <rect key="frame" x="0.0" y="0.0" width="416" height="416"/>
+                    <color key="backgroundColor" red="0.0" green="0.99143940210000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="YGC-ht-VqC" secondAttribute="height" multiplier="1:1" id="EuL-Nf-0zQ"/>
+                    </constraints>
+                </imageView>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="RgF-7R-amO">
+                    <rect key="frame" x="416" y="0.0" width="396.5" height="416"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M0H-WZ-be6">
+                            <rect key="frame" x="0.0" y="0.0" width="396.5" height="13.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1QH-PD-TG7">
+                            <rect key="frame" x="0.0" y="13.5" width="396.5" height="342.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqX-GO-cXC">
+                            <rect key="frame" x="0.0" y="356" width="396.5" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="1YC-Yg-LzP"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <state key="normal" title="Begin Game!"/>
+                            <connections>
+                                <action selector="beginGameAction:" destination="-1" eventType="touchUpInside" id="Vbe-oe-erD"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="0.53172433035714284" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="YGC-ht-VqC" secondAttribute="bottom" id="0U1-Me-xwl"/>
+                <constraint firstItem="YGC-ht-VqC" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="J05-oA-zTw"/>
+                <constraint firstItem="RgF-7R-amO" firstAttribute="leading" secondItem="YGC-ht-VqC" secondAttribute="trailing" id="LiC-HQ-Vnu"/>
+                <constraint firstItem="YGC-ht-VqC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="NNc-Gl-R1x"/>
+                <constraint firstAttribute="bottom" secondItem="RgF-7R-amO" secondAttribute="bottom" id="fND-yu-Kdn"/>
+                <constraint firstAttribute="trailing" secondItem="RgF-7R-amO" secondAttribute="trailing" id="kLr-Hi-5wI"/>
+                <constraint firstItem="RgF-7R-amO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="l3Z-xL-nvK"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="145" y="-39"/>
+        </view>
+    </objects>
+</document>
