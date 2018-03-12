@@ -34,7 +34,7 @@ class CalloutLegView: UIView {
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = path.cgPath
         shapeLayer.fillColor = UIColor.yellow.cgColor
-        self.layer.addSublayer(shapeLayer)
+      //  self.layer.addSublayer(shapeLayer)
         self.layer.mask = shapeLayer
     }
     
