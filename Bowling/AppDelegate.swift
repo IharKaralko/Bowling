@@ -115,16 +115,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
               window = UIWindow(frame:UIScreen.main.bounds)
-//        appCoordinator = AppCoordinator(window: window!)
-//        appCoordinator.start()
-        let locationGameViewController = LocationGameViewController()
-        let navController = UINavigationController(rootViewController: locationGameViewController)
+        appCoordinator = AppCoordinator(window: window!)
+        appCoordinator.start()
+//        let locationGameViewController = LocationGameViewController()
+//        let navController = UINavigationController(rootViewController: locationGameViewController)
 //        let demoViewController = DemoViewController()
 //        let navController = UINavigationController(rootViewController: demoViewController)
 //          let initialPageViewController = InitialPageViewController()
       //    let navController = UINavigationController(rootViewController: initialPageViewController)
-         window?.rootViewController = navController
-         window?.makeKeyAndVisible()
+//         window?.rootViewController = navController
+//         window?.makeKeyAndVisible()
         return true
     }
 

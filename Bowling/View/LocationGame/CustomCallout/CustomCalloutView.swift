@@ -10,7 +10,7 @@ import UIKit
 
 class CustomCalloutView: UIView {
     
-  //  var viewModel: CalloutViewModel! // =  CalloutViewModel()
+  var viewModel: CalloutViewModelProtocol! // =  CalloutViewModel()
     
     @IBOutlet private weak var contentView: UIView!
     @IBOutlet private weak var image: UIImageView!
@@ -19,7 +19,7 @@ class CustomCalloutView: UIView {
  
     @IBAction func beginGame(_ sender: Any) {
         print("Go")
-       // viewModel.beginGameButtonPress()
+        viewModel.beginNewGame()
     }
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {

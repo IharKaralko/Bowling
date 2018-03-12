@@ -15,6 +15,8 @@ class CountOfPlayerViewModel {
     private var _pipe = Signal<CountOfPlayerCoordinator.Action, NoError>.pipe()
     private var inputNumber: Int = 10
     private var inputNumbersOfPlayersAction: Action<Int, Void, NoError>!
+    private var doneBackAction: Action<Void, Void, NoError>!
+    
     
     init() {
         self.inputNumbersOfPlayersAction = Action() { [weak self] input in
@@ -23,6 +25,14 @@ class CountOfPlayerViewModel {
                 observer.sendCompleted()
             }
         }
+        
+        self.doneBackAction = Action() { [weak self]  in
+            return SignalProducer { observer, _ in
+                self?._pipe.input.sendCompleted()
+                observer.sendCompleted()
+            }
+        }
+        
     }
 }
 
@@ -34,6 +44,8 @@ extension CountOfPlayerViewModel: CountOfPlayerProtocol {
     var getNumbersOfPlayersAction: Action<Int, Void, NoError> {
         return inputNumbersOfPlayersAction
     }
+    var backCancelAction: Action< Void, Void, NoError>  { return doneBackAction }
+    
 }
 
 // MARK: - CountOfPlayerOutputProtocol

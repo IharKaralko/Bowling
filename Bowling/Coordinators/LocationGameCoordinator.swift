@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 import ReactiveSwift
 import Result
 import ReactiveCocoa
@@ -45,6 +46,9 @@ extension  LocationGameCoordinator {
         let viewModel = LocationGameViewModel()
         locationGameViewController.viewModel = viewModel
         
+        bindViewModel(viewModel)
+//        navController.pushViewController(countOfPlayerViewController, animated: true)
+        
 //        viewModel.calloutViewModel.output.observeCompleted {
 //            [weak self] in
 //            self?.show()
@@ -56,15 +60,49 @@ extension  LocationGameCoordinator {
         navigController?.pushViewController(locationGameViewController, animated: true)
         return _pipe.output
     }
-    func show() {
-        guard let navigController = navigController else { return }
-       let countOfPlayerCoordinator = CountOfPlayerCoordinator(navigController)
-        countOfPlayerCoordinator.start()
+    
+    func bindViewModel(_ viewModel: LocationGameViewModelOutputProtocol) {
+        viewModel.output.observeValues { [weak self] value in
+            switch value {
+            case .selectLocationOfGame(let location):
+                self?.locationGameDidSelect(location)
+            }
+        }
+        
+        viewModel.output.observeCompleted { [weak self] in
+            self?.navigController?.popViewController(animated: true)
+            self?._pipe.input.sendCompleted()
+        }
+        
     }
     
-}
+    func locationGameDidSelect(_ location: CLLocationCoordinate2D) {
+        guard let navigController = navigController else { return }
+       var countOfPlayerCoordinator: Optional<CountOfPlayerCoordinator> = CountOfPlayerCoordinator(navigController, location)
+        let output = countOfPlayerCoordinator!.start()
+        output.observeCompleted {
+            countOfPlayerCoordinator = nil
+        }
+        
+//        let countOfPlayerCoordinator = CountOfPlayerCoordinator(navigController)
+//        countOfPlayerCoordinator.start()
+    }
+    
+//    func countOfPlayerDidSelect(_ count: Int) {
+//        guard let navController = navController else { return }
+//
+//        var namesOfPlayersCoordinator: Optional<NamesOfPlayersCoordinator> = NamesOfPlayersCoordinator(navController, count)
+//        let output = namesOfPlayersCoordinator!.start()
+//        output.observeCompleted {
+//            namesOfPlayersCoordinator = nil
+//        }
+    }
+    
+    
+    
+
 extension LocationGameCoordinator {
     enum Action {
-    case selectLocationOfGame(location: Int)
+    case selectLocationOfGame(location: CLLocationCoordinate2D)
 }
 }

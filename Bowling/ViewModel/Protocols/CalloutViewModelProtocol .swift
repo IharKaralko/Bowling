@@ -15,3 +15,7 @@ protocol CalloutViewModelOutputProtocol {
     var output: Signal<Void, NoError> { get }
 }
 
+protocol CalloutViewModelProtocol {
+     func beginNewGame()
+    
+}

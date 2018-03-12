@@ -9,18 +9,24 @@
 import UIKit
 import MapKit
 import CoreLocation
+import ReactiveSwift
+import Result
+import ReactiveCocoa
 
 class LocationGameViewController: UIViewController {
     
-    var viewModel: LocationGameViewModel! //  = LocationGameViewModel(calloutViewModel: <#CalloutViewModel#>)
+    var viewModel: LocationGameViewModel = LocationGameViewModel() //   Protocol!
+   
+    
     @IBOutlet weak var mapView: MKMapView!
-    
-  
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUserLocation()
+        
+        let locationManager = CLLocationManager()
+        locationManager.requestWhenInUseAuthorization()
+        mapView.showsUserLocation = true
+       //setupUserLocation()
         setupBarButton()
         setupGestureRecognizer()
         self.mapView.delegate = self
@@ -28,16 +34,16 @@ class LocationGameViewController: UIViewController {
 }
 
 private extension LocationGameViewController {
-    func setupUserLocation(){
-        let locationManager = CLLocationManager()
-        locationManager.requestWhenInUseAuthorization()
-        mapView.showsUserLocation = true
-    }
+//    func setupUserLocation(){
+//        let locationManager = CLLocationManager()
+//        locationManager.requestWhenInUseAuthorization()
+//        mapView.showsUserLocation = true
+//    }
     
     func setupBarButton(){
         self.navigationItem.title = "Select plase of game session"
         let done = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
-        //   done.reactive.pressed = CocoaAction(viewModel.backCancelAction)
+         done.reactive.pressed = CocoaAction(viewModel.backCancelAction)
         navigationItem.setLeftBarButton(done, animated: false)
     }
     
@@ -59,7 +65,7 @@ private extension LocationGameViewController {
     func createAnnotation(_ press: UILongPressGestureRecognizer){
         let location = press.location(in: mapView)
         let coordinates = mapView.convert(location, toCoordinateFrom: mapView)
-       // viewModel.coordinateLocation = coordinates
+        viewModel.coordinateLocation = coordinates
         //        let userLat = String(format: "%f", coordinates.latitude)
 //        let userLong = String(format: "%f", coordinates.longitude)
 //        let locationGame  = "latitude: \(userLat) + longitude: \(userLong)"
@@ -71,7 +77,7 @@ private extension LocationGameViewController {
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinates
         let coordinateLocation = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
-        viewModel.fetchAdressLocation(location:  coordinateLocation)  { [weak annotation] adressLocation  in
+        viewModel.getAdressLocation(location:  coordinateLocation)  { [weak annotation] adressLocation  in
             annotation?.subtitle = adressLocation.adress
         }
         mapView.addAnnotation(annotation)
@@ -102,8 +108,15 @@ extension LocationGameViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view.annotation else {return}
         let calloutView = CustomCalloutView()
-//        let calloutViewModel = CalloutViewModel()
-//        calloutView.viewModel = calloutViewModel
+        let calloutViewModel = CalloutViewModel()
+        calloutView.viewModel = calloutViewModel
+        
+        viewModel.calloutViewModel = calloutViewModel
+        viewModel.calloutViewModel.output.observeCompleted {[weak self] in
+            self?.viewModel.locationGameDidSelect()
+           
+        }
+        
         
         let demoView = CalloutLegView()
 

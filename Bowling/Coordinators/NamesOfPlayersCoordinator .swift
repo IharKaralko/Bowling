@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 import ReactiveSwift
 import Result
 import ReactiveCocoa
@@ -20,14 +21,17 @@ class NamesOfPlayersCoordinator {
     deinit {
         print("NamesOfPlayersCoordinator deinit")
     }
+    
+    private let location: CLLocationCoordinate2D
     private weak var navigationController: UINavigationController?
     private let _pipe = Signal<NamesOfPlayersCoordinator.Output, NoError>.pipe()
     private let countOfPlayers: Int
     
-    init(_ navigationController: UINavigationController, _ countOfPlayers: Int) {
+    init(_ navigationController: UINavigationController, _ countOfPlayers: Int, _ location: CLLocationCoordinate2D){
         self.navigationController = navigationController
         self.countOfPlayers = countOfPlayers
-     }
+        self.location = location
+    }
 }
 
 extension NamesOfPlayersCoordinator: NamesOfPlayersCoordinatorProtocol {

@@ -72,6 +72,7 @@
 		4376D5EA204AE2290088AE58 /* СalloutLegView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4376D5E9204AE2290088AE58 /* СalloutLegView.swift */; };
 		437A5DE9205675F0002C50D5 /* AnnotationView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 437A5DE8205675F0002C50D5 /* AnnotationView .swift */; };
 		43A71563203EE9E200DFA516 /*  FinalFrameViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A71562203EE9E200DFA516 /*  FinalFrameViewModelProtocol.swift */; };
+		43B58EE22056D9D300EB38B2 /* ConfigurationGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B58EE12056D9D300EB38B2 /* ConfigurationGame.swift */; };
 		43F91C89204D941C00659858 /* Bowling.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 43F91C87204D941C00659858 /* Bowling.xcdatamodeld */; };
 		43F91C8B204D946A00659858 /* CoreDataManager .swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F91C8A204D946A00659858 /* CoreDataManager .swift */; };
 		B94A91A75D03B5E1215A9E4D /* Pods_Bowling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36160B32C118AE7053BDB6AB /* Pods_Bowling.framework */; };
@@ -158,6 +159,7 @@
 		4376D5E9204AE2290088AE58 /* СalloutLegView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "СalloutLegView.swift"; sourceTree = "<group>"; };
 		437A5DE8205675F0002C50D5 /* AnnotationView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnnotationView .swift"; sourceTree = "<group>"; };
 		43A71562203EE9E200DFA516 /*  FinalFrameViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " FinalFrameViewModelProtocol.swift"; sourceTree = "<group>"; };
+		43B58EE12056D9D300EB38B2 /* ConfigurationGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationGame.swift; sourceTree = "<group>"; };
 		43F91C88204D941C00659858 /* Bowling.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bowling.xcdatamodel; sourceTree = "<group>"; };
 		43F91C8A204D946A00659858 /* CoreDataManager .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataManager .swift"; sourceTree = "<group>"; };
 		9C81CE5FD2CA97B1D9439D8C /* Pods-Bowling.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bowling.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bowling/Pods-Bowling.release.xcconfig"; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 				43503A6A204EB5C200FF5142 /* Player .swift */,
 				43503A66204EB49300FF5142 /* Location .swift */,
 				434C7630200E146B00879242 /* Frame.swift */,
+				43B58EE12056D9D300EB38B2 /* ConfigurationGame.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -655,6 +658,7 @@
 				434BDB082021CC190029BB85 /* FinalFrameView.swift in Sources */,
 				4348EC41201885DE00B8E457 /* NamesOfPlayersViewModel .swift in Sources */,
 				435B2F1A204830EB005B564C /* CustomCalloutView.swift in Sources */,
+				43B58EE22056D9D300EB38B2 /* ConfigurationGame.swift in Sources */,
 				434575492049643C00838CC9 /* DemoViewController.swift in Sources */,
 				434C7616200E0B7F00879242 /* AppDelegate.swift in Sources */,
 				433DBA39200F61A200732B20 /* CountOfPlayerViewController.swift in Sources */,
@@ -810,6 +814,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Bowling/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = senla.Bowling;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -825,6 +830,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Bowling/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = senla.Bowling;
 				PRODUCT_NAME = "$(TARGET_NAME)";

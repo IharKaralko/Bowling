@@ -26,4 +26,10 @@ class CalloutViewModel {
 extension CalloutViewModel: CalloutViewModelOutputProtocol {
     var output: Signal<Void, NoError> { return _pipe.output }
 }
-
+extension CalloutViewModel: CalloutViewModelProtocol {
+    func beginNewGame(){
+         beginGameButtonPress()
+        
+    }
+    
+}

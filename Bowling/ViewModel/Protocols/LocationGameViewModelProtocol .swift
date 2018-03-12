@@ -7,10 +7,17 @@
 //
 
 import Foundation
+import MapKit
 import ReactiveSwift
 import Result
 import ReactiveCocoa
 
 protocol LocationGameViewModelOutputProtocol {
-    var output: Signal<GameSessionViewModel.Action, NoError> { get }
+    var output: Signal<LocationGameCoordinator.Action, NoError> { get }
+}
+protocol LocationGameViewModelProtocol {
+        
+func getAdressLocation(location: CLLocation, completion: @escaping (AdressLocation) -> ())
+    var backCancelAction: Action< Void, Void, NoError> { get }
+    
 }

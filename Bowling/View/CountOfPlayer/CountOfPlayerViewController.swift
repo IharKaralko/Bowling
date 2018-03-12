@@ -24,6 +24,8 @@ class CountOfPlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
+         setupBarButton()
+        
     }
 }
 
@@ -39,6 +41,14 @@ private extension CountOfPlayerViewController {
             }
         }
         inputButton.reactive.pressed = CocoaAction(action)
+    }
+    
+    func  setupBarButton(){
+        
+        let done = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
+        done.reactive.pressed = CocoaAction(viewModel.backCancelAction)
+        navigationItem.setLeftBarButton(done, animated: false)
+        
     }
     
     func startButtonTapped() {

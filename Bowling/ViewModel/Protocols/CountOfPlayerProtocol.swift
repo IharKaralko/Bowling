@@ -18,4 +18,6 @@ protocol CountOfPlayerOutputProtocol {
 protocol CountOfPlayerProtocol {
     var getNumbersOfPlayersAction: Action<Int, Void, NoError> { get }
     var numberOfPlayers:  Int { get }
+    var backCancelAction: Action< Void, Void, NoError> { get }
+    
 }
