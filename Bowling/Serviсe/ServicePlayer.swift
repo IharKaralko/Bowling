@@ -12,12 +12,12 @@ import CoreData
 
 class ServicePlayer {
     
-    func getPlayersOfGame(currentGame: GameHistory) -> [Player]{
+    func getPlayersOfGameHistory(currentGameId: String) -> [Player]{
         
         var players = [Player]()
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CDPlayer")
-        fetchRequest.predicate = NSPredicate(format: "game.id = %@", currentGame.id!)
+        fetchRequest.predicate = NSPredicate(format: "game.id = %@", currentGameId)
         fetchRequest.sortDescriptors = [NSSortDescriptor.init(key: "scoreGame",
                                                               ascending: false)]
         
@@ -25,7 +25,7 @@ class ServicePlayer {
             let results = try CoreDataManager.instance.persistentContainer.viewContext.fetch(fetchRequest)
             for result in results as! [CDPlayer] {
                 var player = Player()
-                player.id =  result.id?.description
+                player.id =  result.id
                 player.name = result.name
                 player.scoreGame = Int(result.scoreGame)
                 players.append(player)
@@ -38,21 +38,21 @@ class ServicePlayer {
     }
     
     // Creates a new [CDPlayer] for CDGame
-    func createPlayersOfGame(names: [String], scoreGames: [Int], location: String)  {
+    func createPlayersOfGameHistory(location: String, idGameSession: String, gamesModel: [GameViewModel])  {
         
         let serviceGameHistory  = ServiceGameHistory()
-         let cdGameHistory = serviceGameHistory.create(countOfPlayers: names.count, location: location)
+        let cdGameHistory = serviceGameHistory.create(countOfPlayers: gamesModel.count, location: location, idGameSession: idGameSession)
         
-        for index in 0 ... names.count - 1 {
+        for index in 0 ... gamesModel.count - 1 {
         // Описание сущности
         let entityDescription = NSEntityDescription.entity(forEntityName: "CDPlayer", in: CoreDataManager.instance.persistentContainer.viewContext)
         
         // Создание нового объекта
         let newItem = NSManagedObject(entity: entityDescription!, insertInto: CoreDataManager.instance.persistentContainer.viewContext)
         
-        newItem.setValue(UUID(), forKey: "id")
-        newItem.setValue(names[index], forKey: "name")
-        newItem.setValue(Int16(scoreGames[index]), forKey: "scoreGame")
+        newItem.setValue(gamesModel[index].idCurrentGame, forKey: "id")
+        newItem.setValue(gamesModel[index].nameOfPlayerCurrentGame, forKey: "name")
+        newItem.setValue(0, forKey: "scoreGame")
         
        // let cdGameHistory = serviceGameHistory.create(countOfPlayers: countOfPlayers, location: location)
         newItem.setValue(cdGameHistory, forKey: "game")
@@ -60,6 +60,13 @@ class ServicePlayer {
         CoreDataManager.instance.saveContext()
         }
     }
+    
+    func updateScoreGame(idCurrentGame: String){
+        
+        
+    }
+    
+    
     func deleteAll(){
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CDPlayer")
         do {

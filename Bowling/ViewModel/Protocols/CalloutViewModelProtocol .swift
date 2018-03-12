@@ -7,3 +7,11 @@
 //
 
 import Foundation
+import ReactiveSwift
+import Result
+import ReactiveCocoa
+
+protocol CalloutViewModelOutputProtocol {
+    var output: Signal<Void, NoError> { get }
+}
+

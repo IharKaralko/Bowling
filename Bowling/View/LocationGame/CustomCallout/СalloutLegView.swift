@@ -44,7 +44,6 @@ class CalloutLegView: UIView {
         path.addLine(to: CGPoint(x: 0.0, y: self.frame.size.height))
         path.addLine(to: CGPoint(x: self.frame.size.width, y: self.frame.size.height))
         path.close()
-         clipsToBounds = true
         
     }
  

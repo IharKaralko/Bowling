@@ -53,7 +53,7 @@
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <state key="normal" title="Begin Game!"/>
                             <connections>
-                                <action selector="beginGameAction:" destination="-1" eventType="touchUpInside" id="Vbe-oe-erD"/>
+                                <action selector="beginGame:" destination="-1" eventType="touchUpInside" id="pw8-qG-bAb"/>
                             </connections>
                         </button>
                     </subviews>

@@ -12,6 +12,7 @@ import ReactiveSwift
 import Result
 
 protocol GameSessionViewModelProtocol {
+    var idCurrentGameSession: String { get }
     var listNamesOfPlayer: [String]{ get }
     var gamesModelsOfGameSession: [GameViewModel] { get }
     var output: Signal<GameSessionViewController.Action, NoError> { get }

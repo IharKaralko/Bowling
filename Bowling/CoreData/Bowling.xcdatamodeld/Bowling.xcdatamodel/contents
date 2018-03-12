@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13533" systemVersion="17B1003" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="GamingSession" representedClassName="GamingSession" syncable="YES" codeGenerationType="class">
-        <attribute name="countOfPlayers" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+    <entity name="CDGame" representedClassName="CDGame" syncable="YES" codeGenerationType="class">
+        <attribute name="countOfPlayers" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CDLocation" inverseName="games" inverseEntity="CDLocation" syncable="YES"/>
+        <relationship name="players" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDPlayer" inverseName="game" inverseEntity="CDPlayer" syncable="YES"/>
     </entity>
-    <entity name="LocationGame" representedClassName="LocationGame" syncable="YES" codeGenerationType="class">
-        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="CDLocation" representedClassName="CDLocation" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="location" attributeType="String" syncable="YES"/>
+        <relationship name="games" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDGame" inverseName="location" inverseEntity="CDGame" syncable="YES"/>
     </entity>
-    <entity name="Player" representedClassName="Player" syncable="YES" codeGenerationType="class">
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="scoreGame" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+    <entity name="CDPlayer" representedClassName="CDPlayer" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="scoreGame" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="game" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CDGame" inverseName="players" inverseEntity="CDGame" syncable="YES"/>
     </entity>
     <elements>
-        <element name="LocationGame" positionX="-63" positionY="-18" width="128" height="60"/>
-        <element name="GamingSession" positionX="-54" positionY="0" width="128" height="75"/>
-        <element name="Player" positionX="-36" positionY="27" width="128" height="75"/>
+        <element name="CDGame" positionX="-54" positionY="0" width="128" height="120"/>
+        <element name="CDLocation" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="CDPlayer" positionX="-36" positionY="27" width="128" height="105"/>
     </elements>
 </model>

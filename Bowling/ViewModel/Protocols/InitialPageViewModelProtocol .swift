@@ -7,3 +7,17 @@
 //
 
 import Foundation
+import ReactiveSwift
+import Result
+import ReactiveCocoa
+
+protocol InitialPageViewModelProtocol {
+    
+    var beginNewGameAction: Action<Void, Void, NoError> { get }
+    var goToHistoryAction: Action<Void, Void, NoError> { get }
+    
+}
+
+protocol InitialPageViewModelOutputProtocol {
+    var output: Signal<InitialPageCoordinator.Action, NoError> { get }
+}

@@ -10,7 +10,7 @@ import UIKit
 
 class AppCoordinator {
     private weak var window: UIWindow?
-    private var countOfPlayerCoordinator: CountOfPlayerCoordinatorProtocol!
+    private var initialPageCoordinator: InitialPageCoordinatorProtocol!
     private var navController: UINavigationController?
     
     init(window: UIWindow)
@@ -25,13 +25,13 @@ extension AppCoordinator {
         navController = UINavigationController()
         window?.rootViewController = navController
         window?.makeKeyAndVisible()
-        showCountOfPlayers()
+        showInitialPage()
     }
     
-    func showCountOfPlayers() {
+    func showInitialPage() {
         guard let navController = navController else { return }
-        countOfPlayerCoordinator = CountOfPlayerCoordinator(navController)
-        countOfPlayerCoordinator.start()
+        initialPageCoordinator = InitialPageCoordinator(navController)
+        initialPageCoordinator.start()
     }
 }
 

@@ -12,8 +12,11 @@ import CoreLocation
 
 class LocationGameViewController: UIViewController {
     
-    var viewModel: LocationGameViewModel = LocationGameViewModel()
+    var viewModel: LocationGameViewModel! //  = LocationGameViewModel(calloutViewModel: <#CalloutViewModel#>)
     @IBOutlet weak var mapView: MKMapView!
+    
+  
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,8 +59,8 @@ private extension LocationGameViewController {
     func createAnnotation(_ press: UILongPressGestureRecognizer){
         let location = press.location(in: mapView)
         let coordinates = mapView.convert(location, toCoordinateFrom: mapView)
-        
-//        let userLat = String(format: "%f", coordinates.latitude)
+       // viewModel.coordinateLocation = coordinates
+        //        let userLat = String(format: "%f", coordinates.latitude)
 //        let userLong = String(format: "%f", coordinates.longitude)
 //        let locationGame  = "latitude: \(userLat) + longitude: \(userLong)"
 //        print(userLat)
@@ -79,14 +82,14 @@ extension LocationGameViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         if annotation is MKUserLocation {
-            let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "User")
+            let annotationView = AnnotationView(annotation: annotation, reuseIdentifier: "User")
             annotationView.canShowCallout = false
             annotationView.image = #imageLiteral(resourceName: "userPlace")
             return annotationView
         }  else {
             var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: "Pin")
             if annotationView == nil{
-                annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "Pin")
+                annotationView = AnnotationView(annotation: annotation, reuseIdentifier: "Pin")
                 annotationView?.canShowCallout = false
             } else {
                 annotationView?.annotation = annotation
@@ -99,18 +102,21 @@ extension LocationGameViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view.annotation else {return}
         let calloutView = CustomCalloutView()
-        let demoView = CalloutLegView()
-      
-        demoView.center = CGPoint(x: view.bounds.size.width / 2, y: -demoView.bounds.size.height / 2)
+//        let calloutViewModel = CalloutViewModel()
+//        calloutView.viewModel = calloutViewModel
         
+        let demoView = CalloutLegView()
+
+        demoView.center = CGPoint(x: view.bounds.size.width / 2, y: -demoView.bounds.size.height / 2)
+
         view.addSubview(demoView)
         
         if let subtitle = annotation.subtitle {
             calloutView.fillAdress(subtitle)
         }
-        calloutView.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutView.bounds.height/2 - demoView.bounds.size.height) 
+        calloutView.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutView.bounds.height/2 - demoView.bounds.size.height)
         view.addSubview(calloutView)
-        mapView.setCenter(annotation.coordinate, animated: true)
+         mapView.setCenter(annotation.coordinate, animated: true)
        }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {

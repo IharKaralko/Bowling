@@ -5,31 +5,35 @@
 //  Created by Ihar_Karalko on 07.03.2018.
 //  Copyright © 2018 Ihar_Karalko. All rights reserved.
 //
-
 import UIKit
+import ReactiveSwift
+import Result
+import ReactiveCocoa
 
 class InitialPageViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBOutlet weak var startNewGameButton: UIButton!
+    @IBOutlet weak var historyButton: UIButton!
+    
+    var viewModel: InitialPageViewModelProtocol! {
+        didSet {
+            bindViewModel()
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        bindViewModel()
     }
-    */
+}
 
+private extension InitialPageViewController {
+    func bindViewModel() {
+        guard isViewLoaded else { return }
+       
+     
+        startNewGameButton.reactive.pressed = CocoaAction(viewModel.beginNewGameAction)
+        historyButton.reactive.pressed = CocoaAction(viewModel.goToHistoryAction)
+    }
+    
 }

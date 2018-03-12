@@ -7,3 +7,10 @@
 //
 
 import Foundation
+import ReactiveSwift
+import Result
+import ReactiveCocoa
+
+protocol LocationGameViewModelOutputProtocol {
+    var output: Signal<GameSessionViewModel.Action, NoError> { get }
+}

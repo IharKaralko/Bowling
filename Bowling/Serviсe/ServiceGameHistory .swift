@@ -14,12 +14,12 @@ class ServiceGameHistory{
     //var serviceLocation: ServiceLocation!
     
     
-    func getGamesOfLocation(currentLocation: Location) -> [GameHistory]{
+    func getGamesOfLocation(currentLocationId: String) -> [GameHistory]{
         
         var games = [GameHistory]()
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CDGame")
-        fetchRequest.predicate = NSPredicate(format: "location.location = %@", currentLocation.location!)
+        fetchRequest.predicate = NSPredicate(format: "location.id = %@", currentLocationId)
         fetchRequest.sortDescriptors = [NSSortDescriptor.init(key: "date",
                                                               ascending: true)]
         
@@ -27,7 +27,7 @@ class ServiceGameHistory{
             let results = try CoreDataManager.instance.persistentContainer.viewContext.fetch(fetchRequest)
             for result in results as! [CDGame] {
                 var game = GameHistory()
-                game.id =  result.id?.description
+                game.id =  result.id
                 game.date = result.date
                 game.countOfPlayers = Int(result.countOfPlayers)
                 games.append(game)
@@ -40,7 +40,7 @@ class ServiceGameHistory{
     }
     
     // Creates a new CDGame
-    func create(countOfPlayers: Int, location: String)  -> CDGame {
+    func create(countOfPlayers: Int, location: String, idGameSession: String)  -> CDGame {
         let serviceLocation = ServiceLocation()
       
         // Описание сущности
@@ -49,7 +49,7 @@ class ServiceGameHistory{
         // Создание нового объекта
         let newItem = NSManagedObject(entity: entityDescription!, insertInto: CoreDataManager.instance.persistentContainer.viewContext)
         
-        newItem.setValue(UUID(), forKey: "id")
+        newItem.setValue(idGameSession, forKey: "id")
         newItem.setValue(Date(), forKey: "date")
         newItem.setValue(Int16(countOfPlayers), forKey: "countOfPlayers")
         

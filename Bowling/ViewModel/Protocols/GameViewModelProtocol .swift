@@ -12,6 +12,7 @@ import Result
 import ReactiveCocoa
 
 protocol GameViewModelProtocol {
+    var idCurrentGame: String { get }
     var nameOfPlayerCurrentGame: String { get }
     var currentGame: Game { get }
     var collectionFramesViewModel: [FrameViewModel] { get }

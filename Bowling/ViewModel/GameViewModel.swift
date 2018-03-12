@@ -16,7 +16,7 @@ class GameViewModel {
     deinit {
         print("GameViewModel deinit")
     }
-    
+    private let id: String
     private let nameOfPlayer: String
     private let game: Game
     private let framesViewModel: [FrameViewModel]
@@ -35,6 +35,7 @@ class GameViewModel {
         finalFrameViewModel = FinalFrameViewModel(numberLastFrame: game.maxFrame)
         self.nameOfPlayer = nameOfPlayer
         self.game = game
+        self.id = UUID().uuidString
         game.output.observeValues { [weak self] in
             self?.changeScoreGame()
           }
@@ -91,6 +92,8 @@ private extension GameViewModel {
 
 // MARK: - GameViewModelProtocol
 extension GameViewModel: GameViewModelProtocol {
+   
+    var idCurrentGame: String { return id }
     var nameOfPlayerCurrentGame: String { return nameOfPlayer }
     var currentGame: Game { return game }
     var collectionFramesViewModel: [FrameViewModel] { return framesViewModel }

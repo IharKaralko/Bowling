@@ -56,24 +56,24 @@ private extension NamesOfPlayersCoordinator {
         return _pipe.output
     }
     
-//    func namesOfPlayersDidSelect(_ collectionOfNames: [String]) {
-//        guard let navigationController = navigationController else { return }
-//        
-//        var gameSessionCoordinator: Optional<GameSessionCoordinator> = GameSessionCoordinator(navigationController, collectionOfNames)
-//        let output = gameSessionCoordinator!.start()
-//        output.observeCompleted {
-//            gameSessionCoordinator = nil
-//        }
-//    }
     func namesOfPlayersDidSelect(_ collectionOfNames: [String]) {
         guard let navigationController = navigationController else { return }
         
-        var locationGameCoordinator: Optional<LocationGameCoordinator> = LocationGameCoordinator(navigationController, collectionOfNames)
-        let output = locationGameCoordinator!.start()
+        var gameSessionCoordinator: Optional<GameSessionCoordinator> = GameSessionCoordinator(navigationController, collectionOfNames)
+        let output = gameSessionCoordinator!.start()
         output.observeCompleted {
-            locationGameCoordinator = nil
+            gameSessionCoordinator = nil
         }
     }
+//    func namesOfPlayersDidSelect(_ collectionOfNames: [String]) {
+//        guard let navigationController = navigationController else { return }
+//
+//        var locationGameCoordinator: Optional<LocationGameCoordinator> = LocationGameCoordinator(navigationController, collectionOfNames)
+//        let output = locationGameCoordinator!.start()
+//        output.observeCompleted {
+//            locationGameCoordinator = nil
+//        }
+//    }
 }
 
 extension NamesOfPlayersCoordinator {

@@ -39,7 +39,9 @@ private extension CountOfPlayerCoordinator {
         countOfPlayerViewController.viewModel = viewModel
         
         bindViewModel(viewModel)
-        navController.viewControllers = [countOfPlayerViewController]
+        navController.pushViewController(countOfPlayerViewController, animated: true)
+        
+        //navController.viewControllers = [countOfPlayerViewController]
     }
     
     func bindViewModel(_ viewModel: CountOfPlayerOutputProtocol) {
