@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -13,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomCalloutView" customModule="Bowling" customModuleProvider="target">
             <connections>
                 <outlet property="adressLabel" destination="1QH-PD-TG7" id="tDD-YT-2ju"/>
+                <outlet property="beginGameButton" destination="hqX-GO-cXC" id="hWm-GD-1XB"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="aJj-Q5-iv4"/>
                 <outlet property="image" destination="YGC-ht-VqC" id="v1M-it-kkE"/>
                 <outlet property="placeLabel" destination="M0H-WZ-be6" id="Me9-p7-Kvi"/>
@@ -52,9 +52,6 @@
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <state key="normal" title="Begin Game!"/>
-                            <connections>
-                                <action selector="beginGame:" destination="-1" eventType="touchUpInside" id="pw8-qG-bAb"/>
-                            </connections>
                         </button>
                     </subviews>
                 </stackView>

@@ -7,25 +7,32 @@
 //
 
 import UIKit
+import ReactiveCocoa
+import ReactiveSwift
+import Result
 
 class CustomCalloutView: UIView {
     
-  var viewModel: CalloutViewModelProtocol! // =  CalloutViewModel()
+ // var viewModel: CalloutViewModelProtocol!
     
+    var touchSignal: Signal<Void, NoError> { return beginGameButton.reactive.controlEvents(.touchUpInside).map { _ in () } }
+    private let btn: UIButton = UIButton()
+    
+    @IBOutlet weak var beginGameButton: UIButton!
     @IBOutlet private weak var contentView: UIView!
     @IBOutlet private weak var image: UIImageView!
     @IBOutlet private weak var placeLabel: UILabel!
     @IBOutlet private weak var adressLabel: UILabel!
  
-    @IBAction func beginGame(_ sender: Any) {
-        print("Go")
-        viewModel.beginNewGame()
-    }
+//    @IBAction func beginGame(_ sender: Any) {
+//        print("Go")
+//        viewModel.beginNewGame()
+//    }
     
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        let view = super.hitTest(point, with: event)
-        return view
-    }
+//    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+//        let view = super.hitTest(point, with: event)
+//        return view
+//    }
    
     
     override init(frame: CGRect) {
@@ -49,7 +56,6 @@ class CustomCalloutView: UIView {
         Bundle.main.loadNibNamed("CustomCalloutView", owner: self, options: nil)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(contentView)
-      // contentView.becomeFirstResponder()
         NSLayoutConstraint.activate([
             contentView.topAnchor.constraint(equalTo: topAnchor),
             contentView.rightAnchor.constraint(equalTo: rightAnchor),
@@ -65,7 +71,5 @@ class CustomCalloutView: UIView {
         frame = CGRect(x: 0, y: 0, width: 230, height: 130)
         layer.cornerRadius = 25
         clipsToBounds = true
-        
-       
     }
 }

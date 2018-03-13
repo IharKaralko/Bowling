@@ -38,7 +38,7 @@ class ServiceLocation {
         let newItem = NSManagedObject(entity: entityDescription!, insertInto: CoreDataManager.instance.persistentContainer.viewContext)
     
         
-        newItem.setValue(UUID(), forKey: "id")
+        newItem.setValue(UUID().uuidString, forKey: "id")
         newItem.setValue(location, forKey: "location")
         CoreDataManager.instance.saveContext()
         

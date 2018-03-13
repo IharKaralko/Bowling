@@ -15,9 +15,14 @@ import ReactiveCocoa
 protocol LocationGameViewModelOutputProtocol {
     var output: Signal<LocationGameCoordinator.Action, NoError> { get }
 }
+
 protocol LocationGameViewModelProtocol {
         
 func getAdressLocation(location: CLLocation, completion: @escaping (AdressLocation) -> ())
     var backCancelAction: Action< Void, Void, NoError> { get }
+  //  var callout: CalloutViewModelOutputProtocol { get }
+    func selectLocation()
+    //var output: Signal<LocationGameCoordinator.Action, NoError> { get }
+   // var coordinate: CLLocationCoordinate2D { set get }
     
 }

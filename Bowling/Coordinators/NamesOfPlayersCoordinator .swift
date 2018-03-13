@@ -62,8 +62,8 @@ private extension NamesOfPlayersCoordinator {
     
     func namesOfPlayersDidSelect(_ collectionOfNames: [String]) {
         guard let navigationController = navigationController else { return }
-        
-        var gameSessionCoordinator: Optional<GameSessionCoordinator> = GameSessionCoordinator(navigationController, collectionOfNames)
+        let configurationGame = ConfigurationGame(idGameSession: UUID().uuidString, location: location, namesOfPlayer: collectionOfNames)
+        var gameSessionCoordinator: Optional<GameSessionCoordinator> = GameSessionCoordinator(navigationController, collectionOfNames, configurationGame)
         let output = gameSessionCoordinator!.start()
         output.observeCompleted {
             gameSessionCoordinator = nil

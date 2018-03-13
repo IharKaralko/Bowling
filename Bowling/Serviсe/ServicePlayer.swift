@@ -61,10 +61,34 @@ class ServicePlayer {
         }
     }
     
-    func updateScoreGame(idCurrentGame: String){
+    func updateScoreGame(idCurrentGame: String, scoreGame: Int){
         
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CDPlayer")
+        
+        fetchRequest.predicate = NSPredicate(format: "id = %@", idCurrentGame)
+        //        fetchRequest.sortDescriptors = [NSSortDescriptor.init(key: "scoreGame",
+        //                                                              ascending: false)]
+        do {
+            let results = try CoreDataManager.instance.persistentContainer.viewContext.fetch(fetchRequest)
+            let result = results.first as! CDPlayer
+            result.scoreGame = Int16(scoreGame)
+            //            result.setValue(0, forKey: "scoreGame")
+            //            for result in results as! [CDPlayer] {
+            //
+            //                var player = Player()
+            //                player.id =  result.id
+            //                player.name = result.name
+            //                player.scoreGame = Int(result.scoreGame)
+            //                players.append(player)
+            //  }
+        } catch {
+            print(error)
+        }
+        
+         CoreDataManager.instance.saveContext()
         
     }
+
     
     
     func deleteAll(){

@@ -11,11 +11,12 @@ import ReactiveSwift
 import Result
 import ReactiveCocoa
 
-protocol CalloutViewModelOutputProtocol {
-    var output: Signal<Void, NoError> { get }
-}
+//protocol CalloutViewModelOutputProtocol {
+//    var output: Signal<Void, NoError> { get }
+//}
+//
+//protocol CalloutViewModelProtocol {
+//     func beginNewGame()
+//    
+//}
 
-protocol CalloutViewModelProtocol {
-     func beginNewGame()
-    
-}

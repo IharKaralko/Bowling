@@ -30,7 +30,7 @@ public class Game {
     private var waitingToCloseFrames: [Frame] = []
     private var frames: [Frame] = []
     
-    init(maxFrameCount: Int = 10) {
+    init(maxFrameCount: Int = 3) {
         self.maxFrameCount = maxFrameCount
     }
 }

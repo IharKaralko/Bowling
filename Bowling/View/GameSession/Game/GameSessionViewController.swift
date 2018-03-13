@@ -30,6 +30,12 @@ class GameSessionViewController: UIViewController {
         setupBackButton()
         commonInit()
         bindViewModel()
+        
+        let   serviceLocation = ServiceLocation()
+        let locations = serviceLocation.getAll()
+        for location in locations{
+            print(location.id)
+        }
     }
 }
 
@@ -53,7 +59,7 @@ private extension GameSessionViewController {
     
     func commonInit(){
         var previuosGame: GameView?
-        for index in 0 ..< viewModel.listNamesOfPlayer.count {
+        for index in 0 ..< viewModel.configurationCurrentGame.namesOfPlayer.count {
             let gameView = GameView()
             let gameViewModel = viewModel.gamesModelsOfGameSession[index]
             gameView.viewModel = gameViewModel
@@ -76,7 +82,7 @@ private extension GameSessionViewController {
                         gameView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
                         ])
                 }
-                if index == viewModel.listNamesOfPlayer.count - 1{
+                if index == viewModel.configurationCurrentGame.namesOfPlayer.count - 1{
                     gameView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
                 }
             }
@@ -85,7 +91,7 @@ private extension GameSessionViewController {
     }
 
     func alertGameSessionCompleted(_ index: Int){        
-        let alertController = UIAlertController(title: "Game Session is completed", message: "Player \(viewModel.listNamesOfPlayer[index])  with a score \(viewModel.gamesModelsOfGameSession[index].currentGame.score)  WON!", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Game Session is completed", message: "Player \(viewModel.configurationCurrentGame.namesOfPlayer[index])  with a score \(viewModel.gamesModelsOfGameSession[index].currentGame.score)  WON!", preferredStyle: .alert)
         let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(defaultAction)
         present(alertController, animated: true, completion: nil)

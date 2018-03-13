@@ -17,17 +17,16 @@ protocol LocationGameCoordinatorProtocol {
 }
 
 class LocationGameCoordinator {
+    
     deinit {
-        print("LocationGameCoordinator deinit+")
+        print("\(type(of: self)).\(#function)")
     }
-  
+    
     private weak var navigController: UINavigationController?
     private let _pipe = Signal<Void, NoError>.pipe()
-   // private let collectionOfNames: [String]
-
+   
     init(_ navigController: UINavigationController) {
         self.navigController = navigController
-      //  self.collectionOfNames = collectionOfNames
     }
 }
 
@@ -41,22 +40,15 @@ extension LocationGameCoordinator:  LocationGameCoordinatorProtocol {
 extension  LocationGameCoordinator {
     func startCoordinator() -> Signal<Void, NoError> {
         let locationGameViewController = LocationGameViewController()
-      
-        
         let viewModel = LocationGameViewModel()
+       // let customCallout = CustomCalloutView()
+        
+       // customCallout.viewModel = CalloutViewModel()
+      // viewModel.calloutViewModel = CalloutViewModel()
+        
         locationGameViewController.viewModel = viewModel
         
         bindViewModel(viewModel)
-//        navController.pushViewController(countOfPlayerViewController, animated: true)
-        
-//        viewModel.calloutViewModel.output.observeCompleted {
-//            [weak self] in
-//            self?.show()
-//        }
-//        viewModel.output.observeCompleted { [weak self] in
-//            self?.navigController?.popViewController(animated: true)
-//            self?._pipe.input.sendCompleted()
-//        }
         navigController?.pushViewController(locationGameViewController, animated: true)
         return _pipe.output
     }
@@ -73,36 +65,20 @@ extension  LocationGameCoordinator {
             self?.navigController?.popViewController(animated: true)
             self?._pipe.input.sendCompleted()
         }
-        
-    }
+     }
     
     func locationGameDidSelect(_ location: CLLocationCoordinate2D) {
         guard let navigController = navigController else { return }
-       var countOfPlayerCoordinator: Optional<CountOfPlayerCoordinator> = CountOfPlayerCoordinator(navigController, location)
+        var countOfPlayerCoordinator: Optional<CountOfPlayerCoordinator> = CountOfPlayerCoordinator(navigController, location)
         let output = countOfPlayerCoordinator!.start()
         output.observeCompleted {
             countOfPlayerCoordinator = nil
         }
-        
-//        let countOfPlayerCoordinator = CountOfPlayerCoordinator(navigController)
-//        countOfPlayerCoordinator.start()
     }
-    
-//    func countOfPlayerDidSelect(_ count: Int) {
-//        guard let navController = navController else { return }
-//
-//        var namesOfPlayersCoordinator: Optional<NamesOfPlayersCoordinator> = NamesOfPlayersCoordinator(navController, count)
-//        let output = namesOfPlayersCoordinator!.start()
-//        output.observeCompleted {
-//            namesOfPlayersCoordinator = nil
-//        }
-    }
-    
-    
-    
+}
 
 extension LocationGameCoordinator {
     enum Action {
-    case selectLocationOfGame(location: CLLocationCoordinate2D)
-}
+        case selectLocationOfGame(location: CLLocationCoordinate2D)
+    }
 }

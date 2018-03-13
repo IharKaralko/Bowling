@@ -15,7 +15,6 @@ protocol InitialPageCoordinatorProtocol {
     func start()
 }
 
-
 class InitialPageCoordinator {
     private weak var navController: UINavigationController?
     
@@ -24,7 +23,7 @@ class InitialPageCoordinator {
     }
 }
 
-// MARK: - CountOfPlayerCoordinatorProtocol
+// MARK: - InitialPageCoordinatorProtocol
 extension InitialPageCoordinator: InitialPageCoordinatorProtocol {
     func start(){
         return startCoordinator()
@@ -34,11 +33,9 @@ extension InitialPageCoordinator: InitialPageCoordinatorProtocol {
 private extension InitialPageCoordinator {
     func startCoordinator() {
         guard let navController = navController else { return }
-        
         let initialPageViewController = InitialPageViewController()
         let viewModel = InitialPageViewModel()
         initialPageViewController.viewModel = viewModel
-        
         bindViewModel(viewModel)
         navController.viewControllers = [initialPageViewController]
     }
@@ -55,28 +52,21 @@ private extension InitialPageCoordinator {
     }
     func startNewGame() {
         guard let navController = navController else { return }
-        
         var locationGameCoordinator: Optional<LocationGameCoordinator> = LocationGameCoordinator(navController)
         let output = locationGameCoordinator!.start()
                 output.observeCompleted {
                     locationGameCoordinator = nil
                 }
     }
+    
     func showHistory(){
-        print("show")
-        
+         guard let navController = navController else { return }
+        var locationsCoordinator: Optional<LocationsCoordinator> = LocationsCoordinator(navController)
+        let output = locationsCoordinator!.start()
+        output.observeCompleted {
+            locationsCoordinator = nil
+        }
     }
-
-        
-//        guard let navController = navController else { return }
-//
-//        var namesOfPlayersCoordinator: Optional<NamesOfPlayersCoordinator> = NamesOfPlayersCoordinator(navController, count)
-//        let output = namesOfPlayersCoordinator!.start()
-//        output.observeCompleted {
-//            namesOfPlayersCoordinator = nil
-//        }
-//    }
-
 }
     
 
