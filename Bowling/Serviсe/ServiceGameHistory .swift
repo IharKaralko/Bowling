@@ -26,10 +26,7 @@ class ServiceGameHistory{
         do {
             let results = try CoreDataManager.instance.persistentContainer.viewContext.fetch(fetchRequest)
             for result in results as! [CDGame] {
-                var game = GameHistory()
-                game.id =  result.id
-                game.date = result.date
-                game.countOfPlayers = Int(result.countOfPlayers)
+                let game = GameHistory(id: result.id!, date: result.date!, countOfPlayers: Int(result.countOfPlayers))
                 games.append(game)
             }
         } catch {

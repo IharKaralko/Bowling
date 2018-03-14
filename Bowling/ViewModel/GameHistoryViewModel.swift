@@ -21,7 +21,7 @@ class GameHistoryViewModel {
     init(_ location: Location ){
         self.location = location
         let serviceGameHistory = ServiceGameHistory()
-        self.games = serviceGameHistory.getGamesOfLocation(currentLocationId: location.id!)
+        self.games = serviceGameHistory.getGamesOfLocation(currentLocationId: location.id)
     }
 }
 extension GameHistoryViewModel {

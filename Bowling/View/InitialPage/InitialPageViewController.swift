@@ -30,8 +30,7 @@ class InitialPageViewController: UIViewController {
 private extension InitialPageViewController {
     func bindViewModel() {
         guard isViewLoaded else { return }
-       
-     
+      
         startNewGameButton.reactive.pressed = CocoaAction(viewModel.beginNewGameAction)
         historyButton.reactive.pressed = CocoaAction(viewModel.goToHistoryAction)
     }

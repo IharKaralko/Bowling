@@ -21,7 +21,6 @@ class NamesOfPlayersCoordinator {
     deinit {
         print("NamesOfPlayersCoordinator deinit")
     }
-    
     private let location: CLLocationCoordinate2D
     private weak var navigationController: UINavigationController?
     private let _pipe = Signal<NamesOfPlayersCoordinator.Output, NoError>.pipe()
@@ -35,9 +34,7 @@ class NamesOfPlayersCoordinator {
 }
 
 extension NamesOfPlayersCoordinator: NamesOfPlayersCoordinatorProtocol {
-    func start() -> Signal<NamesOfPlayersCoordinator.Output, NoError> {
-        return startCoordinator()
-    }
+    func start() -> Signal<NamesOfPlayersCoordinator.Output, NoError> { return startCoordinator() }
 }
 
 private extension NamesOfPlayersCoordinator {
@@ -69,15 +66,6 @@ private extension NamesOfPlayersCoordinator {
             gameSessionCoordinator = nil
         }
     }
-//    func namesOfPlayersDidSelect(_ collectionOfNames: [String]) {
-//        guard let navigationController = navigationController else { return }
-//
-//        var locationGameCoordinator: Optional<LocationGameCoordinator> = LocationGameCoordinator(navigationController, collectionOfNames)
-//        let output = locationGameCoordinator!.start()
-//        output.observeCompleted {
-//            locationGameCoordinator = nil
-//        }
-//    }
 }
 
 extension NamesOfPlayersCoordinator {

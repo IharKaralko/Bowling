@@ -12,9 +12,8 @@ import ReactiveSwift
 import Result
 
 class CustomCalloutView: UIView {
-    
- // var viewModel: CalloutViewModelProtocol!
-    
+   
+    var leg: CalloutLegView!
     var touchSignal: Signal<Void, NoError> { return beginGameButton.reactive.controlEvents(.touchUpInside).map { _ in () } }
     private let btn: UIButton = UIButton()
     
@@ -24,16 +23,6 @@ class CustomCalloutView: UIView {
     @IBOutlet private weak var placeLabel: UILabel!
     @IBOutlet private weak var adressLabel: UILabel!
  
-//    @IBAction func beginGame(_ sender: Any) {
-//        print("Go")
-//        viewModel.beginNewGame()
-//    }
-    
-//    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-//        let view = super.hitTest(point, with: event)
-//        return view
-//    }
-   
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -56,11 +45,13 @@ class CustomCalloutView: UIView {
         Bundle.main.loadNibNamed("CustomCalloutView", owner: self, options: nil)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(contentView)
+        
         NSLayoutConstraint.activate([
             contentView.topAnchor.constraint(equalTo: topAnchor),
             contentView.rightAnchor.constraint(equalTo: rightAnchor),
             contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
             contentView.leftAnchor.constraint(equalTo: leftAnchor)
+
             ])
     }
    

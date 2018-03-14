@@ -24,10 +24,7 @@ class ServicePlayer {
         do {
             let results = try CoreDataManager.instance.persistentContainer.viewContext.fetch(fetchRequest)
             for result in results as! [CDPlayer] {
-                var player = Player()
-                player.id =  result.id
-                player.name = result.name
-                player.scoreGame = Int(result.scoreGame)
+                var player = Player(id: result.id!, name: result.name!, scoreGame:  Int(result.scoreGame))
                 players.append(player)
             }
         } catch {

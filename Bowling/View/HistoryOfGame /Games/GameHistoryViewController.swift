@@ -64,7 +64,7 @@ extension GameHistoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameHistoryTableViewCell", for: indexPath) as! GameHistoryTableViewCell
         //   cell.configureCell(collectionOfCell[indexPath.row], String(indexPath.row + 1))
-        cell.dateLabel.text = viewModel.gamesHistory[indexPath.row].date?.description
+        cell.dateLabel.text = viewModel.gamesHistory[indexPath.row].date.description
         cell.countOfPlayerLabel.text = "\(viewModel.gamesHistory[indexPath.row].countOfPlayers) Players"
         return cell
     }

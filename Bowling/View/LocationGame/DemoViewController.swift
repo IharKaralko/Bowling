@@ -14,7 +14,9 @@ class DemoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let custom = CustomCalloutView()
+        let custom = CustomView()
+         custom.center = CGPoint(x: view.bounds.size.width / 2, y: view.bounds.height/2)// - demoView.bounds.size.height)
+        view.addSubview(custom)
 //        greenView.addSubview(custom)
         
        // custom.translatesAutoresizingMaskIntoConstraints = false
@@ -30,19 +32,19 @@ class DemoViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        let width: CGFloat = 40.0
-        let height: CGFloat = 20.0
-        
-        let demoView = CalloutLegView(frame: CGRect(x: self.view.frame.size.width/2 - width/2,
-                                              y: self.view.frame.size.height/2 - height/2,
-                                              width: width,
-                                              height: height))
-        
-        self.view.addSubview(demoView)
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//
+//        let width: CGFloat = 40.0
+//        let height: CGFloat = 20.0
+//
+//        let demoView = CalloutLegView(frame: CGRect(x: self.view.frame.size.width/2 - width/2,
+//                                              y: self.view.frame.size.height/2 - height/2,
+//                                              width: width,
+//                                              height: height))
+//
+//        self.view.addSubview(demoView)
+//    }
     
     
     override func didReceiveMemoryWarning() {

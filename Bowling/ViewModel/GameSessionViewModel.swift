@@ -10,7 +10,8 @@ import Foundation
 import ReactiveCocoa
 import ReactiveSwift
 import Result
-
+import CoreLocation
+import MapKit
 
 class GameSessionViewModel {
     
@@ -18,20 +19,18 @@ class GameSessionViewModel {
         print("GameSessionViewModel deinit-")
     }
     
-    //private let id: String
+    
     private let _pipe = Signal<GameSessionViewController.Action, NoError>.pipe()
     private var  doneBackAction: ReactiveSwift.Action<Void, Void, NoError>!
-   // private let namesOfPlayer: [String]
+   
     private var countOfGameFinish: Int = 0
     private let  gamesModels: [GameViewModel]
     private let  configurationGame: ConfigurationGame
     
- //   let locationGame: LocationGameViewModel = LocationGameViewModel()
+ 
     
     init (namesOfPlayer: [String], configurationGame: ConfigurationGame) {
         self.configurationGame = configurationGame
-      //  self.namesOfPlayer  = namesOfPlayer
-      //  self.id = UUID().uuidString
         var gameModels: [GameViewModel] = []
         for name in configurationGame.namesOfPlayer  {
             let gameViewModel = GameViewModel(nameOfPlayer: name)
@@ -50,8 +49,17 @@ class GameSessionViewModel {
             }
         }
         let servicePlayer = ServicePlayer()
-        let  userLat = String(format: "%f",  configurationGame.location.latitude)
-        servicePlayer.createPlayersOfGameHistory(location: userLat, idGameSession: configurationGame.idGameSession, gamesModel: gamesModels)
+     //   let  userLat = String(format: "%f",  configurationGame.location.latitude)
+       
+        let coordinateLocation = CLLocation(latitude: configurationGame.location.latitude, longitude: configurationGame.location.longitude)
+        let service = Service()
+        var adress = String()
+        service.fetchAdressLocation(location: coordinateLocation) {adressLocation  in
+            adress = adressLocation.adress
+            servicePlayer.createPlayersOfGameHistory(location: adress, idGameSession: configurationGame.idGameSession, gamesModel: self.gamesModels)
+         }
+        
+       // servicePlayer.createPlayersOfGameHistory(location: adress, idGameSession: configurationGame.idGameSession, gamesModel: gamesModels)
     }
 }
 

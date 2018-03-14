@@ -64,18 +64,13 @@ extension PlayersViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PlayersTableViewCell", for: indexPath) as! PlayersTableViewCell
-        //   cell.configureCell(collectionOfCell[indexPath.row], String(indexPath.row + 1))
         cell.nameLabel.text = viewModel.playersOfGame[indexPath.row].name
-        cell.scoreGame.text = viewModel.playersOfGame[indexPath.row].scoreGame?.description
+        cell.scoreGame.text = viewModel.playersOfGame[indexPath.row].scoreGame.description
         return cell
     }
 }
 extension PlayersViewController: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let index = indexPath.row
-//        let currentGame = viewModel.gamesHistory[index]
-//        print(currentGame.id)
-//    }
+
     //    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath){
     //        if let cell = cell as? NamesOfPlayersTableViewCell{
     //            cell.output.take(until: cell.reactive.prepareForReuse).observeValues { [weak self] value in

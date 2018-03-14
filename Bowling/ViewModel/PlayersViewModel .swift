@@ -21,7 +21,7 @@ class PlayersViewModel {
     init(_ game: GameHistory ){
         self.game = game
         let servicePlayer = ServicePlayer()
-        self.players = servicePlayer.getPlayersOfGameHistory(currentGameId: game.id!)
+        self.players = servicePlayer.getPlayersOfGameHistory(currentGameId: game.id)
     }
 }
 

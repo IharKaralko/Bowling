@@ -10,9 +10,13 @@ import Foundation
 
 struct GameHistory {
     
-    var id: String?
-    var date: Date?
-    var countOfPlayers: Int?
+    let id: String
+    let date: Date
+    let countOfPlayers: Int
     
-   // var players: [Player] = []
+    init(id: String, date: Date, countOfPlayers: Int){
+        self.id = id
+        self.date = date
+        self.countOfPlayers = countOfPlayers
+    }
 }

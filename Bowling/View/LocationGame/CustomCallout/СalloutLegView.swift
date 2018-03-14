@@ -14,13 +14,13 @@ class CalloutLegView: UIView {
      override init(frame: CGRect){
         super.init(frame: frame)
        setupLayout()
-        maskVsSublayer()
+        maskSublayer()
       }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupLayout()
-        maskVsSublayer()
+        maskSublayer()
      }
     
     override func draw(_ rect: CGRect) {
@@ -29,16 +29,15 @@ class CalloutLegView: UIView {
         path.fill()
      }
  
-    func maskVsSublayer(){
+    func maskSublayer(){
         self.createTriangle()
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = path.cgPath
         shapeLayer.fillColor = UIColor.yellow.cgColor
-      //  self.layer.addSublayer(shapeLayer)
-        self.layer.mask = shapeLayer
+         self.layer.mask = shapeLayer
     }
     
-    func createTriangle() {
+    func createTriangleOne() {
         path = UIBezierPath()
         path.move(to: CGPoint(x: self.frame.width/2, y: 0.0))
         path.addLine(to: CGPoint(x: 0.0, y: self.frame.size.height))
@@ -46,10 +45,18 @@ class CalloutLegView: UIView {
         path.close()
         
     }
- 
+    func createTriangle() {
+        path = UIBezierPath()
+        path.move(to: CGPoint(x: self.frame.width/2, y:   self.frame.size.height))
+        path.addCurve(to:  CGPoint(x: 0.0, y: 0.0), controlPoint1: CGPoint(x:  self.frame.width/2 - 25, y: self.frame.size.height/2), controlPoint2:  CGPoint(x: 3.0, y: 3.0))
+        path.addLine(to: CGPoint(x: self.frame.width, y:   0.0))
+        path.addCurve(to: CGPoint(x: self.frame.width/2, y:   self.frame.size.height), controlPoint1: CGPoint(x:  self.frame.width - 3, y: 3), controlPoint2:  CGPoint(x:  self.frame.width/2 + 25, y: self.frame.size.height/2))
+        
+    }
+    
     func setupLayout(){
-        let width: CGFloat = 20.0
-        let height: CGFloat = 40.0
+        let width: CGFloat = 170.0
+        let height: CGFloat = 50.0
         
         frame = CGRect(x: frame.size.width/2 - width/2,
                        y: frame.size.height/2 - height/2,

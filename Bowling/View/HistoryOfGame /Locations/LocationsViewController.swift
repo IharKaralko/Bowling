@@ -70,7 +70,7 @@ extension LocationsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LocationTableViewCell", for: indexPath) as! LocationTableViewCell
      //   cell.configureCell(collectionOfCell[indexPath.row], String(indexPath.row + 1))
-       cell.locationLabel.text = viewModel.locations[indexPath.row].id
+       cell.locationLabel.text = viewModel.locations[indexPath.row].location
         
         return cell
     }

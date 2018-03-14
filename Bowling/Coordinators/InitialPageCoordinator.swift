@@ -25,9 +25,7 @@ class InitialPageCoordinator {
 
 // MARK: - InitialPageCoordinatorProtocol
 extension InitialPageCoordinator: InitialPageCoordinatorProtocol {
-    func start(){
-        return startCoordinator()
-    }
+    func start(){ return startCoordinator() }
 }
 
 private extension InitialPageCoordinator {
@@ -50,16 +48,17 @@ private extension InitialPageCoordinator {
             }
         }
     }
+    
     func startNewGame() {
         guard let navController = navController else { return }
         var locationGameCoordinator: Optional<LocationGameCoordinator> = LocationGameCoordinator(navController)
         let output = locationGameCoordinator!.start()
-                output.observeCompleted {
-                    locationGameCoordinator = nil
-                }
+        output.observeCompleted {
+            locationGameCoordinator = nil
+        }
     }
     
-    func showHistory(){
+    func showHistory() {
          guard let navController = navController else { return }
         var locationsCoordinator: Optional<LocationsCoordinator> = LocationsCoordinator(navController)
         let output = locationsCoordinator!.start()
@@ -68,7 +67,6 @@ private extension InitialPageCoordinator {
         }
     }
 }
-    
 
 extension InitialPageCoordinator {
     enum Action {

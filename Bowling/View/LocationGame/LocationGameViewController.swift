@@ -15,39 +15,27 @@ import ReactiveCocoa
 
 class LocationGameViewController: UIViewController {
    
-    var viewModel: LocationGameViewModel! {
-        didSet {
-            bindViewModel()
-        }
-    }
+    var viewModel: LocationGameViewModelProtocol!
+    
     
     @IBOutlet weak var mapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        bindViewModel()
         let locationManager = CLLocationManager()
         locationManager.requestWhenInUseAuthorization()
-   //     let location = CLLocation(latitude: 53.71153637577107, longitude: 23.824214730087533)
-//        mapView.userLocation.coordinate = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
         mapView.showsUserLocation = true
-         mapView.addAnnotation(mapView.userLocation)
         setupBarButton()
         setupGestureRecognizer()
         self.mapView.delegate = self
-     }
+    }
 }
 
 private extension LocationGameViewController {
-    func bindViewModel() {
-        guard isViewLoaded else { return }
-    }
-    
-    func setupBarButton(){
-        self.navigationItem.title = "Select plase of game session"
+     func setupBarButton(){
+        self.navigationItem.title = "Select place of game session"
         let done = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
-         done.reactive.pressed = CocoaAction(viewModel.backCancelAction)
+        done.reactive.pressed = CocoaAction(viewModel.backCancelAction)
         navigationItem.setLeftBarButton(done, animated: false)
     }
     
@@ -55,7 +43,7 @@ private extension LocationGameViewController {
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(gestureAction(press:)))
         longPressGestureRecognizer.minimumPressDuration = 0.4
         mapView.addGestureRecognizer(longPressGestureRecognizer)
-     }
+    }
     
     @objc
     func gestureAction(press: UILongPressGestureRecognizer) {
@@ -69,11 +57,11 @@ private extension LocationGameViewController {
     func createAnnotation(_ press: UILongPressGestureRecognizer){
         let location = press.location(in: mapView)
         let coordinates = mapView.convert(location, toCoordinateFrom: mapView)
-       viewModel.coordinateLocation = coordinates
-       let annotation = MKPointAnnotation()
+        let annotation = MKPointAnnotation()
         annotation.coordinate = coordinates
         let coordinateLocation = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
-        viewModel.getAdressLocation(location:  coordinateLocation)  { [weak annotation] adressLocation  in
+        let service = Service()
+        service.fetchAdressLocation(location: coordinateLocation) { [weak annotation] adressLocation  in
             annotation?.subtitle = adressLocation.adress
         }
         mapView.addAnnotation(annotation)
@@ -84,9 +72,10 @@ extension LocationGameViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         if annotation is MKUserLocation {
-            let annotationView = AnnotationView(annotation: annotation, reuseIdentifier: "User")
-            annotationView.canShowCallout = false
-            annotationView.image = #imageLiteral(resourceName: "userPlace")
+            var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: "User")
+            annotationView = AnnotationView(annotation: annotation, reuseIdentifier: "User")
+            annotationView?.canShowCallout = false
+            annotationView?.image = #imageLiteral(resourceName: "userPlace")
             return annotationView
         }  else {
             var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: "Pin")
@@ -103,40 +92,24 @@ extension LocationGameViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view.annotation else { return }
-        
-        let calloutView = CustomCalloutView()
-     //   let calloutViewModel = CalloutViewModel()
-       // calloutView.viewModel = calloutViewModel
-        
-        viewModel.backCancelAction.bindingTarget <~ calloutView.touchSignal
-   
-        //viewModel.
-        
-//        viewModel.calloutViewModel = calloutViewModel
-//        viewModel.calloutViewModel.output.observeCompleted {[weak self] in
-//            self?.viewModel.selectLocation()
-//        }
-        
-        
-        let demoView = CalloutLegView()
-
-        demoView.center = CGPoint(x: view.bounds.size.width / 2, y: -demoView.bounds.size.height / 2)
-        view.addSubview(demoView)
+        for annot in mapView.annotations {
+            if annot !== annotation {
+                mapView.removeAnnotation(annot)
+            }
+        }
+        let calloutView = CustomView()
+        viewModel.beginGameAction.bindingTarget <~ calloutView.customCalloutView.touchSignal.map{[unowned annotation] _ in annotation.coordinate }
         
         if let subtitle = annotation.subtitle {
-            calloutView.fillAdress(subtitle)
+            calloutView.customCalloutView.fillAdress(subtitle)
         }
-        calloutView.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutView.bounds.height/2 - demoView.bounds.size.height)
+        calloutView.center = CGPoint(x: view.bounds.size.width / 2, y:  -calloutView.bounds.size.height / 2  )
         view.addSubview(calloutView)
-         mapView.setCenter(annotation.coordinate, animated: true)
-       }
+        mapView.setCenter(annotation.coordinate, animated: true)
+    }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        let allAnnotations = self.mapView.annotations
-        self.mapView.removeAnnotations(allAnnotations)
-        for subview in view.subviews { if subview is CustomCalloutView { subview.removeFromSuperview() }
+        for subview in view.subviews { if subview is CustomView { subview.removeFromSuperview() }
         }
-        for subview in view.subviews { if subview is CalloutLegView { subview.removeFromSuperview() }
-        }
-      }
+    }
 }

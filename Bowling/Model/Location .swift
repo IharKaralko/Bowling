@@ -9,7 +9,12 @@
 import Foundation
 
 struct Location {
-    var id: String?
-    var location: String?
-  //  var games: [GameHistory] = []
+    let id: String
+    let location: String
+
+    init(id: String,  location: String){
+        self.id = id
+        self.location = location
+    }
+    //  var games: [GameHistory] = []
 }

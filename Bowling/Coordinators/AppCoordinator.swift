@@ -13,8 +13,7 @@ class AppCoordinator {
     private var initialPageCoordinator: InitialPageCoordinatorProtocol!
     private var navController: UINavigationController?
     
-    init(window: UIWindow)
-    {
+    init(window: UIWindow) {
         self.window = window
     }
 }

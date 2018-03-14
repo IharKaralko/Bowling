@@ -18,61 +18,34 @@ class LocationGameViewModel {
         print("\(type(of: self)).\(#function)")
     }
     
-  //  var calloutViewModel: CalloutViewModelOutputProtocol!
-    var coordinateLocation: CLLocationCoordinate2D?
     private var _pipe = Signal<LocationGameCoordinator.Action, NoError>.pipe()
     private var doneBackAction: Action<Void, Void, NoError>!
+    private var selectLocationAction: Action<CLLocationCoordinate2D, Void, NoError>!
     
-    init (){
+    init() {
+        self.selectLocationAction = Action() { [weak self]  input in
+            return SignalProducer { observer, _ in
+                self?._pipe.input.send(value: .selectLocationOfGame(location: input))
+                //self?._pipe.input.sendCompleted()
+                observer.sendCompleted()
+            }
+        }
+        
         self.doneBackAction = Action() { [weak self]  in
             return SignalProducer { observer, _ in
                 self?._pipe.input.sendCompleted()
                 observer.sendCompleted()
             }
         }
-       }
-    
-    func fetchAdressLocation(location: CLLocation, completion: @escaping (AdressLocation) -> ()) {
-        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
-            var adressLocation = AdressLocation()
-            if let error = error {
-                print(error)
-            } else if let  country = placemarks?.first?.country,
-                let city = placemarks?.first?.locality,
-                let name = placemarks?.first?.name
-            {
-                adressLocation.country = country
-                adressLocation.city = city
-                adressLocation.name = name
-                completion(adressLocation)
-            }
-        }
-    }
-    func locationGameDidSelect() {
-             guard let coordinateLocation = coordinateLocation else { return }
-            _pipe.input.send(value: .selectLocationOfGame(location: coordinateLocation))
-            print(coordinateLocation)
-        }
-}
-extension LocationGameViewModel: LocationGameViewModelProtocol {
-       
-    func selectLocation() {  return locationGameDidSelect() }
-  //  var callout: CalloutViewModelOutputProtocol { return calloutViewModel }
-    var backCancelAction: Action< Void, Void, NoError>  { return doneBackAction }
-    func getAdressLocation(location: CLLocation, completion: @escaping (AdressLocation) -> ()) {
-        return fetchAdressLocation(location: location, completion: completion)
     }
 }
 
-struct AdressLocation {
-    var country: String!
-    var city: String!
-    var name: String!
-    var adress: String { return country + " " +  city + " " + name }
+extension LocationGameViewModel: LocationGameViewModelProtocol {
+    var beginGameAction:  Action< CLLocationCoordinate2D, Void, NoError> { return selectLocationAction}
+    var backCancelAction: Action< Void, Void, NoError>  { return doneBackAction }
 }
 
 // MARK: - LocationGameViewModelOutputProtocol
 extension LocationGameViewModel: LocationGameViewModelOutputProtocol {
-  var output: Signal<LocationGameCoordinator.Action, NoError> { return _pipe.output }
+    var output: Signal<LocationGameCoordinator.Action, NoError> { return _pipe.output }
 }
-

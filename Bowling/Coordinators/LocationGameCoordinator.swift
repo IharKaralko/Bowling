@@ -41,13 +41,7 @@ extension  LocationGameCoordinator {
     func startCoordinator() -> Signal<Void, NoError> {
         let locationGameViewController = LocationGameViewController()
         let viewModel = LocationGameViewModel()
-       // let customCallout = CustomCalloutView()
-        
-       // customCallout.viewModel = CalloutViewModel()
-      // viewModel.calloutViewModel = CalloutViewModel()
-        
         locationGameViewController.viewModel = viewModel
-        
         bindViewModel(viewModel)
         navigController?.pushViewController(locationGameViewController, animated: true)
         return _pipe.output
@@ -65,7 +59,7 @@ extension  LocationGameCoordinator {
             self?.navigController?.popViewController(animated: true)
             self?._pipe.input.sendCompleted()
         }
-     }
+    }
     
     func locationGameDidSelect(_ location: CLLocationCoordinate2D) {
         guard let navigController = navigController else { return }

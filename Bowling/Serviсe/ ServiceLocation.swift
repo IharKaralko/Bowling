@@ -43,26 +43,10 @@ class ServiceLocation {
         CoreDataManager.instance.saveContext()
         
         return newItem as! CDLocation
-        
+       
     }
     
-    
-    
-//    // Gets a person by id
-//    func getById(id: NSManagedObjectID) -> Person? {
-//        return context.objectWithID(id) as? Person
-//    }
-//    
-//    // Gets all.
-//    func getAll() -> [Person]{
-//        return get(withPredicate: NSPredicate(value:true))
-//    }
-//    
-//    // Gets all that fulfill the specified predicate.
-//    // Predicates examples:
-//    // - NSPredicate(format: "name == %@", "Juan Carlos")
-//    // - NSPredicate(format: "name contains %@", "Juan")
-//
+ 
     // get all Location
     func getAll() -> [Location]{
         var locations = [Location]()
@@ -70,9 +54,7 @@ class ServiceLocation {
         do {
             let results = try CoreDataManager.instance.persistentContainer.viewContext.fetch(fetchRequest)
             for result in results as! [CDLocation] {
-                var location = Location()
-                location.id =  result.id?.description
-                location.location = result.location
+                let location = Location(id: result.id!, location: result.location!)
                 locations.append(location)
             }
         } catch {
@@ -96,31 +78,6 @@ class ServiceLocation {
         
     }
     
-//    
-//    // Updates a person
-//    func update(updatedPerson: Person){
-//        if let person = getById(updatedPerson.objectID){
-//            person.name = updatedPerson.name
-//            person.age = updatedPerson.age
-//        }
-//    }
-//    
-//    // Deletes a person
-//    func delete(id: NSManagedObjectID){
-//        if let personToDelete = getById(id){
-//            context.deleteObject(personToDelete)
-//        }
-//    }
-//    
-//    // Saves all changes
-//    func saveChanges(){
-//        do{
-//            try context.save()
-//        } catch let error as NSError {
-//            // failure
-//            print(error)
-//        }
-//    }
-//}
+
 
 }

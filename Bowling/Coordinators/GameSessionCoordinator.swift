@@ -29,23 +29,18 @@ class GameSessionCoordinator {
         self.navigController = navigController
         self.collectionOfNames = collectionOfNames
         self.configurationGame = configurationGame
-        
     }
 }
 
 extension GameSessionCoordinator: GameSessionCoordinatorProtocol {
-    func start() -> Signal<Void, NoError> {
-        return startCoordinator()
-    }
+    func start() -> Signal<Void, NoError> { return startCoordinator() }
 }
-
 
 extension  GameSessionCoordinator {
     func startCoordinator() -> Signal<Void, NoError> {
         let gameSessionViewController = GameSessionViewController()
         let viewModel = GameSessionViewModel(namesOfPlayer: collectionOfNames, configurationGame: configurationGame)
         gameSessionViewController.viewModel = viewModel
-        
         viewModel.output.observeCompleted { [weak self] in
             self?.navigController?.popViewController(animated: true)
             self?._pipe.input.sendCompleted()

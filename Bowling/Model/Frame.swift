@@ -82,7 +82,7 @@ private extension Frame {
     @discardableResult
     func doThrow(with score: Int) -> Bool {
         if throwScore.isEmpty {
-            if  0 < score && score < 11 {
+            if  -1 < score && score < 11 {
                 firstScoreFrame = score
                 throwScore.append(score)
                 return true

@@ -21,10 +21,9 @@ class PlayersCoordinator {
         print("GameHistoryCoordinator deinit+")
     }
     
-   private var currenGame: GameHistory
+    private var currenGame: GameHistory
     private weak var navigController: UINavigationController?
     private let _pipe = Signal<Void, NoError>.pipe()
-    // private let collectionOfNames: [String]
     
     init(_ navigController: UINavigationController, currentGame: GameHistory) {
         self.navigController = navigController
@@ -33,11 +32,8 @@ class PlayersCoordinator {
 }
 
 extension PlayersCoordinator:  PlayersCoordinatorProtocol {
-    func start() -> Signal<Void, NoError> {
-        return startCoordinator()
-    }
+    func start() -> Signal<Void, NoError> { return startCoordinator() }
 }
-
 
 extension  PlayersCoordinator {
     func startCoordinator() -> Signal<Void, NoError> {
@@ -50,15 +46,11 @@ extension  PlayersCoordinator {
     }
     
     func bindViewModel(_ viewModel: PlayersViewModelOutputProtocol) {
-       
         viewModel.output.observeCompleted { [weak self] in
             self?.navigController?.popViewController(animated: true)
             self?._pipe.input.sendCompleted()
         }
-        
     }
-    
-   
 }
 
 

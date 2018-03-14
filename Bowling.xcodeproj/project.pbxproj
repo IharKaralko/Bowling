@@ -15,6 +15,7 @@
 		433DBA3E200F631C00732B20 /* CountOfPlayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433DBA3D200F631C00732B20 /* CountOfPlayerProtocol.swift */; };
 		4342F33220453B2D00D89C84 /* FrameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4342F33120453B2D00D89C84 /* FrameTests.swift */; };
 		4342F33420454F8300D89C84 /* GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4342F33320454F8300D89C84 /* GameTests.swift */; };
+		4345431120592554008B0FBA /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4345431020592554008B0FBA /* CustomView.swift */; };
 		4345753C2049361300838CC9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4345753B2049361300838CC9 /* MapKit.framework */; };
 		4345754620495F0900838CC9 /* LocationGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4345754520495F0900838CC9 /* LocationGameViewModel.swift */; };
 		434575492049643C00838CC9 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434575472049643C00838CC9 /* DemoViewController.swift */; };
@@ -119,6 +120,7 @@
 		433DBA3D200F631C00732B20 /* CountOfPlayerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountOfPlayerProtocol.swift; sourceTree = "<group>"; };
 		4342F33120453B2D00D89C84 /* FrameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameTests.swift; sourceTree = "<group>"; };
 		4342F33320454F8300D89C84 /* GameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTests.swift; sourceTree = "<group>"; };
+		4345431020592554008B0FBA /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		4345753B2049361300838CC9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		4345754520495F0900838CC9 /* LocationGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationGameViewModel.swift; sourceTree = "<group>"; };
 		434575472049643C00838CC9 /* DemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
@@ -462,6 +464,7 @@
 				435B2F17204830BD005B564C /* CustomCalloutView.xib */,
 				435B2F19204830EB005B564C /* CustomCalloutView.swift */,
 				4376D5E9204AE2290088AE58 /* СalloutLegView.swift */,
+				4345431020592554008B0FBA /* CustomView.swift */,
 			);
 			path = CustomCallout;
 			sourceTree = "<group>";
@@ -724,6 +727,7 @@
 				434DB51220132E3100F3017A /* NamesOfPlayersTableViewCell.swift in Sources */,
 				43A71563203EE9E200DFA516 /*  FinalFrameViewModelProtocol.swift in Sources */,
 				432CC821205683EC008564B2 /* CalloutViewModelProtocol .swift in Sources */,
+				4345431120592554008B0FBA /* CustomView.swift in Sources */,
 				435FBBC52010AA770087E415 /* NamesOfPlayersViewController.swift in Sources */,
 				434C762F200E142400879242 /* Game .swift in Sources */,
 				43481CC42057AACD005AF47B /* LocationsViewController.swift in Sources */,

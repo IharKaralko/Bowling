@@ -11,20 +11,28 @@ import MapKit
 
 class Service {
     
-    // TODO: need to refactor
-    func fetchCountryAndCity(location: CLLocation, completion: @escaping (String, String, String) -> ()) {
+    func fetchAdressLocation(location: CLLocation, completion: @escaping (AdressLocation) -> ()) {
         CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
+            var adressLocation = AdressLocation()
             if let error = error {
                 print(error)
-            } else if let country = placemarks?.first?.country,
+            } else if let  country = placemarks?.first?.country,
                 let city = placemarks?.first?.locality,
                 let name = placemarks?.first?.name
-               
             {
-                
-                completion(country, city, name)
+                adressLocation.country = country
+                adressLocation.city = city
+                adressLocation.name = name
+                completion(adressLocation)
             }
         }
     }
     
+}
+
+struct AdressLocation {
+    var country: String!
+    var city: String!
+    var name: String!
+    var adress: String { return country + " " +  city + " " + name }
 }

@@ -9,7 +9,13 @@
 import Foundation
 
 struct Player {
-    var id: String?
-    var name: String?
-    var scoreGame: Int?
+    let id: String
+    let name: String
+    var scoreGame: Int
+    
+    init(id: String, name: String,  scoreGame: Int){
+        self.id = id
+        self.name = name
+        self.scoreGame = scoreGame
+    }
 }
