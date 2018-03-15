@@ -18,17 +18,12 @@ class GameSessionViewModel {
     deinit {
         print("GameSessionViewModel deinit-")
     }
-    
-    
     private let _pipe = Signal<GameSessionViewController.Action, NoError>.pipe()
     private var  doneBackAction: ReactiveSwift.Action<Void, Void, NoError>!
-   
-    private var countOfGameFinish: Int = 0
+    private var  countOfGameFinish: Int = 0
     private let  gamesModels: [GameViewModel]
     private let  configurationGame: ConfigurationGame
-    
- 
-    
+
     init (namesOfPlayer: [String], configurationGame: ConfigurationGame) {
         self.configurationGame = configurationGame
         var gameModels: [GameViewModel] = []
@@ -48,18 +43,21 @@ class GameSessionViewModel {
                 observer.sendCompleted()
             }
         }
-        let servicePlayer = ServicePlayer()
-     //   let  userLat = String(format: "%f",  configurationGame.location.latitude)
-       
-        let coordinateLocation = CLLocation(latitude: configurationGame.location.latitude, longitude: configurationGame.location.longitude)
-        let service = Service()
-        var adress = String()
-        service.fetchAdressLocation(location: coordinateLocation) {adressLocation  in
-            adress = adressLocation.adress
-            servicePlayer.createPlayersOfGameHistory(location: adress, idGameSession: configurationGame.idGameSession, gamesModel: self.gamesModels)
-         }
         
-       // servicePlayer.createPlayersOfGameHistory(location: adress, idGameSession: configurationGame.idGameSession, gamesModel: gamesModels)
+        let servicePlayer = ServiceDataSourseOfPlayer()
+        let userCoordinate = String(format: "%f",  configurationGame.location.latitude) +  "+"  + String(format: "%f",  configurationGame.location.longitude)
+        let coordinateLocation = CLLocation(latitude: configurationGame.location.latitude, longitude: configurationGame.location.longitude)
+        let service = ServiceSettingOfAdress()
+   
+        service.fetchAdressLocation(location: coordinateLocation) { adressLocation  in
+            var adress = String()
+            if adressLocation.adress.isEmpty {
+                adress = "This is the coordinates: \(userCoordinate)"
+            } else {
+                adress = adressLocation.adress
+            }
+           servicePlayer.createPlayersOfGameHistory(location:  adress, idGameSession: configurationGame.idGameSession, gamesModel: self.gamesModels)
+         }
     }
 }
 
@@ -70,15 +68,6 @@ private extension GameSessionViewModel {
             let max = gamesModels.max{$0.currentGame.score  < $1.currentGame.score}
             if  let index = gamesModels.index(where: {$0 === max}){
                 _pipe.input.send(value: GameSessionViewController.Action.gameSessionCompleted(index: index))
-                
-//                locationGame.output.observeValues({ [weak self] value in
-//                    switch value {
-//                    case .locationGameDidSelect(let location):
-//                        let serviceLocation = ServiceLocation()
-//                        serviceLocation.create(location: location)
-//                        //self?.namesOfPlayersDidSelect(names)
-//                    }
-//                })
             }
         }
     }
@@ -86,9 +75,7 @@ private extension GameSessionViewModel {
 
 // MARK: - GameSessionViewModelProtocol
 extension GameSessionViewModel:  GameSessionViewModelProtocol {
-     var configurationCurrentGame: ConfigurationGame { return configurationGame }
-    //  var idCurrentGameSession: String { return id }
-   // var listNamesOfPlayer: [String] { return  namesOfPlayer }
+    var configurationCurrentGame: ConfigurationGame { return configurationGame }
     var gamesModelsOfGameSession: [GameViewModel] { return gamesModels }
     var output: Signal<GameSessionViewController.Action, NoError> { return _pipe.output }
     var doneCancelAction: ReactiveSwift.Action<Void, Void, NoError> { return  doneBackAction }

@@ -81,7 +81,7 @@ private extension GameViewModel {
     }
     
     func changeScoreGame() {
-        let servicePlayer = ServicePlayer()
+        let servicePlayer = ServiceDataSourseOfPlayer()
         servicePlayer.updateScoreGame(idCurrentGame: id, scoreGame: game.score)
         
         if frameNumber < framesViewModel.count  {                                             
@@ -95,7 +95,6 @@ private extension GameViewModel {
 
 // MARK: - GameViewModelProtocol
 extension GameViewModel: GameViewModelProtocol {
-   
     var idCurrentGame: String { return id }
     var nameOfPlayerCurrentGame: String { return nameOfPlayer }
     var currentGame: Game { return game }

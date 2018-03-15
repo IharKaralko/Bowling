@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MapKit
 import ReactiveSwift
 import Result
 import ReactiveCocoa
@@ -19,5 +18,6 @@ protocol GameHistoryViewModelOutputProtocol {
 protocol GameHistoryViewModelProtocol {
     var currentLocation: Location { get }
     var gamesHistory: [GameHistory] { get }
+    var backCancelAction: Action< Void, Void, NoError>  { get}
     func selectGameHistory(currentLocation: GameHistory)
 }

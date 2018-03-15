@@ -14,34 +14,40 @@ import Result
 
 class GameHistoryViewModel {
     
-    var location: Location
+    private var location: Location
     private var _pipe = Signal<GameHistoryCoordinator.Action, NoError>.pipe()
-    var games: [GameHistory]
+    private var games: [GameHistory]
+    private var doneBackAction: Action<Void, Void, NoError>!
     
-    init(_ location: Location ){
+    init(_ location: Location ) {
         self.location = location
-        let serviceGameHistory = ServiceGameHistory()
+        let serviceGameHistory = ServiceDataSourseOfGameHistory()
         self.games = serviceGameHistory.getGamesOfLocation(currentLocationId: location.id)
-    }
-}
-extension GameHistoryViewModel {
-    func gameDidSelect(_ currentLocation: GameHistory){
-          _pipe.input.send(value: GameHistoryCoordinator.Action.selectGame(game: currentLocation))
         
+        self.doneBackAction = Action() { [weak self]  in
+            return SignalProducer { observer, _ in
+                self?._pipe.input.sendCompleted()
+                observer.sendCompleted()
+            }
+        }
     }
 }
 
-// MARK: - LocationGameViewModelProtocol
+extension GameHistoryViewModel {
+    func gameDidSelect(_ currentLocation: GameHistory){
+        _pipe.input.send(value: GameHistoryCoordinator.Action.selectGame(game: currentLocation))
+    }
+}
+
+// MARK: - GameHistoryViewModelProtocol
 extension GameHistoryViewModel: GameHistoryViewModelProtocol {
+    var backCancelAction: Action< Void, Void, NoError>  { return doneBackAction }
     var currentLocation: Location { return location }
     var gamesHistory: [GameHistory] { return games }
-    func selectGameHistory(currentLocation: GameHistory){
-        return gameDidSelect(currentLocation)
-        
-    }
-    
+    func selectGameHistory(currentLocation: GameHistory) { return gameDidSelect(currentLocation) }
 }
-// MARK: - LocationGameViewModelOutputProtocol
+
+// MARK: - GameHistoryViewModelOutputProtocol
 extension GameHistoryViewModel: GameHistoryViewModelOutputProtocol {
     var output: Signal<GameHistoryCoordinator.Action, NoError> { return _pipe.output }
 }

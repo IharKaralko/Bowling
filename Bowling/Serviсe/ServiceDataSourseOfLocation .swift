@@ -1,25 +1,25 @@
-//
-//   ServiceLocation.swift
-//  Bowling
-//
-//  Created by Ihar_Karalko on 06.03.2018.
-//  Copyright © 2018 Ihar_Karalko. All rights reserved.
-//
-
-import Foundation
-import CoreData
-
-class ServiceLocation {
+ //
+ //   ServiceLocation.swift
+ //  Bowling
+ //
+ //  Created by Ihar_Karalko on 06.03.2018.
+ //  Copyright © 2018 Ihar_Karalko. All rights reserved.
+ //
+ 
+ import Foundation
+ import CoreData
+ 
+ class ServiceDataSourseOfLocation  {
     
     var context: NSManagedObjectContext
     
-    init(context: NSManagedObjectContext){
+    init(context: NSManagedObjectContext  = CoreDataManager.instance.persistentContainer.viewContext){
         self.context = context
     }
     
     // Creates a new CDLocation
     func create(location: String) -> CDLocation {
-       
+        
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CDLocation")
         do {
             let results = try CoreDataManager.instance.persistentContainer.viewContext.fetch(fetchRequest)
@@ -27,7 +27,7 @@ class ServiceLocation {
                 if result.location == location {
                     return result
                 }
-                  }
+            }
         } catch {
             print(error)
         }
@@ -36,17 +36,17 @@ class ServiceLocation {
         
         // Создание нового объекта
         let newItem = NSManagedObject(entity: entityDescription!, insertInto: CoreDataManager.instance.persistentContainer.viewContext)
-    
+        
         
         newItem.setValue(UUID().uuidString, forKey: "id")
         newItem.setValue(location, forKey: "location")
         CoreDataManager.instance.saveContext()
         
         return newItem as! CDLocation
-       
+        
     }
     
- 
+    
     // get all Location
     func getAll() -> [Location]{
         var locations = [Location]()
@@ -61,7 +61,6 @@ class ServiceLocation {
             print(error)
         }
         return locations
-        
     }
     
     func deleteAll(){
@@ -71,13 +70,14 @@ class ServiceLocation {
             for result in results as! [CDLocation] {
                 CoreDataManager.instance.persistentContainer.viewContext.delete(result)
             }
-               } catch {
+        } catch {
             print(error)
         }
-          CoreDataManager.instance.saveContext()
+        CoreDataManager.instance.saveContext()
         
     }
     
+    
+    
+ }
 
-
-}

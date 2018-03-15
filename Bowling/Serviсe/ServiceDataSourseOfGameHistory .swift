@@ -9,9 +9,12 @@
 import Foundation
 import CoreData
 
-class ServiceGameHistory{
+class ServiceDataSourseOfGameHistory {
+    var context: NSManagedObjectContext
     
-       
+    init(context: NSManagedObjectContext = CoreDataManager.instance.persistentContainer.viewContext){
+        self.context = context
+    }
     
     func getGamesOfLocation(currentLocationId: String) -> [GameHistory]{
         
@@ -23,7 +26,7 @@ class ServiceGameHistory{
                                                               ascending: true)]
         
         do {
-            let results = try CoreDataManager.instance.persistentContainer.viewContext.fetch(fetchRequest)
+            let results = try context.fetch(fetchRequest)
             for result in results as! [CDGame] {
                 let game = GameHistory(id: result.id!, date: result.date!, countOfPlayers: Int(result.countOfPlayers))
                 games.append(game)
@@ -37,20 +40,18 @@ class ServiceGameHistory{
     
     // Creates a new CDGame
     func create(countOfPlayers: Int, location: String, idGameSession: String)  -> CDGame {
-        let serviceLocation = ServiceLocation()
-      
-        // Описание сущности
-        let entityDescription = NSEntityDescription.entity(forEntityName: "CDGame", in: CoreDataManager.instance.persistentContainer.viewContext)
+        let serviceLocation = ServiceDataSourseOfLocation()
+        let entityDescription = NSEntityDescription.entity(forEntityName: "CDGame", in: context)
         
         // Создание нового объекта
-        let newItem = NSManagedObject(entity: entityDescription!, insertInto: CoreDataManager.instance.persistentContainer.viewContext)
+        let newItem = NSManagedObject(entity: entityDescription!, insertInto: context)
         
         newItem.setValue(idGameSession, forKey: "id")
         newItem.setValue(Date(), forKey: "date")
         newItem.setValue(Int16(countOfPlayers), forKey: "countOfPlayers")
         
-       let cdLocation = serviceLocation.create(location: location)
-       
+        let cdLocation = serviceLocation.create(location: location)
+        
         newItem.setValue(cdLocation, forKey: "location")
         
         CoreDataManager.instance.saveContext()
@@ -60,14 +61,14 @@ class ServiceGameHistory{
     func deleteAll(){
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CDGame")
         do {
-            let results = try CoreDataManager.instance.persistentContainer.viewContext.fetch(fetchRequest)
+            let results = try context.fetch(fetchRequest)
             for result in results as! [CDGame] {
-                CoreDataManager.instance.persistentContainer.viewContext.delete(result)
+                context.delete(result)
             }
         } catch {
             print(error)
         }
-          CoreDataManager.instance.saveContext()
+        CoreDataManager.instance.saveContext()
         
     }
 }

@@ -13,13 +13,13 @@ import ReactiveSwift
 import Result
 
 class LocationsViewModel {
-     private var _pipe = Signal<LocationsCoordinator.Action, NoError>.pipe()
-     var locations: [Location]
-     var clearHistoryAction: Action<Void, Void, NoError>!
+    private var _pipe = Signal<LocationsCoordinator.Action, NoError>.pipe()
+    private var locations: [Location]
+    private  var clearHistoryAction: Action<Void, Void, NoError>!
     private var doneBackAction: Action<Void, Void, NoError>!
     
     init(){
-        let serviceLocation = ServiceLocation()
+        let serviceLocation = ServiceDataSourseOfLocation()
         self.locations = serviceLocation.getAll()
         
         self.doneBackAction = Action() { [weak self]  in
@@ -31,31 +31,28 @@ class LocationsViewModel {
         
         self.clearHistoryAction = Action() { [weak self]  in
             return SignalProducer { observer, _ in
-                let serviceLocation = ServiceLocation()
+                let serviceLocation = ServiceDataSourseOfLocation()
                 serviceLocation.deleteAll()
                 self?._pipe.input.sendCompleted()
-                //                self?._pipe.input.send(value: LocationsCoordinator.Action.clearHistory)
                 observer.sendCompleted()
             }
         }
-        
     }
 }
-extension LocationsViewModel{
-    func locationDidSelect(_ currentLocation: Location){
+
+private extension LocationsViewModel {
+    func locationDidSelect(_ currentLocation: Location) {
         _pipe.input.send(value: LocationsCoordinator.Action.selectLocation(location: currentLocation))
     }
-   
 }
 
-
 extension LocationsViewModel: LocationsViewModelProtocol {
-     var backCancelAction: Action< Void, Void, NoError>  { return doneBackAction }
-     var locationsGame: [Location]{ return locations }
-     var clearAction: Action<Void, Void, NoError> { return clearHistoryAction }
-    func selectLocation(_ currentLocation: Location){
-          locationDidSelect(currentLocation)
-     }
+    var backCancelAction: Action< Void, Void, NoError>  { return doneBackAction }
+    var locationsGame: [Location]{ return locations }
+    var clearAction: Action<Void, Void, NoError> { return clearHistoryAction }
+    func selectLocation(_ currentLocation: Location) {
+        locationDidSelect(currentLocation)
+    }
 }
 
 // MARK: - LocationGameViewModelOutputProtocol

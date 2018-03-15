@@ -9,19 +9,21 @@
 import UIKit
 
 class GameHistoryTableViewCell: UITableViewCell {
-   
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var countOfPlayerLabel: UILabel!
+    
+    @IBOutlet private weak var dateLabel: UILabel!
+    @IBOutlet private weak var countOfPlayerLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
+}
+extension GameHistoryTableViewCell {
+    func configureCell(_ date: String, _ countOfPlayer: String) {
+        dateLabel.text = date
+        countOfPlayerLabel.text = countOfPlayer
+    }
 }

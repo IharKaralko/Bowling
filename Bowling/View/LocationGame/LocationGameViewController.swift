@@ -16,13 +16,13 @@ import ReactiveCocoa
 class LocationGameViewController: UIViewController {
    
     var viewModel: LocationGameViewModelProtocol!
-    
+    var locationManager: CLLocationManager!
     
     @IBOutlet weak var mapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let locationManager = CLLocationManager()
+        locationManager = CLLocationManager()
         locationManager.requestWhenInUseAuthorization()
         mapView.showsUserLocation = true
         setupBarButton()
@@ -60,7 +60,7 @@ private extension LocationGameViewController {
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinates
         let coordinateLocation = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
-        let service = Service()
+        let service = ServiceSettingOfAdress()
         service.fetchAdressLocation(location: coordinateLocation) { [weak annotation] adressLocation  in
             annotation?.subtitle = adressLocation.adress
         }

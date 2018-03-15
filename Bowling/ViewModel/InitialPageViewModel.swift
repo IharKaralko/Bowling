@@ -34,13 +34,9 @@ class InitialPageViewModel {
 
 // MARK: - InitialPageViewModelProtocol
 extension InitialPageViewModel: InitialPageViewModelProtocol {
-
     var beginNewGameAction: Action<Void, Void, NoError> { return startNewGameAction }
     var goToHistoryAction: Action<Void, Void, NoError> {  return showHistoryAction }
-    
 }
-    
-   
 
 // MARK: - InitialPageViewModeOutputProtocol
 extension InitialPageViewModel: InitialPageViewModelOutputProtocol {

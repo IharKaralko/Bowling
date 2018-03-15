@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-class Service {
+class ServiceSettingOfAdress {
     
     func fetchAdressLocation(location: CLLocation, completion: @escaping (AdressLocation) -> ()) {
         CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
@@ -24,15 +24,24 @@ class Service {
                 adressLocation.city = city
                 adressLocation.name = name
                 completion(adressLocation)
+            } else {
+                adressLocation.country = String()
+                adressLocation.city = String()
+                adressLocation.name = String()
+                completion(adressLocation)
+                
             }
         }
+        
     }
-    
 }
 
 struct AdressLocation {
     var country: String!
     var city: String!
     var name: String!
-    var adress: String { return country + " " +  city + " " + name }
+    
+    var adress: String { if country.isEmpty && city.isEmpty && name.isEmpty {return String()}
+    else { return country + " " +  city + " " + name}
+                }
 }

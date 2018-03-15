@@ -14,20 +14,29 @@ import Result
 
 class PlayersViewModel {
     
-    var game: GameHistory
+    private var game: GameHistory
     private var _pipe = Signal<Void, NoError>.pipe()
-    var players: [Player]
+    private var players: [Player]
+    private var doneBackAction: Action<Void, Void, NoError>!
     
     init(_ game: GameHistory ){
         self.game = game
-        let servicePlayer = ServicePlayer()
+        let servicePlayer = ServiceDataSourseOfPlayer()
         self.players = servicePlayer.getPlayersOfGameHistory(currentGameId: game.id)
+        
+        self.doneBackAction = Action() { [weak self]  in
+            return SignalProducer { observer, _ in
+                self?._pipe.input.sendCompleted()
+                observer.sendCompleted()
+            }
+        }
     }
 }
 
 
 // MARK: - LocationGameViewModelProtocol
 extension PlayersViewModel: PlayersViewModelProtocol {
+    var backCancelAction: Action< Void, Void, NoError>  { return doneBackAction }
     var currentGame: GameHistory { return game }
     var playersOfGame: [Player] { return players }
 }

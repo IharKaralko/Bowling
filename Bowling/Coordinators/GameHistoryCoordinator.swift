@@ -20,7 +20,6 @@ class GameHistoryCoordinator {
     deinit {
         print("GameHistoryCoordinator deinit+")
     }
-    
     private var currenLocation: Location
     private weak var navigController: UINavigationController?
     private let _pipe = Signal<Void, NoError>.pipe()
@@ -35,7 +34,7 @@ extension GameHistoryCoordinator:  GameHistoryCoordinatorProtocol {
     func start() -> Signal<Void, NoError> { return startCoordinator() }
 }
 
-extension  GameHistoryCoordinator {
+private extension  GameHistoryCoordinator {
     func startCoordinator() -> Signal<Void, NoError> {
         guard let navigController = navigController else { return .empty }
         let gameHistoryViewController = GameHistoryViewController()

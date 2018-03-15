@@ -31,7 +31,7 @@ class GameSessionViewController: UIViewController {
         commonInit()
         bindViewModel()
         
-        let   serviceLocation = ServiceLocation()
+        let   serviceLocation = ServiceDataSourseOfLocation(context: CoreDataManager.instance.persistentContainer.viewContext)
         let locations = serviceLocation.getAll()
         for location in locations{
             print(location.id)

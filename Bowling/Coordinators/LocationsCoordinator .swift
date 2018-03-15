@@ -32,8 +32,7 @@ extension LocationsCoordinator:  LocationsCoordinatorProtocol {
     func start() -> Signal<Void, NoError> {  return startCoordinator() }
 }
 
-
-extension  LocationsCoordinator {
+private extension  LocationsCoordinator {
     func startCoordinator() -> Signal<Void, NoError> {
         guard let navigController = navigController else { return .empty }
         let locationsViewController = LocationsViewController()
@@ -49,8 +48,6 @@ extension  LocationsCoordinator {
             switch value {
             case .selectLocation(let location):
                 self?.locationGameDidSelect(location)
-            case .clearHistory:
-                self?.startCoordinator()
             }
         }
         
@@ -73,7 +70,6 @@ extension  LocationsCoordinator {
 extension LocationsCoordinator {
     enum Action {
         case selectLocation(location: Location)
-        case clearHistory
     }
 }
 

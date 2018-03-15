@@ -18,7 +18,7 @@ protocol PlayersCoordinatorProtocol {
 
 class PlayersCoordinator {
     deinit {
-        print("GameHistoryCoordinator deinit+")
+        print("PlayersCoordinator deinit+")
     }
     
     private var currenGame: GameHistory
@@ -49,6 +49,7 @@ extension  PlayersCoordinator {
     func bindViewModel(_ viewModel: PlayersViewModelOutputProtocol) {
         viewModel.output.observeCompleted { [weak self] in
             self?.navigController?.popViewController(animated: true)
+            
             self?._pipe.input.sendCompleted()
         }
     }

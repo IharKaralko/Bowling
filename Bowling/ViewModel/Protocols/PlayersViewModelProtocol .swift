@@ -19,5 +19,5 @@ protocol PlayersViewModelOutputProtocol {
 protocol PlayersViewModelProtocol {
     var currentGame: GameHistory { get }
     var playersOfGame: [Player] { get }
-    
-}
+    var backCancelAction: Action< Void, Void, NoError>  { get }
+ }

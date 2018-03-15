@@ -24,8 +24,7 @@ class GameSessionCoordinator {
     private let collectionOfNames: [String]
     private let configurationGame: ConfigurationGame
     
-    init(_ navigController: UINavigationController, _ collectionOfNames: [String], _ configurationGame: ConfigurationGame)
-    {
+    init(_ navigController: UINavigationController, _ collectionOfNames: [String], _ configurationGame: ConfigurationGame) {
         self.navigController = navigController
         self.collectionOfNames = collectionOfNames
         self.configurationGame = configurationGame
