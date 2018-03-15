@@ -39,11 +39,12 @@ extension LocationGameCoordinator:  LocationGameCoordinatorProtocol {
 
 extension  LocationGameCoordinator {
     func startCoordinator() -> Signal<Void, NoError> {
+        guard let navigController = navigController else { return .empty }
         let locationGameViewController = LocationGameViewController()
         let viewModel = LocationGameViewModel()
         locationGameViewController.viewModel = viewModel
         bindViewModel(viewModel)
-        navigController?.pushViewController(locationGameViewController, animated: true)
+        navigController.pushViewController(locationGameViewController, animated: true)
         return _pipe.output
     }
     

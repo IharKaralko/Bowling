@@ -16,3 +16,11 @@ import ReactiveCocoa
 protocol LocationsViewModelOutputProtocol {
     var output: Signal<LocationsCoordinator.Action, NoError> { get }
 }
+
+protocol LocationsViewModelProtocol {
+    var backCancelAction: Action< Void, Void, NoError>  { get }
+    var locationsGame: [Location]{ get }
+    var clearAction: Action<Void, Void, NoError> { get }
+    func selectLocation(_ currentLocation: Location)
+    
+}

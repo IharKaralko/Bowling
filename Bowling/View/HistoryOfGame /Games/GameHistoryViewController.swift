@@ -68,7 +68,11 @@ extension GameHistoryViewController: UITableViewDataSource {
         cell.countOfPlayerLabel.text = "\(viewModel.gamesHistory[indexPath.row].countOfPlayers) Players"
         return cell
     }
-}
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
+ }
+
 extension GameHistoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let index = indexPath.row

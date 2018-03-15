@@ -11,11 +11,11 @@ import CoreData
 
 class ServiceLocation {
     
-//    var context: NSManagedObjectContext
-//    
-//    init(context: NSManagedObjectContext){
-//        self.context = context
-//    }
+    var context: NSManagedObjectContext
+    
+    init(context: NSManagedObjectContext){
+        self.context = context
+    }
     
     // Creates a new CDLocation
     func create(location: String) -> CDLocation {

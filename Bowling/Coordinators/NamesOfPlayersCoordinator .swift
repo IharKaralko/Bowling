@@ -39,6 +39,7 @@ extension NamesOfPlayersCoordinator: NamesOfPlayersCoordinatorProtocol {
 
 private extension NamesOfPlayersCoordinator {
     func startCoordinator() -> Signal<NamesOfPlayersCoordinator.Output, NoError> {
+        guard let navigationController = navigationController else { return .empty }
         let namesOfPlayersViewController = NamesOfPlayersViewController()
         let viewModel = NamesOfPlayersViewModel(countOfPlayers: countOfPlayers)
         namesOfPlayersViewController.viewModel = viewModel
@@ -53,7 +54,7 @@ private extension NamesOfPlayersCoordinator {
             self?.navigationController?.popViewController(animated: true)
             self?._pipe.input.sendCompleted()
         }
-        navigationController?.pushViewController(namesOfPlayersViewController, animated: true)
+        navigationController.pushViewController(namesOfPlayersViewController, animated: true)
         return _pipe.output
     }
     

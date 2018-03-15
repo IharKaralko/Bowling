@@ -38,6 +38,7 @@ extension GameSessionCoordinator: GameSessionCoordinatorProtocol {
 
 extension  GameSessionCoordinator {
     func startCoordinator() -> Signal<Void, NoError> {
+        guard let navigController = navigController else { return .empty }
         let gameSessionViewController = GameSessionViewController()
         let viewModel = GameSessionViewModel(namesOfPlayer: collectionOfNames, configurationGame: configurationGame)
         gameSessionViewController.viewModel = viewModel
@@ -45,7 +46,7 @@ extension  GameSessionCoordinator {
             self?.navigController?.popViewController(animated: true)
             self?._pipe.input.sendCompleted()
         }
-        navigController?.pushViewController(gameSessionViewController, animated: true)
+        navigController.pushViewController(gameSessionViewController, animated: true)
         return _pipe.output
     }
 }

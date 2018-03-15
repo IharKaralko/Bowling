@@ -35,11 +35,12 @@ extension LocationsCoordinator:  LocationsCoordinatorProtocol {
 
 extension  LocationsCoordinator {
     func startCoordinator() -> Signal<Void, NoError> {
+        guard let navigController = navigController else { return .empty }
         let locationsViewController = LocationsViewController()
         let viewModel = LocationsViewModel()
         locationsViewController.viewModel = viewModel
         bindViewModel(viewModel)
-        navigController?.pushViewController(locationsViewController, animated: true)
+        navigController.pushViewController(locationsViewController, animated: true)
         return _pipe.output
     }
     

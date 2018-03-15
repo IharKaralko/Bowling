@@ -17,7 +17,7 @@ class CustomCalloutView: UIView {
     var touchSignal: Signal<Void, NoError> { return beginGameButton.reactive.controlEvents(.touchUpInside).map { _ in () } }
     private let btn: UIButton = UIButton()
     
-    @IBOutlet weak var beginGameButton: UIButton!
+    @IBOutlet private var beginGameButton: UIButton!
     @IBOutlet private weak var contentView: UIView!
     @IBOutlet private weak var image: UIImageView!
     @IBOutlet private weak var placeLabel: UILabel!

@@ -14,54 +14,7 @@ class CoreDataManager {
     
     // Singleton
     static let instance = CoreDataManager()
-    
-    private init() {}
-    
-    // Entity for Name
-    func entityForName(entityName: String) -> NSEntityDescription {
-        return NSEntityDescription.entity(forEntityName: entityName, in:
-            self.persistentContainer.viewContext)!
-    }
-    
-    func fetchedResultsController(entityName: String, keyForSort: String) -> NSFetchedResultsController<NSFetchRequestResult> {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
-        let sortDescriptor = NSSortDescriptor(key: keyForSort, ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        //  fetchRequest.predicate = NSPredicate(format: "name = %@", "John")
-        
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataManager.instance.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
-        
-               return fetchedResultsController
-    }
-//    func fetchOrder(entityName: String)->[Order] {
-//        var johnOrders = [Order]()
-//
-//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
-//        fetchRequest.predicate = NSPredicate(format: "name = %@", "John")
-//        fetchRequest.sortDescriptors = [NSSortDescriptor.init(key: "name",
-//                                                              ascending: true)]
-//        do {
-//            let results = try
-//                CoreDataManager.instance.persistentContainer.viewContext.fetch(fetchRequest)
-//
-//            let john: Customer = results.first as! Customer
-//
-//            // print(john.name)
-//            johnOrders = john.orders?.allObjects as! [Order]
-//            ////            print(johnOrders.count)
-//            // for result in johnOrders {
-//
-//            //              CoreDataManager.instance.persistentContainer.viewContext.delete(result)
-//
-//            //  print("order - \(String(result.made))")
-//            //\(result.value(forKey: "name")!)")
-//            // }
-//        } catch {
-//            print(error)
-//        }
-//        return johnOrders
-//    }
-    
+
     
     // MARK: - Core Data stack
     

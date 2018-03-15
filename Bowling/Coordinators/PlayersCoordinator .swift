@@ -37,11 +37,12 @@ extension PlayersCoordinator:  PlayersCoordinatorProtocol {
 
 extension  PlayersCoordinator {
     func startCoordinator() -> Signal<Void, NoError> {
+        guard let navigController = navigController else { return .empty }
         let playersViewController = PlayersViewController()
         let viewModel = PlayersViewModel(currenGame)
         playersViewController.viewModel = viewModel
         bindViewModel(viewModel)
-        navigController?.pushViewController(playersViewController, animated: true)
+        navigController.pushViewController(playersViewController, animated: true)
         return _pipe.output
     }
     

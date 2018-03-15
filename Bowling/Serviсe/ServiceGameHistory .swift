@@ -11,8 +11,7 @@ import CoreData
 
 class ServiceGameHistory{
     
-    //var serviceLocation: ServiceLocation!
-    
+       
     
     func getGamesOfLocation(currentLocationId: String) -> [GameHistory]{
         

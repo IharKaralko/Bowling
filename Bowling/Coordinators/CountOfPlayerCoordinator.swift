@@ -37,12 +37,12 @@ extension CountOfPlayerCoordinator: CountOfPlayerCoordinatorProtocol {
 
 private extension CountOfPlayerCoordinator {
     func startCoordinator()-> Signal<CountOfPlayerCoordinator.Output, NoError> {
-        // guard let navController = navController else { return }
+        guard let navController = navController else { return .empty }
         let countOfPlayerViewController = CountOfPlayerViewController()
         let viewModel = CountOfPlayerViewModel()
         countOfPlayerViewController.viewModel = viewModel
         bindViewModel(viewModel)
-        navController?.pushViewController(countOfPlayerViewController, animated: true)
+        navController.pushViewController(countOfPlayerViewController, animated: true)
         return _pipe.output
     }
     

@@ -20,12 +20,12 @@ class LocationsViewController: UIViewController {
         print("LocationsViewController deinit--------")
     }
     
-     var viewModel: LocationsViewModel = LocationsViewModel()
+     var viewModel: LocationsViewModelProtocol! // = LocationsViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
        bindViewModel()
-      commonInit()
+       commonInit()
         setupBarButton()       
     }
 
@@ -44,33 +44,45 @@ private extension LocationsViewController {
        // self.hideKeyboard()
         
     }
+    
+   
     func setupBarButton(){
         self.navigationItem.title = "HISTORY"
         
         let done = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
-        //done.reactive.pressed = CocoaAction(viewModel.backCancelAction)
+        done.reactive.pressed = CocoaAction(viewModel.backCancelAction)
         navigationItem.setLeftBarButton(done, animated: false)
         
 //        let startAction: ReactiveSwift.Action <Void, Void, NoError> = ReactiveSwift.Action() { [weak self] in
 //            return SignalProducer<Void, NoError> { observer, _ in self?.startButtonTapped(); observer.sendCompleted() }
 //        }
+//        let clearHistoryAction: ReactiveSwift.Action <Void, Void, NoError> = Action() { [weak self]  in
+//            return SignalProducer { observer, _ in
+//                let serviceLocation = ServiceLocation()
+//                serviceLocation.deleteAll()
+//                 //self?.tableView.reloadData()
+//               // self?._pipe.input.send(value: LocationsCoordinator.Action.clearHistory)
+//                observer.sendCompleted()
+//            }
+//        }
+        
+        
         let clear = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: nil)
-        clear.reactive.pressed = CocoaAction(viewModel.clearHistoryAction)
-       // tableView.reloadData()
-        navigationItem.setRightBarButton(clear, animated: false)
+        clear.reactive.pressed = CocoaAction(viewModel.clearAction)
+         navigationItem.setRightBarButton(clear, animated: false)
     }
 }
 // MARK: - UITableViewDataSource
 extension LocationsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.locations.count
+        return viewModel.locationsGame.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LocationTableViewCell", for: indexPath) as! LocationTableViewCell
      //   cell.configureCell(collectionOfCell[indexPath.row], String(indexPath.row + 1))
-       cell.locationLabel.text = viewModel.locations[indexPath.row].location
+       cell.locationLabel.text = viewModel.locationsGame[indexPath.row].location
         
         return cell
     }
@@ -78,10 +90,14 @@ extension LocationsViewController: UITableViewDataSource {
 extension LocationsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let index = indexPath.row
-        let currentLocation = viewModel.locations[index]
+        let currentLocation = viewModel.locationsGame[index]
         print(currentLocation.id)
-        viewModel.locationDidSelect(currentLocation: currentLocation)
+        viewModel.selectLocation(currentLocation)
         
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
     }
 //    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath){
 //        if let cell = cell as? NamesOfPlayersTableViewCell{

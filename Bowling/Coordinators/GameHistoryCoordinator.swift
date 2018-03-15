@@ -37,11 +37,12 @@ extension GameHistoryCoordinator:  GameHistoryCoordinatorProtocol {
 
 extension  GameHistoryCoordinator {
     func startCoordinator() -> Signal<Void, NoError> {
+        guard let navigController = navigController else { return .empty }
         let gameHistoryViewController = GameHistoryViewController()
         let viewModel = GameHistoryViewModel(currenLocation)
         gameHistoryViewController.viewModel = viewModel
         bindViewModel(viewModel)
-        navigController?.pushViewController(gameHistoryViewController, animated: true)
+        navigController.pushViewController(gameHistoryViewController, animated: true)
         return _pipe.output
     }
     

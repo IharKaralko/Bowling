@@ -68,7 +68,11 @@ extension PlayersViewController: UITableViewDataSource {
         cell.scoreGame.text = viewModel.playersOfGame[indexPath.row].scoreGame.description
         return cell
     }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
 }
+
 extension PlayersViewController: UITableViewDelegate {
 
     //    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath){
