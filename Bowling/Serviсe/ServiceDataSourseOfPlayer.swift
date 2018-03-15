@@ -12,7 +12,7 @@ import CoreData
 
 class ServiceDataSourseOfPlayer {
     
-    var context: NSManagedObjectContext
+  private  var context: NSManagedObjectContext
     
     init(context: NSManagedObjectContext = CoreDataManager.instance.persistentContainer.viewContext){
         self.context = context

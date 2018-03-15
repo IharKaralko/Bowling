@@ -11,7 +11,7 @@
  
  class ServiceDataSourseOfLocation  {
     
-    var context: NSManagedObjectContext
+    private var context: NSManagedObjectContext
     
     init(context: NSManagedObjectContext  = CoreDataManager.instance.persistentContainer.viewContext){
         self.context = context
@@ -22,7 +22,7 @@
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CDLocation")
         do {
-            let results = try CoreDataManager.instance.persistentContainer.viewContext.fetch(fetchRequest)
+            let results = try context.fetch(fetchRequest)
             for result in results as! [CDLocation] {
                 if result.location == location {
                     return result
@@ -31,13 +31,9 @@
         } catch {
             print(error)
         }
-        // Описание сущности
-        let entityDescription = NSEntityDescription.entity(forEntityName: "CDLocation", in: CoreDataManager.instance.persistentContainer.viewContext)
-        
-        // Создание нового объекта
-        let newItem = NSManagedObject(entity: entityDescription!, insertInto: CoreDataManager.instance.persistentContainer.viewContext)
-        
-        
+       
+        let entityDescription = NSEntityDescription.entity(forEntityName: "CDLocation", in: context)
+        let newItem = NSManagedObject(entity: entityDescription!, insertInto: context)
         newItem.setValue(UUID().uuidString, forKey: "id")
         newItem.setValue(location, forKey: "location")
         CoreDataManager.instance.saveContext()
@@ -52,7 +48,7 @@
         var locations = [Location]()
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CDLocation")
         do {
-            let results = try CoreDataManager.instance.persistentContainer.viewContext.fetch(fetchRequest)
+            let results = try context.fetch(fetchRequest)
             for result in results as! [CDLocation] {
                 let location = Location(id: result.id!, location: result.location!)
                 locations.append(location)
@@ -66,9 +62,9 @@
     func deleteAll(){
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CDLocation")
         do {
-            let results = try CoreDataManager.instance.persistentContainer.viewContext.fetch(fetchRequest)
+            let results = try context.fetch(fetchRequest)
             for result in results as! [CDLocation] {
-                CoreDataManager.instance.persistentContainer.viewContext.delete(result)
+                context.delete(result)
             }
         } catch {
             print(error)
