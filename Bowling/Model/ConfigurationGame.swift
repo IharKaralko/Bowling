@@ -13,11 +13,13 @@ struct  ConfigurationGame {
     
     var idGameSession: String
     var location:  CLLocationCoordinate2D
+    var adressLocation: String
     var namesOfPlayer: [String]
     
-    init(idGameSession: String, location:  CLLocationCoordinate2D, namesOfPlayer: [String]) {
-        self.idGameSession = idGameSession
+    init(location:  CLLocationCoordinate2D, adressLocation: String, namesOfPlayer: [String] = []) {
+        self.idGameSession = UUID().uuidString
         self.location = location
+        self.adressLocation = adressLocation
         self.namesOfPlayer = namesOfPlayer
     }
     

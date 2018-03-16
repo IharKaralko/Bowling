@@ -18,13 +18,13 @@ protocol CountOfPlayerCoordinatorProtocol {
 
 class CountOfPlayerCoordinator {
     
-    private let location: CLLocationCoordinate2D
+    private let configurationGame: ConfigurationGame
     private weak var navController: UINavigationController?
     private let _pipe = Signal<CountOfPlayerCoordinator.Output, NoError>.pipe()
     
-    init(_ navController: UINavigationController, _ location: CLLocationCoordinate2D) {
+    init(_ navController: UINavigationController, _ configurationGame: ConfigurationGame) {
         self.navController = navController
-        self.location = location
+        self.configurationGame = configurationGame
     }
 }
 
@@ -62,7 +62,7 @@ private extension CountOfPlayerCoordinator {
     
     func countOfPlayerDidSelect(_ count: Int) {
         guard let navController = navController else { return }
-        var namesOfPlayersCoordinator: Optional<NamesOfPlayersCoordinator> = NamesOfPlayersCoordinator(navController, count, location)
+        var namesOfPlayersCoordinator: Optional<NamesOfPlayersCoordinator> = NamesOfPlayersCoordinator(navController, count, configurationGame)
         let output = namesOfPlayersCoordinator!.start()
         output.observeCompleted {
             namesOfPlayersCoordinator = nil

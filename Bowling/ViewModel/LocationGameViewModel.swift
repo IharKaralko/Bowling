@@ -20,12 +20,12 @@ class LocationGameViewModel {
     
     private var _pipe = Signal<LocationGameCoordinator.Action, NoError>.pipe()
     private var doneBackAction: Action<Void, Void, NoError>!
-    private var selectLocationAction: Action<CLLocationCoordinate2D, Void, NoError>!
+    private var selectLocationAction: Action<ConfigurationGame, Void, NoError>!
     
     init() {
         self.selectLocationAction = Action() { [weak self]  input in
             return SignalProducer { observer, _ in
-                self?._pipe.input.send(value: .selectLocationOfGame(location: input))
+                self?._pipe.input.send(value: .selectLocationOfGame(configurationGame: input))
                 //self?._pipe.input.sendCompleted()
                 observer.sendCompleted()
             }
@@ -41,7 +41,7 @@ class LocationGameViewModel {
 }
 
 extension LocationGameViewModel: LocationGameViewModelProtocol {
-    var beginGameAction:  Action< CLLocationCoordinate2D, Void, NoError> { return selectLocationAction}
+    var beginGameAction:  Action< ConfigurationGame, Void, NoError> { return selectLocationAction}
     var backCancelAction: Action< Void, Void, NoError>  { return doneBackAction }
 }
 

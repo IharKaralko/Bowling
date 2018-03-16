@@ -21,12 +21,10 @@ class GameSessionCoordinator {
     }
     private weak var navigController: UINavigationController?
     private let _pipe = Signal<Void, NoError>.pipe()
-    private let collectionOfNames: [String]
     private let configurationGame: ConfigurationGame
     
-    init(_ navigController: UINavigationController, _ collectionOfNames: [String], _ configurationGame: ConfigurationGame) {
+    init(_ navigController: UINavigationController,  _ configurationGame: ConfigurationGame) {
         self.navigController = navigController
-        self.collectionOfNames = collectionOfNames
         self.configurationGame = configurationGame
     }
 }
@@ -39,7 +37,7 @@ extension  GameSessionCoordinator {
     func startCoordinator() -> Signal<Void, NoError> {
         guard let navigController = navigController else { return .empty }
         let gameSessionViewController = GameSessionViewController()
-        let viewModel = GameSessionViewModel(namesOfPlayer: collectionOfNames, configurationGame: configurationGame)
+        let viewModel = GameSessionViewModel(configurationGame: configurationGame)
         gameSessionViewController.viewModel = viewModel
         viewModel.output.observeCompleted { [weak self] in
             self?.navigController?.popViewController(animated: true)

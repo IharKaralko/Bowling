@@ -18,5 +18,5 @@ protocol LocationGameViewModelOutputProtocol {
 
 protocol LocationGameViewModelProtocol {
     var backCancelAction: Action< Void, Void, NoError> { get }
-    var beginGameAction:  Action< CLLocationCoordinate2D, Void, NoError> { get }
+    var beginGameAction:  Action< ConfigurationGame, Void, NoError> { get }
  }

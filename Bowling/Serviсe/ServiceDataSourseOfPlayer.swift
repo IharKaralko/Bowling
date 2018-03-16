@@ -61,13 +61,13 @@ class ServiceDataSourseOfPlayer {
     
     func updateScoreGame(idCurrentGame: String, scoreGame: Int){
         
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CDPlayer")
+        let fetchRequest = NSFetchRequest<CDPlayer>(entityName: "CDPlayer")
         
         fetchRequest.predicate = NSPredicate(format: "id = %@", idCurrentGame)
            do {
             let results = try context.fetch(fetchRequest)
-            let result = results.first as! CDPlayer
-            result.scoreGame = Int16(scoreGame)
+            let result = results.first
+            result?.scoreGame = Int16(scoreGame)
            
         } catch {
             print(error)
@@ -77,7 +77,23 @@ class ServiceDataSourseOfPlayer {
         
     }
 
-    
+    func updateScoreGameForAllPlayer(idGameSession: String, gamesModels: [GameViewModel]){
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CDPlayer")
+        
+        fetchRequest.predicate = NSPredicate(format: "game.id = %@", idGameSession)
+        do {
+            let results = try context.fetch(fetchRequest)
+            var i = 0
+            for result in results as! [CDPlayer] {
+                result.scoreGame = Int16(gamesModels[i].currentGame.score)
+                i += 1
+            }
+        } catch {
+            print(error)
+        }
+        CoreDataManager.instance.saveContext()
+    }
     
     func deleteAll(){
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CDPlayer")

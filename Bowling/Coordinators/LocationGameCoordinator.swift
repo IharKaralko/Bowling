@@ -51,8 +51,8 @@ extension  LocationGameCoordinator {
     func bindViewModel(_ viewModel: LocationGameViewModelOutputProtocol) {
         viewModel.output.observeValues { [weak self] value in
             switch value {
-            case .selectLocationOfGame(let location):
-                self?.locationGameDidSelect(location)
+            case .selectLocationOfGame(let configurationGame):
+                self?.locationGameDidSelect(configurationGame)
             }
         }
         
@@ -62,9 +62,9 @@ extension  LocationGameCoordinator {
         }
     }
     
-    func locationGameDidSelect(_ location: CLLocationCoordinate2D) {
+    func locationGameDidSelect(_ configurationGame: ConfigurationGame) {
         guard let navigController = navigController else { return }
-        var countOfPlayerCoordinator: Optional<CountOfPlayerCoordinator> = CountOfPlayerCoordinator(navigController, location)
+        var countOfPlayerCoordinator: Optional<CountOfPlayerCoordinator> = CountOfPlayerCoordinator(navigController, configurationGame)
         let output = countOfPlayerCoordinator!.start()
         output.observeCompleted {
             countOfPlayerCoordinator = nil
@@ -74,6 +74,6 @@ extension  LocationGameCoordinator {
 
 extension LocationGameCoordinator {
     enum Action {
-        case selectLocationOfGame(location: CLLocationCoordinate2D)
+        case selectLocationOfGame(configurationGame: ConfigurationGame)
     }
 }

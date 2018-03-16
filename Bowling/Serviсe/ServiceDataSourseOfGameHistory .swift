@@ -28,7 +28,11 @@ class ServiceDataSourseOfGameHistory {
         do {
             let results = try context.fetch(fetchRequest)
             for result in results as! [CDGame] {
-                let game = GameHistory(id: result.id!, date: result.date!, countOfPlayers: Int(result.countOfPlayers))
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat =  "EEE, dd MMM yyyy HH:mm" 
+              let date = dateFormatter.string(from: result.date!)
+                
+                let game = GameHistory(id: result.id!, date: date, countOfPlayers: Int(result.countOfPlayers))
                 games.append(game)
             }
         } catch {
@@ -43,14 +47,20 @@ class ServiceDataSourseOfGameHistory {
         let serviceLocation = ServiceDataSourseOfLocation()
         let entityDescription = NSEntityDescription.entity(forEntityName: "CDGame", in: context)
         
+        serviceLocation.create(location: location)
         // Создание нового объекта
-        let newItem = NSManagedObject(entity: entityDescription!, insertInto: context)
+        let newItem = NSManagedObject(entity: entityDescription!, insertInto: context) 
+      
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss +zzzz"
+//        let date = dateFormatter..date(from: Date())
         
         newItem.setValue(idGameSession, forKey: "id")
         newItem.setValue(Date(), forKey: "date")
         newItem.setValue(Int16(countOfPlayers), forKey: "countOfPlayers")
         
-        let cdLocation = serviceLocation.create(location: location)
+        
+        let cdLocation = serviceLocation.fetchCDLocation(location: location)
         
         newItem.setValue(cdLocation, forKey: "location")
         

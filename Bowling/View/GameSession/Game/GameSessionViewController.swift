@@ -30,13 +30,19 @@ class GameSessionViewController: UIViewController {
         setupBackButton()
         commonInit()
         bindViewModel()
-        
-        let   serviceLocation = ServiceDataSourseOfLocation(context: CoreDataManager.instance.persistentContainer.viewContext)
-        let locations = serviceLocation.getAll()
-        for location in locations{
-            print(location.id)
-        }
+//
+//        let   serviceLocation = ServiceDataSourseOfLocation()
+//        let locations = serviceLocation.getAll()
+//        for location in locations{
+//            print(location.id)
+       // }
     }
+override func viewWillDisappear(_ animated: Bool){
+    super.viewWillDisappear(animated)
+    let   servicePlayer = ServiceDataSourseOfPlayer()
+     servicePlayer.updateScoreGameForAllPlayer(idGameSession: viewModel.configurationCurrentGame.idGameSession , gamesModels: viewModel.gamesModelsOfGameSession)
+        }
+    
 }
 
 private extension GameSessionViewController {
@@ -50,7 +56,7 @@ private extension GameSessionViewController {
             }
         }
     }
-    
+
     func setupBackButton(){
         let done = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
         done.reactive.pressed = CocoaAction(viewModel.doneCancelAction)

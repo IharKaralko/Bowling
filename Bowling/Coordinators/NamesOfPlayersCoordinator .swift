@@ -21,15 +21,15 @@ class NamesOfPlayersCoordinator {
     deinit {
         print("NamesOfPlayersCoordinator deinit")
     }
-    private let location: CLLocationCoordinate2D
+    private var configurationGame: ConfigurationGame
     private weak var navigationController: UINavigationController?
     private let _pipe = Signal<NamesOfPlayersCoordinator.Output, NoError>.pipe()
     private let countOfPlayers: Int
     
-    init(_ navigationController: UINavigationController, _ countOfPlayers: Int, _ location: CLLocationCoordinate2D){
+    init(_ navigationController: UINavigationController, _ countOfPlayers: Int, _ configurationGame: ConfigurationGame){
         self.navigationController = navigationController
         self.countOfPlayers = countOfPlayers
-        self.location = location
+        self.configurationGame = configurationGame
     }
 }
 
@@ -60,8 +60,8 @@ private extension NamesOfPlayersCoordinator {
     
     func namesOfPlayersDidSelect(_ collectionOfNames: [String]) {
         guard let navigationController = navigationController else { return }
-        let configurationGame = ConfigurationGame(idGameSession: UUID().uuidString, location: location, namesOfPlayer: collectionOfNames)
-        var gameSessionCoordinator: Optional<GameSessionCoordinator> = GameSessionCoordinator(navigationController, collectionOfNames, configurationGame)
+        configurationGame.namesOfPlayer = collectionOfNames
+        var gameSessionCoordinator: Optional<GameSessionCoordinator> = GameSessionCoordinator(navigationController,  configurationGame)
         let output = gameSessionCoordinator!.start()
         output.observeCompleted {
             gameSessionCoordinator = nil

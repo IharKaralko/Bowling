@@ -25,6 +25,7 @@ class LocationGameViewController: UIViewController {
         locationManager = CLLocationManager()
         locationManager.requestWhenInUseAuthorization()
         mapView.showsUserLocation = true
+        mapView.userLocation.subtitle = "Our location: lat: 53,7115 lon: 23,8242"
         setupBarButton()
         setupGestureRecognizer()
         self.mapView.delegate = self
@@ -82,6 +83,7 @@ extension LocationGameViewController: MKMapViewDelegate {
             annotationView = AnnotationView(annotation: annotation, reuseIdentifier: "User")
             annotationView?.canShowCallout = false
             annotationView?.image = #imageLiteral(resourceName: "userPlace")
+           // annotation.subtitle = "Senla"
             return annotationView
         }  else {
             var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: "Pin")
@@ -104,10 +106,17 @@ extension LocationGameViewController: MKMapViewDelegate {
             }
         }
         let calloutView = CustomView()
-        viewModel.beginGameAction.bindingTarget <~ calloutView.customCalloutView.touchSignal.map{[unowned annotation] _ in annotation.coordinate }
+       guard let adress = annotation.subtitle, let adressLocation = adress else{ return }
+
+        print(annotation.coordinate)
+        print(annotation.subtitle)
         
+        let configurationGame = ConfigurationGame(location: annotation.coordinate, adressLocation:adressLocation)
+
+        viewModel.beginGameAction.bindingTarget <~ calloutView.customCalloutView.touchSignal.map{ _ in configurationGame }
+
         if let subtitle = annotation.subtitle {
-            calloutView.customCalloutView.fillAdress(subtitle)
+        calloutView.customCalloutView.fillAdress(subtitle!)
         }
         calloutView.center = CGPoint(x: view.bounds.size.width / 2, y:  -calloutView.bounds.size.height / 2  )
         view.addSubview(calloutView)

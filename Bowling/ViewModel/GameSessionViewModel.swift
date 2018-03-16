@@ -24,7 +24,7 @@ class GameSessionViewModel {
     private let  gamesModels: [GameViewModel]
     private let  configurationGame: ConfigurationGame
 
-    init (namesOfPlayer: [String], configurationGame: ConfigurationGame) {
+    init (configurationGame: ConfigurationGame) {
         self.configurationGame = configurationGame
         var gameModels: [GameViewModel] = []
         for name in configurationGame.namesOfPlayer  {
@@ -45,19 +45,8 @@ class GameSessionViewModel {
         }
         
         let servicePlayer = ServiceDataSourseOfPlayer()
-        let userCoordinate = String(format: "%f",  configurationGame.location.latitude) +  "+"  + String(format: "%f",  configurationGame.location.longitude)
-        let coordinateLocation = CLLocation(latitude: configurationGame.location.latitude, longitude: configurationGame.location.longitude)
-        let service = ServiceSettingOfAdress()
-   
-        service.fetchAdressLocation(location: coordinateLocation) { adressLocation  in
-            var adress = String()
-            if adressLocation.adress.isEmpty {
-                adress = "This is the coordinates: \(userCoordinate)"
-            } else {
-                adress = adressLocation.adress
-            }
-           servicePlayer.createPlayersOfGameHistory(location:  adress, idGameSession: configurationGame.idGameSession, gamesModel: self.gamesModels)
-         }
+        servicePlayer.createPlayersOfGameHistory(location:  configurationGame.adressLocation, idGameSession: configurationGame.idGameSession, gamesModel: self.gamesModels)
+        
     }
 }
 
@@ -69,9 +58,15 @@ private extension GameSessionViewModel {
             if  let index = gamesModels.index(where: {$0 === max}){
                 _pipe.input.send(value: GameSessionViewController.Action.gameSessionCompleted(index: index))
             }
+            
+            let   servicePlayer = ServiceDataSourseOfPlayer()
+            servicePlayer.updateScoreGameForAllPlayer(idGameSession: configurationCurrentGame.idGameSession , gamesModels: gamesModelsOfGameSession)
+            
         }
+        
     }
 }
+
 
 // MARK: - GameSessionViewModelProtocol
 extension GameSessionViewModel:  GameSessionViewModelProtocol {
