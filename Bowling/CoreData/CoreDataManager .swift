@@ -14,7 +14,6 @@ class CoreDataManager {
     
     // Singleton
     static let instance = CoreDataManager()
-
     
     // MARK: - Core Data stack
      lazy var persistentContainer: NSPersistentContainer = {

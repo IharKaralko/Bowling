@@ -107,9 +107,6 @@ extension LocationGameViewController: MKMapViewDelegate {
         }
         let calloutView = CustomView()
        guard let adress = annotation.subtitle, let adressLocation = adress else{ return }
-
-        print(annotation.coordinate)
-        print(annotation.subtitle)
         
         let configurationGame = ConfigurationGame(location: annotation.coordinate, adressLocation:adressLocation)
 

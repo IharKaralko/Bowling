@@ -16,69 +16,53 @@
     init(context: NSManagedObjectContext  = CoreDataManager.instance.persistentContainer.viewContext){
         self.context = context
     }
-    
-    // Creates a new CDLocation
-    func create(location: String)  {
-        
+ }
+ 
+ private extension ServiceDataSourseOfLocation {
+  // MARK: - Creates a new CDLocation
+    func createCDLocation(location: String)  {
         let fetchRequest = NSFetchRequest<CDLocation>(entityName: "CDLocation")
         do {
             let results = try context.fetch(fetchRequest)
             for result in results  {
                 if result.location == location {
-                    return //result
+                    return
                 }
             }
         } catch {
             print(error)
         }
-       
         let entityDescription = NSEntityDescription.entity(forEntityName: "CDLocation", in: context)
         let newItem = NSManagedObject(entity: entityDescription!, insertInto: context)
         newItem.setValue(UUID().uuidString, forKey: "id")
         newItem.setValue(location, forKey: "location")
-       // let ddd:CDLocation = newItem 
         CoreDataManager.instance.saveContext()
-        
-        //return newItem as! CDLocation
-        
     }
     
-     func fetchCDLocation(location: String) -> CDLocation {
-        
+    func fetchCDLocation(location: String) -> CDLocation {
         let fetchRequest = NSFetchRequest<CDLocation>(entityName: "CDLocation")
-         fetchRequest.predicate = NSPredicate(format: "location = %@", location)
-          var final = CDLocation()
+        fetchRequest.predicate = NSPredicate(format: "location = %@", location)
+        var cdLocation = CDLocation()
         do {
             let results = try context.fetch(fetchRequest)
-            guard let result = results.first else { return final }
-            final = result
+            guard let result = results.first else { return cdLocation }
+            cdLocation = result
         } catch {
             print(error)
         }
-  
-        //    func createOne(location: String) {
-//
-//        let entityDescription = NSEntityDescription.entity(forEntityName: "CDLocation", in: context)
-//        let newItem = NSManagedObject(entity: entityDescription!, insertInto: context)
-//        newItem.setValue(UUID().uuidString, forKey: "id")
-//        newItem.setValue(location, forKey: "location")
-//        CoreDataManager.instance.saveContext()
-//
-        return final
+        return cdLocation
     }
-    
-    
-    
-    
-    // get all Location
+
+    // MARK: - Get all Location
     func getAll() -> [Location]{
         var locations = [Location]()
         let fetchRequest = NSFetchRequest<CDLocation>(entityName: "CDLocation")
         do {
             let results = try context.fetch(fetchRequest)
             for result in results  {
-                let location = Location(id: result.id!, location: result.location!)
-                locations.append(location)
+                guard let id = result.id, let location = result.location else { return locations }
+                let locationGame = Location(id: id, location: location)
+                locations.append(locationGame)
             }
         } catch {
             print(error)
@@ -86,6 +70,7 @@
         return locations
     }
     
+    // MARK: - Delete all Location
     func deleteAll(){
         let fetchRequest = NSFetchRequest<CDLocation>(entityName: "CDLocation")
         do {
@@ -97,10 +82,13 @@
             print(error)
         }
         CoreDataManager.instance.saveContext()
-        
     }
-    
-    
-    
  }
-
+ 
+ extension ServiceDataSourseOfLocation: ServiceDataSourseOfLocationProtocol {
+    func checkAndSaveCDLocation(location: String){ createCDLocation(location: location) }
+    func getCDLocation(location: String) -> CDLocation { return fetchCDLocation(location: location)}
+    func getAllLocations() -> [Location] { return getAll() }
+    func deleteAllCDLocations() {  deleteAll() }
+ }
+ 

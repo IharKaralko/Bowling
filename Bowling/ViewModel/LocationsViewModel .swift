@@ -14,13 +14,14 @@ import Result
 
 class LocationsViewModel {
     private var _pipe = Signal<LocationsCoordinator.Action, NoError>.pipe()
-    private var locations: [Location]
-    private  var clearHistoryAction: Action<Void, Void, NoError>!
+    private let locations: [Location]
+    private var clearHistoryAction: Action<Void, Void, NoError>!
     private var doneBackAction: Action<Void, Void, NoError>!
+    private let serviceDataSourseOfLocation: ServiceDataSourseOfLocationProtocol!
     
     init(){
-        let serviceLocation = ServiceDataSourseOfLocation()
-        self.locations = serviceLocation.getAll()
+        serviceDataSourseOfLocation = ServiceDataSourseOfLocation()
+        self.locations = serviceDataSourseOfLocation.getAllLocations()
         
         self.doneBackAction = Action() { [weak self]  in
             return SignalProducer { observer, _ in
@@ -31,8 +32,9 @@ class LocationsViewModel {
         
         self.clearHistoryAction = Action() { [weak self]  in
             return SignalProducer { observer, _ in
-                let serviceLocation = ServiceDataSourseOfLocation()
-                serviceLocation.deleteAll()
+                // let serviceLocation = ServiceDataSourseOfLocation()
+                self?.serviceDataSourseOfLocation.deleteAllCDLocations()
+                //serviceLocation.deleteAll()
                 self?._pipe.input.sendCompleted()
                 observer.sendCompleted()
             }

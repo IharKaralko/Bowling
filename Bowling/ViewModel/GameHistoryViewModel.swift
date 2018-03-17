@@ -18,12 +18,12 @@ class GameHistoryViewModel {
     private var _pipe = Signal<GameHistoryCoordinator.Action, NoError>.pipe()
     private var games: [GameHistory]
     private var doneBackAction: Action<Void, Void, NoError>!
+    private var serviceDataSourseOfGameHistory: ServiceDataSourseOfGameHistoryProtocol!
     
     init(_ location: Location ) {
         self.location = location
-        let serviceGameHistory = ServiceDataSourseOfGameHistory()
-        self.games = serviceGameHistory.getGamesOfLocation(currentLocationId: location.id)
-        
+        serviceDataSourseOfGameHistory = ServiceDataSourseOfGameHistory()
+        self.games = serviceDataSourseOfGameHistory.getGamesOfCurrentLocation(currentLocationId: location.id)        
         self.doneBackAction = Action() { [weak self]  in
             return SignalProducer { observer, _ in
                 self?._pipe.input.sendCompleted()

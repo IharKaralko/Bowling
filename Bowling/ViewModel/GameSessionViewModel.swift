@@ -23,7 +23,9 @@ class GameSessionViewModel {
     private var  countOfGameFinish: Int = 0
     private let  gamesModels: [GameViewModel]
     private let  configurationGame: ConfigurationGame
-
+    private var serviceDataSourseOfPlayer: ServiceDataSourseOfPlayerProtocol!
+    
+    
     init (configurationGame: ConfigurationGame) {
         self.configurationGame = configurationGame
         var gameModels: [GameViewModel] = []
@@ -43,14 +45,17 @@ class GameSessionViewModel {
                 observer.sendCompleted()
             }
         }
-        
-        let servicePlayer = ServiceDataSourseOfPlayer()
-        servicePlayer.createPlayersOfGameHistory(location:  configurationGame.adressLocation, idGameSession: configurationGame.idGameSession, gamesModel: self.gamesModels)
-        
-    }
+        serviceDataSourseOfPlayer = ServiceDataSourseOfPlayer()
+        serviceDataSourseOfPlayer.savePlayersOfGameHistory(location: configurationGame.adressLocation, idGameSession: configurationGame.idGameSession, gamesModel: self.gamesModels)
+      }
 }
 
 private extension GameSessionViewModel {
+    
+    func updateScoreGameOfPlayers(){
+        serviceDataSourseOfPlayer.updateScoreGamePlayersOfGameHistory(idGameSession: configurationCurrentGame.idGameSession, gamesModels: gamesModelsOfGameSession)
+    }
+    
     func stateOfGameChange() {
         countOfGameFinish += 1
         if countOfGameFinish == configurationGame.namesOfPlayer.count{
@@ -58,12 +63,8 @@ private extension GameSessionViewModel {
             if  let index = gamesModels.index(where: {$0 === max}){
                 _pipe.input.send(value: GameSessionViewController.Action.gameSessionCompleted(index: index))
             }
-            
-            let   servicePlayer = ServiceDataSourseOfPlayer()
-            servicePlayer.updateScoreGameForAllPlayer(idGameSession: configurationCurrentGame.idGameSession , gamesModels: gamesModelsOfGameSession)
-            
-        }
-        
+           updateScoreGameOfPlayers()
+         }
     }
 }
 
@@ -74,6 +75,8 @@ extension GameSessionViewModel:  GameSessionViewModelProtocol {
     var gamesModelsOfGameSession: [GameViewModel] { return gamesModels }
     var output: Signal<GameSessionViewController.Action, NoError> { return _pipe.output }
     var doneCancelAction: ReactiveSwift.Action<Void, Void, NoError> { return  doneBackAction }
+    var dataSourseOfPlayer: ServiceDataSourseOfPlayerProtocol { return serviceDataSourseOfPlayer}
+    func refreshScoreGameOfPlayers(){ updateScoreGameOfPlayers() }
 }
 
 extension GameSessionViewModel {

@@ -18,11 +18,12 @@ class PlayersViewModel {
     private var _pipe = Signal<Void, NoError>.pipe()
     private var players: [Player]
     private var doneBackAction: Action<Void, Void, NoError>!
-    
+    private var serviceDataSourseOfPlayer: ServiceDataSourseOfPlayerProtocol!
+   
     init(_ game: GameHistory ){
         self.game = game
-        let servicePlayer = ServiceDataSourseOfPlayer()
-        self.players = servicePlayer.getPlayersOfGameHistory(currentGameId: game.id)
+        serviceDataSourseOfPlayer = ServiceDataSourseOfPlayer()
+        self.players = serviceDataSourseOfPlayer.getPlayersByCurreentGameId(currentGameId: game.id)
         
         self.doneBackAction = Action() { [weak self]  in
             return SignalProducer { observer, _ in

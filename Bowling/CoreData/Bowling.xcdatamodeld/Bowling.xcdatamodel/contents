@@ -4,19 +4,19 @@
         <attribute name="countOfPlayers" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="date" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="id" attributeType="String" syncable="YES"/>
-        <relationship name="location" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CDLocation" inverseName="games" inverseEntity="CDLocation" syncable="YES"/>
-        <relationship name="players" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDPlayer" inverseName="game" inverseEntity="CDPlayer" syncable="YES"/>
+        <relationship name="location" maxCount="1" deletionRule="Cascade" destinationEntity="CDLocation" inverseName="games" inverseEntity="CDLocation" syncable="YES"/>
+        <relationship name="players" toMany="YES" deletionRule="Cascade" destinationEntity="CDPlayer" inverseName="game" inverseEntity="CDPlayer" syncable="YES"/>
     </entity>
     <entity name="CDLocation" representedClassName="CDLocation" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="location" attributeType="String" syncable="YES"/>
-        <relationship name="games" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDGame" inverseName="location" inverseEntity="CDGame" syncable="YES"/>
+        <relationship name="games" toMany="YES" deletionRule="Cascade" destinationEntity="CDGame" inverseName="location" inverseEntity="CDGame" syncable="YES"/>
     </entity>
     <entity name="CDPlayer" representedClassName="CDPlayer" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="scoreGame" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="game" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CDGame" inverseName="players" inverseEntity="CDGame" syncable="YES"/>
+        <relationship name="game" maxCount="1" deletionRule="Cascade" destinationEntity="CDGame" inverseName="players" inverseEntity="CDGame" syncable="YES"/>
     </entity>
     <elements>
         <element name="CDGame" positionX="-54" positionY="0" width="128" height="120"/>

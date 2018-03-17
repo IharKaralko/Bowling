@@ -38,9 +38,10 @@ class GameViewModel {
         self.id = UUID().uuidString
         game.output.observeValues { [weak self] in
             self?.changeScoreGame()
-          }
+        }
     }
 }
+
 // MARK: - private methods
 private extension GameViewModel {
     func makeRoll(bowlScore: Int){
@@ -51,10 +52,10 @@ private extension GameViewModel {
             finalFrameViewModel.frame = game.currentFrameForGame
         }
         let availableScores = availableButtons(bowlScore)
-            _pipe.input.send(value: GameView.Action.trowDidEnding(score: availableScores))
-          if !game.isOpen {
-             _pipe.input.sendCompleted()
-          }
+        _pipe.input.send(value: GameView.Action.trowDidEnding(score: availableScores))
+        if !game.isOpen {
+            _pipe.input.sendCompleted()
+        }
     }
 
     func availableButtons( _ score: Int)-> Int {
@@ -81,10 +82,7 @@ private extension GameViewModel {
     }
     
     func changeScoreGame() {
-//        let servicePlayer = ServiceDataSourseOfPlayer()
-//        servicePlayer.updateScoreGame(idCurrentGame: id, scoreGame: game.score)
-        
-        if frameNumber < framesViewModel.count  {                                             
+        if frameNumber < framesViewModel.count  {
             framesViewModel[frameNumber].scoreGame = game.score
             frameNumber += 1
         } else {

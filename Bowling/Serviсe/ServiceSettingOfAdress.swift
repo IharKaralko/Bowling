@@ -10,7 +10,6 @@ import Foundation
 import MapKit
 
 class ServiceSettingOfAdress {
-    
     func fetchAdressLocation(location: CLLocation, completion: @escaping (AdressLocation) -> ()) {
         CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
             var adressLocation = AdressLocation()
@@ -29,10 +28,8 @@ class ServiceSettingOfAdress {
                 adressLocation.city = String()
                 adressLocation.name = String()
                 completion(adressLocation)
-                
             }
         }
-        
     }
 }
 
@@ -43,5 +40,5 @@ struct AdressLocation {
     
     var adress: String { if country.isEmpty && city.isEmpty && name.isEmpty {return String()}
     else { return country + " " +  city + " " + name}
-                }
+    }
 }

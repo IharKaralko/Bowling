@@ -17,7 +17,8 @@ class GameSessionViewController: UIViewController {
         print("GameSessionViewController deinit")
     }
     
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet private weak var scrollView: UIScrollView!
+    private let _pipe = Signal<(), NoError>.pipe()
     
     var viewModel: GameSessionViewModelProtocol! {
         didSet {
@@ -30,25 +31,36 @@ class GameSessionViewController: UIViewController {
         setupBackButton()
         commonInit()
         bindViewModel()
-//
-//        let   serviceLocation = ServiceDataSourseOfLocation()
-//        let locations = serviceLocation.getAll()
-//        for location in locations{
-//            print(location.id)
-       // }
+     }
+ 
+    override func viewWillAppear(_ animated: Bool) {
+        let bag = CompositeDisposable()
+        let notificationCenter = NotificationCenter.default.reactive
+        
+        bag += notificationCenter.notifications(forName: .UIApplicationDidEnterBackground)
+            .observeValues{ [weak self] notification in self?.saveResultsOfGameSession(notification: notification )}
+        bag += notificationCenter.notifications(forName: .UIApplicationWillResignActive)
+            .observeValues{ [weak self] notification in self?.saveResultsOfGameSession(notification: notification )}
+        bag +=  notificationCenter.notifications(forName: .UIApplicationWillTerminate)
+            .observeValues{ [weak self] notification in self?.saveResultsOfGameSession(notification: notification )}
+        _pipe.output.observeValues { bag.dispose() }
     }
-override func viewWillDisappear(_ animated: Bool){
-    super.viewWillDisappear(animated)
-    let   servicePlayer = ServiceDataSourseOfPlayer()
-     servicePlayer.updateScoreGameForAllPlayer(idGameSession: viewModel.configurationCurrentGame.idGameSession , gamesModels: viewModel.gamesModelsOfGameSession)
-        }
     
+    override func viewDidDisappear(_ animated: Bool) {
+         super.viewDidDisappear(animated)
+        _pipe.input.send(value: ())
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool){
+        super.viewWillDisappear(animated)
+        viewModel.refreshScoreGameOfPlayers()
+    }
 }
 
 private extension GameSessionViewController {
     func bindViewModel() {
         guard isViewLoaded else { return }
-        
         viewModel.output.observeValues{ [weak self] value in
             switch value {
             case .gameSessionCompleted(let index):
@@ -56,12 +68,16 @@ private extension GameSessionViewController {
             }
         }
     }
-
+    
+    func saveResultsOfGameSession(notification: Notification){
+        viewModel.refreshScoreGameOfPlayers()
+    }
+    
     func setupBackButton(){
         let done = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
         done.reactive.pressed = CocoaAction(viewModel.doneCancelAction)
         navigationItem.setLeftBarButton(done, animated: false)
-     }
+    }
     
     func commonInit(){
         var previuosGame: GameView?
@@ -95,7 +111,7 @@ private extension GameSessionViewController {
             previuosGame = gameView
         }
     }
-
+    
     func alertGameSessionCompleted(_ index: Int){        
         let alertController = UIAlertController(title: "Game Session is completed", message: "Player \(viewModel.configurationCurrentGame.namesOfPlayer[index])  with a score \(viewModel.gamesModelsOfGameSession[index].currentGame.score)  WON!", preferredStyle: .alert)
         let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
