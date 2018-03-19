@@ -23,7 +23,7 @@ class GameSessionViewModel {
     private var  countOfGameFinish: Int = 0
     private let  gamesModels: [GameViewModel]
     private let  configurationGame: ConfigurationGame
-    private var dataSoursePlayers: DataSourseOfPlayerProtocol!
+    private var dataSourcePlayers: DataSourceOfPlayerProtocol!
   
     
     
@@ -47,14 +47,14 @@ class GameSessionViewModel {
                 observer.sendCompleted()
             }
         }
-        dataSoursePlayers = DataSourseOfPlayer()
-        dataSoursePlayers.savePlayersOfGame(configurationGame: configurationGame)
+        dataSourcePlayers = DataSourceOfPlayer()
+        dataSourcePlayers.savePlayersOfGame(configurationGame: configurationGame)
       }
 }
 
 private extension GameSessionViewModel {
       func updateScoreGameOfPlayers(){
-        dataSoursePlayers.updateScoreGamePlayers(idGameSession: configurationCurrentGame.idGameSession, gamesModels: gamesModelsOfGameSession)
+        dataSourcePlayers.updateScoreGamePlayers(idGameSession: configurationCurrentGame.idGameSession, gamesModels: gamesModelsOfGameSession)
       }
     
     
@@ -77,7 +77,7 @@ extension GameSessionViewModel:  GameSessionViewModelProtocol {
     var gamesModelsOfGameSession: [GameViewModel] { return gamesModels }
     var output: Signal<GameSessionViewController.Action, NoError> { return _pipe.output }
     var doneCancelAction: ReactiveSwift.Action<Void, Void, NoError> { return  doneBackAction }
-    var dataSourseOfPlayer: DataSourseOfPlayerProtocol { return dataSoursePlayers}
+    var dataSourceOfPlayer: DataSourceOfPlayerProtocol { return dataSourcePlayers}
     func refreshScoreGameOfPlayers(){ updateScoreGameOfPlayers() }
 }
 

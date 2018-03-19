@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DataSourseOfGameProtocol {
+protocol DataSourceOfGameProtocol {
     func getGamesOfLocation(currentLocationId: String) -> [GameHistory]
     func saveAndReturnCDGame(configurationGame: ConfigurationGame) -> CDGame?
 }

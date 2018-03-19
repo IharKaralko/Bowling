@@ -9,14 +9,14 @@
  import Foundation
  import CoreData
  
- class DataSourseOfLocation  {
+ class DataSourceOfLocation  {
     private var context: NSManagedObjectContext
     init(context: NSManagedObjectContext  = CoreDataManager.instance.persistentContainer.viewContext){
         self.context = context
     }
  }
  
- private extension DataSourseOfLocation {
+ private extension DataSourceOfLocation {
     // MARK: - Creates a new CDLocation
     func createAndReturnCDLocation(location: String) -> CDLocation? {
         let fetchRequest = NSFetchRequest<CDLocation>(entityName: "CDLocation")
@@ -67,7 +67,7 @@
     }
  }
  
- extension DataSourseOfLocation: DataSourseOfLocationProtocol {
+ extension DataSourceOfLocation: DataSourceOfLocationProtocol {
     func returnCDLocation(location: String) -> CDLocation? {return createAndReturnCDLocation(location: location) }
     func getAllLocations() -> [Location] { return getAll() }
     func deleteAllCDLocations() {  deleteAll() }

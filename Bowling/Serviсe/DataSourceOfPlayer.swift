@@ -10,18 +10,18 @@ import Foundation
 
 import CoreData
 
-class DataSourseOfPlayer {
+class DataSourceOfPlayer {
     
   private  var context: NSManagedObjectContext
-    private var dataSourseOfGame: DataSourseOfGameProtocol!
+    private var dataSourceOfGame: DataSourceOfGameProtocol!
     
     init(context: NSManagedObjectContext = CoreDataManager.instance.persistentContainer.viewContext){
         self.context = context
-        self.dataSourseOfGame = DataSourseOfGame()
+        self.dataSourceOfGame = DataSourceOfGame()
      }
 }
 
-private extension DataSourseOfPlayer {
+private extension DataSourceOfPlayer {
     // MARK: - Get [Player] by CDGame
     func getPlayersOfGame(currentGameId: String) -> [Player]{
         var players = [Player]()
@@ -44,7 +44,7 @@ private extension DataSourseOfPlayer {
     
     // MARK: - Creates a new [CDPlayer] for CDGame
     func createPlayersOfGame(configurationGame: ConfigurationGame) {
-        let cdGameHistory = dataSourseOfGame.saveAndReturnCDGame(configurationGame: configurationGame)
+        let cdGameHistory = dataSourceOfGame.saveAndReturnCDGame(configurationGame: configurationGame)
         for index in 0 ... configurationGame.namesOfPlayer.count - 1 {
             let entityDescription = NSEntityDescription.entity(forEntityName: "CDPlayer", in: context)
             let newItem = NSManagedObject(entity: entityDescription!, insertInto: context)
@@ -78,7 +78,7 @@ private extension DataSourseOfPlayer {
     }
 }
 
-extension DataSourseOfPlayer: DataSourseOfPlayerProtocol {
+extension DataSourceOfPlayer: DataSourceOfPlayerProtocol {
     func getPlayersByGameId(currentGameId: String) -> [Player] { return  getPlayersOfGame(currentGameId: currentGameId) }
     func savePlayersOfGame(configurationGame: ConfigurationGame) {
         createPlayersOfGame(configurationGame: configurationGame)

@@ -18,12 +18,12 @@ class PlayersViewModel {
     private var _pipe = Signal<Void, NoError>.pipe()
     private var players: [Player]
     private var doneBackAction: Action<Void, Void, NoError>!
-    private var dataSourseOfPlayer: DataSourseOfPlayerProtocol!
+    private var dataSourceOfPlayer: DataSourceOfPlayerProtocol!
    
     init(_ game: GameHistory ) {
         self.game = game
-        dataSourseOfPlayer = DataSourseOfPlayer()
-        self.players = dataSourseOfPlayer.getPlayersByGameId(currentGameId: game.id)
+        dataSourceOfPlayer = DataSourceOfPlayer()
+        self.players = dataSourceOfPlayer.getPlayersByGameId(currentGameId: game.id)
         self.doneBackAction = Action() { [weak self]  in
             return SignalProducer { observer, _ in
                 self?._pipe.input.sendCompleted()

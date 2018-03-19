@@ -17,11 +17,11 @@ class LocationsViewModel {
     private let locations: [Location]
     private var clearHistoryAction: Action<Void, Void, NoError>!
     private var doneBackAction: Action<Void, Void, NoError>!
-    private let dataSourseOfLocation: DataSourseOfLocationProtocol!
+    private let dataSourceOfLocation: DataSourceOfLocationProtocol!
     
     init(){
-        dataSourseOfLocation = DataSourseOfLocation()
-        self.locations = dataSourseOfLocation.getAllLocations()
+        dataSourceOfLocation = DataSourceOfLocation()
+        self.locations = dataSourceOfLocation.getAllLocations()
         
         self.doneBackAction = Action() { [weak self]  in
             return SignalProducer { observer, _ in
@@ -32,7 +32,7 @@ class LocationsViewModel {
         
         self.clearHistoryAction = Action() { [weak self]  in
             return SignalProducer { observer, _ in
-                self?.dataSourseOfLocation.deleteAllCDLocations()
+                self?.dataSourceOfLocation.deleteAllCDLocations()
                 self?._pipe.input.sendCompleted()
                 observer.sendCompleted()
             }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DataSourseOfLocationProtocol {
+protocol DataSourceOfLocationProtocol {
     func returnCDLocation(location: String) -> CDLocation?
     func getAllLocations() -> [Location]
     func deleteAllCDLocations()

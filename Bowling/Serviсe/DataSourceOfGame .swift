@@ -9,17 +9,17 @@
 import Foundation
 import CoreData
 
-class DataSourseOfGame {
+class DataSourceOfGame {
     private var context: NSManagedObjectContext
-    private var dataSourseOfLocation: DataSourseOfLocationProtocol!
+    private var dataSourceOfLocation: DataSourceOfLocationProtocol!
     
     init(context: NSManagedObjectContext = CoreDataManager.instance.persistentContainer.viewContext) {
         self.context = context
-        self.dataSourseOfLocation = DataSourseOfLocation()
+        self.dataSourceOfLocation = DataSourceOfLocation()
     }
 }
 
-private extension DataSourseOfGame {
+private extension DataSourceOfGame {
     // MARK: - Get Games Of Location
     func getGames(currentLocationId: String) -> [GameHistory]{
         var games = [GameHistory]()
@@ -47,7 +47,7 @@ private extension DataSourseOfGame {
       func createCDGame(configurationGame: ConfigurationGame) -> CDGame? {
         let entityDescription = NSEntityDescription.entity(forEntityName: "CDGame", in: context)
         let newItem = NSManagedObject(entity: entityDescription!, insertInto: context)
-        let cdLocation = dataSourseOfLocation.returnCDLocation(location: configurationGame.adressLocation)
+        let cdLocation = dataSourceOfLocation.returnCDLocation(location: configurationGame.adressLocation)
         guard let cdGame = newItem as? CDGame else { return nil }
         cdGame.id =  configurationGame.idGameSession
         cdGame.date = Date()
@@ -58,7 +58,7 @@ private extension DataSourseOfGame {
     }
 }
 
-extension DataSourseOfGame: DataSourseOfGameProtocol {
+extension DataSourceOfGame: DataSourceOfGameProtocol {
     func getGamesOfLocation(currentLocationId: String) -> [GameHistory] { return getGames(currentLocationId: currentLocationId) }
     func saveAndReturnCDGame(configurationGame: ConfigurationGame)-> CDGame? {
         return  createCDGame(configurationGame: configurationGame)

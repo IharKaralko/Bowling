@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DataSourseOfPlayerProtocol {
+protocol DataSourceOfPlayerProtocol {
     func getPlayersByGameId(currentGameId: String) -> [Player]
     func savePlayersOfGame(configurationGame: ConfigurationGame)
     func updateScoreGamePlayers(idGameSession: String, gamesModels: [GameViewModel])
