@@ -8,10 +8,8 @@
 
 import Foundation
 
-protocol ServiceDataSourseOfLocationProtocol {
-    
-    func checkAndSaveCDLocation(location: String)
-    func getCDLocation(location: String) -> CDLocation
+protocol DataSourseOfLocationProtocol {
+    func returnCDLocation(location: String) -> CDLocation?
     func getAllLocations() -> [Location]
     func deleteAllCDLocations()
 }

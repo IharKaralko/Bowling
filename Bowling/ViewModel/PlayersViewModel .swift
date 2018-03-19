@@ -18,13 +18,12 @@ class PlayersViewModel {
     private var _pipe = Signal<Void, NoError>.pipe()
     private var players: [Player]
     private var doneBackAction: Action<Void, Void, NoError>!
-    private var serviceDataSourseOfPlayer: ServiceDataSourseOfPlayerProtocol!
+    private var dataSourseOfPlayer: DataSourseOfPlayerProtocol!
    
-    init(_ game: GameHistory ){
+    init(_ game: GameHistory ) {
         self.game = game
-        serviceDataSourseOfPlayer = ServiceDataSourseOfPlayer()
-        self.players = serviceDataSourseOfPlayer.getPlayersByCurreentGameId(currentGameId: game.id)
-        
+        dataSourseOfPlayer = DataSourseOfPlayer()
+        self.players = dataSourseOfPlayer.getPlayersByGameId(currentGameId: game.id)
         self.doneBackAction = Action() { [weak self]  in
             return SignalProducer { observer, _ in
                 self?._pipe.input.sendCompleted()
@@ -33,7 +32,6 @@ class PlayersViewModel {
         }
     }
 }
-
 
 // MARK: - LocationGameViewModelProtocol
 extension PlayersViewModel: PlayersViewModelProtocol {

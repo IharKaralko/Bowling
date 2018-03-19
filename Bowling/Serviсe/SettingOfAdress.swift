@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-class ServiceSettingOfAdress {
+class SettingOfAdress {
     func fetchAdressLocation(location: CLLocation, completion: @escaping (AdressLocation) -> ()) {
         CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
             var adressLocation = AdressLocation()

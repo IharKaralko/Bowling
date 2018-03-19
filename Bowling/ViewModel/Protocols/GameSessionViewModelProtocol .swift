@@ -16,7 +16,7 @@ protocol GameSessionViewModelProtocol {
     var output: Signal<GameSessionViewController.Action, NoError> { get }
     var doneCancelAction: Action<Void, Void, NoError> { get }
     var configurationCurrentGame: ConfigurationGame { get }
-    var dataSourseOfPlayer: ServiceDataSourseOfPlayerProtocol { get }
+    var dataSourseOfPlayer: DataSourseOfPlayerProtocol { get }
     func refreshScoreGameOfPlayers()
 }
 

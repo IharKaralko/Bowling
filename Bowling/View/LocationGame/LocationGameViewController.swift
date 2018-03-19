@@ -63,7 +63,7 @@ private extension LocationGameViewController {
          let userCoordinate = String(format: "%f",  coordinates.latitude) +  "+"  + String(format: "%f",  coordinates.longitude)
         
         let coordinateLocation = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
-        let service = ServiceSettingOfAdress()
+        let service = SettingOfAdress()
         service.fetchAdressLocation(location: coordinateLocation) { [weak annotation] adressLocation  in
             if adressLocation.adress.isEmpty {
                 annotation?.subtitle = "This is the coordinates: \(userCoordinate)"

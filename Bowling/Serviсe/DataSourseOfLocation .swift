@@ -9,50 +9,32 @@
  import Foundation
  import CoreData
  
- class ServiceDataSourseOfLocation  {
-    
+ class DataSourseOfLocation  {
     private var context: NSManagedObjectContext
-    
     init(context: NSManagedObjectContext  = CoreDataManager.instance.persistentContainer.viewContext){
         self.context = context
     }
  }
  
- private extension ServiceDataSourseOfLocation {
-  // MARK: - Creates a new CDLocation
-    func createCDLocation(location: String)  {
+ private extension DataSourseOfLocation {
+    // MARK: - Creates a new CDLocation
+    func createAndReturnCDLocation(location: String) -> CDLocation? {
         let fetchRequest = NSFetchRequest<CDLocation>(entityName: "CDLocation")
         do {
             let results = try context.fetch(fetchRequest)
-            for result in results  {
-                if result.location == location {
-                    return
-                }
-            }
+            if let fetchedLocation = results.first(where: { $0.location == location }) { return fetchedLocation }
         } catch {
             print(error)
         }
         let entityDescription = NSEntityDescription.entity(forEntityName: "CDLocation", in: context)
         let newItem = NSManagedObject(entity: entityDescription!, insertInto: context)
-        newItem.setValue(UUID().uuidString, forKey: "id")
-        newItem.setValue(location, forKey: "location")
-        CoreDataManager.instance.saveContext()
+        
+        guard let locationGame = newItem as? CDLocation else { return nil }
+        locationGame.id = UUID().uuidString
+        locationGame.location = location
+        return locationGame
     }
     
-    func fetchCDLocation(location: String) -> CDLocation {
-        let fetchRequest = NSFetchRequest<CDLocation>(entityName: "CDLocation")
-        fetchRequest.predicate = NSPredicate(format: "location = %@", location)
-        var cdLocation = CDLocation()
-        do {
-            let results = try context.fetch(fetchRequest)
-            guard let result = results.first else { return cdLocation }
-            cdLocation = result
-        } catch {
-            print(error)
-        }
-        return cdLocation
-    }
-
     // MARK: - Get all Location
     func getAll() -> [Location]{
         var locations = [Location]()
@@ -85,9 +67,8 @@
     }
  }
  
- extension ServiceDataSourseOfLocation: ServiceDataSourseOfLocationProtocol {
-    func checkAndSaveCDLocation(location: String){ createCDLocation(location: location) }
-    func getCDLocation(location: String) -> CDLocation { return fetchCDLocation(location: location)}
+ extension DataSourseOfLocation: DataSourseOfLocationProtocol {
+    func returnCDLocation(location: String) -> CDLocation? {return createAndReturnCDLocation(location: location) }
     func getAllLocations() -> [Location] { return getAll() }
     func deleteAllCDLocations() {  deleteAll() }
  }

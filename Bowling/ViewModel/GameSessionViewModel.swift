@@ -23,10 +23,12 @@ class GameSessionViewModel {
     private var  countOfGameFinish: Int = 0
     private let  gamesModels: [GameViewModel]
     private let  configurationGame: ConfigurationGame
-    private var serviceDataSourseOfPlayer: ServiceDataSourseOfPlayerProtocol!
+    private var dataSoursePlayers: DataSourseOfPlayerProtocol!
+  
     
     
     init (configurationGame: ConfigurationGame) {
+      
         self.configurationGame = configurationGame
         var gameModels: [GameViewModel] = []
         for name in configurationGame.namesOfPlayer  {
@@ -45,16 +47,16 @@ class GameSessionViewModel {
                 observer.sendCompleted()
             }
         }
-        serviceDataSourseOfPlayer = ServiceDataSourseOfPlayer()
-        serviceDataSourseOfPlayer.savePlayersOfGameHistory(location: configurationGame.adressLocation, idGameSession: configurationGame.idGameSession, gamesModel: self.gamesModels)
+        dataSoursePlayers = DataSourseOfPlayer()
+        dataSoursePlayers.savePlayersOfGame(configurationGame: configurationGame)
       }
 }
 
 private extension GameSessionViewModel {
+      func updateScoreGameOfPlayers(){
+        dataSoursePlayers.updateScoreGamePlayers(idGameSession: configurationCurrentGame.idGameSession, gamesModels: gamesModelsOfGameSession)
+      }
     
-    func updateScoreGameOfPlayers(){
-        serviceDataSourseOfPlayer.updateScoreGamePlayersOfGameHistory(idGameSession: configurationCurrentGame.idGameSession, gamesModels: gamesModelsOfGameSession)
-    }
     
     func stateOfGameChange() {
         countOfGameFinish += 1
@@ -75,7 +77,7 @@ extension GameSessionViewModel:  GameSessionViewModelProtocol {
     var gamesModelsOfGameSession: [GameViewModel] { return gamesModels }
     var output: Signal<GameSessionViewController.Action, NoError> { return _pipe.output }
     var doneCancelAction: ReactiveSwift.Action<Void, Void, NoError> { return  doneBackAction }
-    var dataSourseOfPlayer: ServiceDataSourseOfPlayerProtocol { return serviceDataSourseOfPlayer}
+    var dataSourseOfPlayer: DataSourseOfPlayerProtocol { return dataSoursePlayers}
     func refreshScoreGameOfPlayers(){ updateScoreGameOfPlayers() }
 }
 

@@ -52,7 +52,6 @@ private extension  GameHistoryCoordinator {
                 self?.gameDidSelect(game)
             }
         }
-        
         viewModel.output.observeCompleted { [weak self] in
             self?.navigController?.popViewController(animated: true)
             self?._pipe.input.sendCompleted()
