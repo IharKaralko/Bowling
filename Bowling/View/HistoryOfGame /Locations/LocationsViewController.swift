@@ -57,8 +57,11 @@ extension LocationsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let location = viewModel.locationsGame[indexPath.row]
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "LocationTableViewCell", for: indexPath) as! LocationTableViewCell
-        cell.fillLocationLabel(location: viewModel.locationsGame[indexPath.row].location)
+        cell.fillLocationLabel(latitude: location.latitude, longitude:  location.longitude)
+        
         return cell
     }
 }

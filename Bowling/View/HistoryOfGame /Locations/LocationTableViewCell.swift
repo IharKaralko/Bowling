@@ -21,7 +21,7 @@ class LocationTableViewCell: UITableViewCell {
     }
 }
 extension LocationTableViewCell {
-    func fillLocationLabel(location: String){
-        locationLabel.text = location
+    func fillLocationLabel(latitude: String, longitude: String){
+        locationLabel.text = "latitude: \(latitude) longitude: \(longitude)"
     }
 }

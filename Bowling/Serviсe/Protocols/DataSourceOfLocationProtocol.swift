@@ -9,7 +9,7 @@
 import Foundation
 
 protocol DataSourceOfLocationProtocol {
-    func returnCDLocation(location: String) -> CDLocation?
+    func returnCDLocation(latitude: String, longitude: String, adress: String) -> CDLocation?
     func getAllLocations() -> [Location]
     func deleteAllCDLocations()
 }

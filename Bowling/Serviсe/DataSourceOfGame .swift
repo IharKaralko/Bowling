@@ -47,7 +47,9 @@ private extension DataSourceOfGame {
       func createCDGame(configurationGame: ConfigurationGame) -> CDGame? {
         let entityDescription = NSEntityDescription.entity(forEntityName: "CDGame", in: context)
         let newItem = NSManagedObject(entity: entityDescription!, insertInto: context)
-        let cdLocation = dataSourceOfLocation.returnCDLocation(location: configurationGame.adressLocation)
+        let latitude =  String(format: "%f", configurationGame.location.latitude)
+        let longitude =  String(format: "%f", configurationGame.location.longitude)
+        let cdLocation = dataSourceOfLocation.returnCDLocation(latitude: latitude, longitude: longitude, adress: configurationGame.adressLocation)
         guard let cdGame = newItem as? CDGame else { return nil }
         cdGame.id =  configurationGame.idGameSession
         cdGame.date = Date()

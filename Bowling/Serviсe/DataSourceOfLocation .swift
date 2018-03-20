@@ -18,11 +18,12 @@
  
  private extension DataSourceOfLocation {
     // MARK: - Creates a new CDLocation
-    func createAndReturnCDLocation(location: String) -> CDLocation? {
+    func createAndReturnCDLocation(latitude: String, longitude: String, adress: String) -> CDLocation? {
         let fetchRequest = NSFetchRequest<CDLocation>(entityName: "CDLocation")        
+        fetchRequest.predicate =  NSPredicate(format: "latitude = %@ AND longitude = %@", latitude, longitude)
         do {
             let results = try context.fetch(fetchRequest)
-            if let fetchedLocation = results.first(where: { $0.location == location }) { return fetchedLocation }
+            if let fetchedLocation = results.first { return fetchedLocation }
         } catch {
             print(error)
         }
@@ -31,7 +32,9 @@
         
         guard let locationGame = newItem as? CDLocation else { return nil }
         locationGame.id = UUID().uuidString
-        locationGame.location = location
+        locationGame.latitude = latitude
+        locationGame.longitude = longitude
+        locationGame.adress = adress
         return locationGame
     }
     
@@ -42,8 +45,9 @@
         do {
             let results = try context.fetch(fetchRequest)
             for result in results  {
-                guard let id = result.id, let location = result.location else { return locations }
-                let locationGame = Location(id: id, location: location)
+                guard let id = result.id, let latitude = result.latitude, let longitude = result.longitude, let adress = result.adress
+                    else { continue } 
+                let locationGame = Location(id: id, latitude: latitude, longitude: longitude, adress: adress)
                 locations.append(locationGame)
             }
         } catch {
@@ -68,7 +72,7 @@
  }
  
  extension DataSourceOfLocation: DataSourceOfLocationProtocol {
-    func returnCDLocation(location: String) -> CDLocation? {return createAndReturnCDLocation(location: location) }
+    func returnCDLocation(latitude: String, longitude: String, adress: String) -> CDLocation? {return createAndReturnCDLocation(latitude: latitude, longitude: longitude, adress: adress)}
     func getAllLocations() -> [Location] { return getAll() }
     func deleteAllCDLocations() {  deleteAll() }
  }

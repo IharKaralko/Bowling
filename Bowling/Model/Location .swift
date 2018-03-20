@@ -10,10 +10,14 @@ import Foundation
 
 struct Location {
     let id: String
-    let location: String
-
-    init(id: String,  location: String){
+    let latitude: String
+    let longitude: String
+    let adress: String
+    
+    init(id: String,  latitude: String, longitude: String, adress: String) {
         self.id = id
-        self.location = location
+        self.latitude = latitude
+        self.longitude = longitude
+        self.adress = adress
     }
  }

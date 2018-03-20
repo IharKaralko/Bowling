@@ -8,8 +8,10 @@
         <relationship name="players" toMany="YES" deletionRule="Cascade" destinationEntity="CDPlayer" inverseName="game" inverseEntity="CDPlayer" syncable="YES"/>
     </entity>
     <entity name="CDLocation" representedClassName="CDLocation" syncable="YES" codeGenerationType="class">
+        <attribute name="adress" attributeType="String" syncable="YES"/>
         <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="location" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" attributeType="String" syncable="YES"/>
+        <attribute name="longitude" attributeType="String" syncable="YES"/>
         <relationship name="games" toMany="YES" deletionRule="Cascade" destinationEntity="CDGame" inverseName="location" inverseEntity="CDGame" syncable="YES"/>
     </entity>
     <entity name="CDPlayer" representedClassName="CDPlayer" syncable="YES" codeGenerationType="class">
@@ -20,7 +22,7 @@
     </entity>
     <elements>
         <element name="CDGame" positionX="-54" positionY="0" width="128" height="120"/>
-        <element name="CDLocation" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="CDLocation" positionX="-63" positionY="-18" width="128" height="120"/>
         <element name="CDPlayer" positionX="-36" positionY="27" width="128" height="105"/>
     </elements>
 </model>
