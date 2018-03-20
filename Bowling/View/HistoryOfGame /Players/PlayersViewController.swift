@@ -12,12 +12,12 @@ import ReactiveSwift
 import Result
 
 class PlayersViewController: UIViewController {
-   
-    @IBOutlet weak var tableView: UITableView!
     
     deinit {
-        print("PlayersViewController deinit--------")
+        print("\(type(of: self)).\(#function)")
     }
+   
+    @IBOutlet weak var tableView: UITableView!
     
     var viewModel: PlayersViewModelProtocol!
     

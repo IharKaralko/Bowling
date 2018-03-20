@@ -17,8 +17,9 @@ class LocationsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     deinit {
-        print("LocationsViewController deinit--------")
+        print("\(type(of: self)).\(#function)")
     }
+    
     var viewModel: LocationsViewModelProtocol!
     
     override func viewDidLoad() {

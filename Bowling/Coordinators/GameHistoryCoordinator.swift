@@ -17,9 +17,11 @@ protocol GameHistoryCoordinatorProtocol {
 }
 
 class GameHistoryCoordinator {
+
     deinit {
-        print("GameHistoryCoordinator deinit+")
+        print("\(type(of: self)).\(#function)")
     }
+    
     private var currenLocation: Location
     private weak var navigController: UINavigationController?
     private let _pipe = Signal<Void, NoError>.pipe()

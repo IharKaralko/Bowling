@@ -16,7 +16,7 @@ class GameHistoryViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     deinit {
-        print("GameHistoryViewController deinit--------")
+        print("\(type(of: self)).\(#function)")
     }
     
     var viewModel: GameHistoryViewModelProtocol! 

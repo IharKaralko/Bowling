@@ -10,6 +10,6 @@ import Foundation
 
 protocol DataSourceOfPlayerProtocol {
     func getPlayersByGameId(currentGameId: String) -> [Player]
-    func savePlayersOfGame(configurationGame: ConfigurationGame)
-    func updateScoreGamePlayers(idGameSession: String, gamesModels: [GameViewModel])
+    func savePlayersOfGame(configurationGame: ConfigurationGame, players: [Player])
+    func updateScoreGamePlayers(idGameSession: String, players: [Player])
 }

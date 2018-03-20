@@ -13,6 +13,11 @@ import ReactiveSwift
 import Result
 
 class LocationsViewModel {
+    
+    deinit {
+        print("\(type(of: self)).\(#function)")
+    }
+    
     private var _pipe = Signal<LocationsCoordinator.Action, NoError>.pipe()
     private let locations: [Location]
     private var clearHistoryAction: Action<Void, Void, NoError>!

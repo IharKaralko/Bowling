@@ -13,6 +13,10 @@ import ReactiveCocoa
 
 class FinalFrameView: UIView {
     
+    deinit {
+        print("\(type(of: self)).\(#function)")
+    }
+    
     @IBOutlet private weak var contentView: UIView!
     @IBOutlet private weak var numberFrame: UILabel!
     @IBOutlet private weak var totalScore: UILabel!

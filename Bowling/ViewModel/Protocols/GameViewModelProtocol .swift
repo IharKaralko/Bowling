@@ -12,9 +12,9 @@ import Result
 import ReactiveCocoa
 
 protocol GameViewModelProtocol {
-    //var idCurrentGame: String { get }
+    var idCurrentGame: String { get }
     var nameOfPlayerCurrentGame: String { get }
-    
+    var player: Player { get }
     var currentGame: Game { get }
     var collectionFramesViewModel: [FrameViewModel] { get }
     var currentFinalFrameViewModel: FinalFrameViewModel { get }

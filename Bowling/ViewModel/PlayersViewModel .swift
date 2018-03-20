@@ -14,6 +14,10 @@ import Result
 
 class PlayersViewModel {
     
+    deinit {
+        print("\(type(of: self)).\(#function)")
+    }
+    
     private var game: GameHistory
     private var _pipe = Signal<Void, NoError>.pipe()
     private var players: [Player]

@@ -24,18 +24,20 @@ class GameSessionViewModel {
     private let  gamesModels: [GameViewModel]
     private let  configurationGame: ConfigurationGame
     private var dataSourcePlayers: DataSourceOfPlayerProtocol!
-  
-    
+    private var players: [Player] = []
     
     init (configurationGame: ConfigurationGame) {
-      
         self.configurationGame = configurationGame
         var gameModels: [GameViewModel] = []
+        
         for name in configurationGame.namesOfPlayer  {
             let gameViewModel = GameViewModel(nameOfPlayer: name)
+            let player = gameViewModel.player
             gameModels.append(gameViewModel)
+            players.append(player)
         }
         gamesModels = gameModels
+       
         for i in 0..<configurationGame.namesOfPlayer.count  {
             gamesModels[i].output.observeCompleted {[weak self] in
                 self?.stateOfGameChange()
@@ -48,15 +50,21 @@ class GameSessionViewModel {
             }
         }
         dataSourcePlayers = DataSourceOfPlayer()
-        dataSourcePlayers.savePlayersOfGame(configurationGame: configurationGame)
+        dataSourcePlayers.savePlayersOfGame(configurationGame: configurationGame, players: players)
       }
 }
 
 private extension GameSessionViewModel {
       func updateScoreGameOfPlayers(){
-        dataSourcePlayers.updateScoreGamePlayers(idGameSession: configurationCurrentGame.idGameSession, gamesModels: gamesModelsOfGameSession)
+        updateScorePlayers()
+        dataSourcePlayers.updateScoreGamePlayers(idGameSession: configurationCurrentGame.idGameSession, players: players)
       }
     
+    func updateScorePlayers() {
+            for i in 0..<gamesModels.count{
+            players[i].scoreGame = gamesModels[i].player.scoreGame
+        }
+    }
     
     func stateOfGameChange() {
         countOfGameFinish += 1
@@ -69,7 +77,6 @@ private extension GameSessionViewModel {
          }
     }
 }
-
 
 // MARK: - GameSessionViewModelProtocol
 extension GameSessionViewModel:  GameSessionViewModelProtocol {

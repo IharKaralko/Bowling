@@ -37,8 +37,8 @@ class GameSessionViewController: UIViewController {
         let bag = CompositeDisposable()
         let notificationCenter = NotificationCenter.default.reactive
         
-        bag += notificationCenter.notifications(forName: .UIApplicationDidEnterBackground)
-            .observeValues{ [weak self] notification in self?.saveResultsOfGameSession(notification: notification )}
+//        bag += notificationCenter.notifications(forName: .UIApplicationDidEnterBackground)
+//            .observeValues{ [weak self] notification in self?.saveResultsOfGameSession(notification: notification )}
         bag += notificationCenter.notifications(forName: .UIApplicationWillResignActive)
             .observeValues{ [weak self] notification in self?.saveResultsOfGameSession(notification: notification )}
         bag +=  notificationCenter.notifications(forName: .UIApplicationWillTerminate)

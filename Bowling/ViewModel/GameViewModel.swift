@@ -16,14 +16,14 @@ class GameViewModel {
     deinit {
         print("GameViewModel deinit")
     }
-   // private let id: String
+    private let id: String
     private let nameOfPlayer: String
     private let game: Game
     private let framesViewModel: [FrameViewModel]
     private let finalFrameViewModel: FinalFrameViewModel
     private var frameNumber: Int = 0
     private var _pipe = Signal<GameView.Action, NoError>.pipe()
-    
+    private var playerOfGame: Player
     
     init(game: Game = Game(), nameOfPlayer: String) {
         var frameModels: [FrameViewModel] = []
@@ -35,11 +35,13 @@ class GameViewModel {
         finalFrameViewModel = FinalFrameViewModel(numberLastFrame: game.maxFrame)
         self.nameOfPlayer = nameOfPlayer
         self.game = game
-       // self.id = UUID().uuidString
+        self.id = UUID().uuidString
+        self.playerOfGame = Player(id: id, name: nameOfPlayer, scoreGame: game.score)
+        
         game.output.observeValues { [weak self] in
             self?.changeScoreGame()
         }
-    }
+      }
 }
 
 // MARK: - private methods
@@ -82,6 +84,7 @@ private extension GameViewModel {
     }
     
     func changeScoreGame() {
+        playerOfGame.scoreGame = game.score
         if frameNumber < framesViewModel.count  {
             framesViewModel[frameNumber].scoreGame = game.score
             frameNumber += 1
@@ -93,12 +96,14 @@ private extension GameViewModel {
 
 // MARK: - GameViewModelProtocol
 extension GameViewModel: GameViewModelProtocol {
-    //var idCurrentGame: String { return id }
+    var player: Player { return playerOfGame }
+    var idCurrentGame: String { return id }
     var nameOfPlayerCurrentGame: String { return nameOfPlayer }
     var currentGame: Game { return game }
     var collectionFramesViewModel: [FrameViewModel] { return framesViewModel }
     var currentFinalFrameViewModel: FinalFrameViewModel { return finalFrameViewModel }
     var output: Signal<GameView.Action, NoError> { return  _pipe.output}
+    
     
     func makeBowl(bowlScore: Int){
         makeRoll(bowlScore: bowlScore)

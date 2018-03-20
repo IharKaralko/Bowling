@@ -17,8 +17,9 @@ protocol PlayersCoordinatorProtocol {
 }
 
 class PlayersCoordinator {
+    
     deinit {
-        print("PlayersCoordinator deinit+")
+        print("\(type(of: self)).\(#function)")
     }
     
     private var currenGame: GameHistory

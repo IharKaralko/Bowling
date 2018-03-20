@@ -14,6 +14,10 @@ import Result
 
 class GameHistoryViewModel {
     
+    deinit {
+        print("\(type(of: self)).\(#function)")
+    }
+    
     private var location: Location
     private var _pipe = Signal<GameHistoryCoordinator.Action, NoError>.pipe()
     private var games: [GameHistory]

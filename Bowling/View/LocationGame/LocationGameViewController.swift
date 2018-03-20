@@ -14,6 +14,10 @@ import Result
 import ReactiveCocoa
 
 class LocationGameViewController: UIViewController {
+    
+    deinit {
+        print("\(type(of: self)).\(#function)")
+    }
    
     var viewModel: LocationGameViewModelProtocol!
     var locationManager: CLLocationManager!
@@ -25,7 +29,7 @@ class LocationGameViewController: UIViewController {
         locationManager = CLLocationManager()
         locationManager.requestWhenInUseAuthorization()
         mapView.showsUserLocation = true
-        mapView.userLocation.subtitle = "Our location: lat: 53,7115 lon: 23,8242"
+        mapView.userLocation.subtitle = "latitude: 53,711500 longitude: 23,824200"
         setupBarButton()
         setupGestureRecognizer()
         self.mapView.delegate = self
@@ -60,13 +64,14 @@ private extension LocationGameViewController {
         let coordinates = mapView.convert(location, toCoordinateFrom: mapView)
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinates
-         let userCoordinate = String(format: "%f",  coordinates.latitude) +  "+"  + String(format: "%f",  coordinates.longitude)
+         let userLatitude = String(format: "%f",  coordinates.latitude)
+         let userLongitude = String(format: "%f",  coordinates.longitude)
         
         let coordinateLocation = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
         let service = SettingOfAdress()
         service.fetchAdressLocation(location: coordinateLocation) { [weak annotation] adressLocation  in
             if adressLocation.adress.isEmpty {
-                annotation?.subtitle = "This is the coordinates: \(userCoordinate)"
+                annotation?.subtitle = "latitude: \(userLatitude) longitude: \(userLongitude)"
             } else {
                 annotation?.subtitle = adressLocation.adress
             }
@@ -83,7 +88,6 @@ extension LocationGameViewController: MKMapViewDelegate {
             annotationView = AnnotationView(annotation: annotation, reuseIdentifier: "User")
             annotationView?.canShowCallout = false
             annotationView?.image = #imageLiteral(resourceName: "userPlace")
-           // annotation.subtitle = "Senla"
             return annotationView
         }  else {
             var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: "Pin")
@@ -109,7 +113,8 @@ extension LocationGameViewController: MKMapViewDelegate {
        guard let adress = annotation.subtitle, let adressLocation = adress else{ return }
         
         let configurationGame = ConfigurationGame(location: annotation.coordinate, adressLocation:adressLocation)
-
+        
+        
         viewModel.beginGameAction.bindingTarget <~ calloutView.customCalloutView.touchSignal.map{ _ in configurationGame }
 
         if let subtitle = annotation.subtitle {

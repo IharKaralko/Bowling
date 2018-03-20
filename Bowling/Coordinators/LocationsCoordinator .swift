@@ -17,9 +17,11 @@ protocol LocationsCoordinatorProtocol {
 }
 
 class LocationsCoordinator {
+   
     deinit {
-        print("LocationsCoordinator deinit+")
+        print("\(type(of: self)).\(#function)")
     }
+    
     private weak var navigController: UINavigationController?
     private let _pipe = Signal<Void, NoError>.pipe()
     

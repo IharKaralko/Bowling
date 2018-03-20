@@ -32,7 +32,7 @@ private extension DataSourceOfPlayer {
         do {
             let results = try context.fetch(fetchRequest)
             for result in results {
-                guard let id = result.id, let name = result.name else { return players }
+                guard let id = result.id, let name = result.name else {  continue } 
                 let player = Player(id: id, name: name, scoreGame:  Int(result.scoreGame))
                 players.append(player)
             }
@@ -42,32 +42,31 @@ private extension DataSourceOfPlayer {
         return players
     }
     
-    // MARK: - Creates a new [CDPlayer] for CDGame
-    func createPlayersOfGame(configurationGame: ConfigurationGame) {
+    func createPlayersOfGame(configurationGame: ConfigurationGame, players: [Player]) {
         let cdGameHistory = dataSourceOfGame.saveAndReturnCDGame(configurationGame: configurationGame)
-        for index in 0 ... configurationGame.namesOfPlayer.count - 1 {
+        for index in 0 ... players.count - 1  {
             let entityDescription = NSEntityDescription.entity(forEntityName: "CDPlayer", in: context)
             let newItem = NSManagedObject(entity: entityDescription!, insertInto: context)
             let player = newItem as? CDPlayer
-            guard let cdPlayer = player else { return }
-            cdPlayer.id = UUID().uuidString
-            cdPlayer.name = configurationGame.namesOfPlayer[index] 
-            cdPlayer.scoreGame = 0
+            guard let cdPlayer = player else { continue }
+            cdPlayer.id = players[index].id
+            cdPlayer.name = players[index].name
+            cdPlayer.scoreGame = Int16(players[index].scoreGame)
+            
             cdPlayer.game = cdGameHistory
-            CoreDataManager.instance.saveContext()
         }
+        CoreDataManager.instance.saveContext()
     }
     
-    // MARK: - Update ScoreGame ForAllPlayer
-    func updateScoreGame(idGameSession: String, gamesModels: [GameViewModel]){
-         let fetchRequest = NSFetchRequest<CDPlayer>(entityName: "CDPlayer")
+    func updateScoreGame(idGameSession: String, players: [Player]) {
+        let fetchRequest = NSFetchRequest<CDPlayer>(entityName: "CDPlayer")
         fetchRequest.predicate = NSPredicate(format: "game.id = %@", idGameSession)
         do {
             let results = try context.fetch(fetchRequest)
             for result in results {
-                for indexPlayer in 0 ..< gamesModels.count {
-                    if result.name == gamesModels[indexPlayer].nameOfPlayerCurrentGame {
-                        result.scoreGame = Int16(gamesModels[indexPlayer].currentGame.score)
+                for indexPlayer in 0 ..< players.count {
+                    if result.id == players[indexPlayer].id {
+                        result.scoreGame = Int16(players[indexPlayer].scoreGame)
                     }
                 }
             }
@@ -76,14 +75,15 @@ private extension DataSourceOfPlayer {
         }
         CoreDataManager.instance.saveContext()
     }
+
 }
 
 extension DataSourceOfPlayer: DataSourceOfPlayerProtocol {
     func getPlayersByGameId(currentGameId: String) -> [Player] { return  getPlayersOfGame(currentGameId: currentGameId) }
-    func savePlayersOfGame(configurationGame: ConfigurationGame) {
-        createPlayersOfGame(configurationGame: configurationGame)
+    func savePlayersOfGame(configurationGame: ConfigurationGame, players: [Player]) {
+        createPlayersOfGame(configurationGame: configurationGame, players: players)
     }
-    func updateScoreGamePlayers(idGameSession: String, gamesModels: [GameViewModel]) {
-        updateScoreGame(idGameSession: idGameSession, gamesModels: gamesModels)
+    func updateScoreGamePlayers(idGameSession: String, players: [Player]) {
+        updateScoreGame(idGameSession: idGameSession, players: players)
     }
 }

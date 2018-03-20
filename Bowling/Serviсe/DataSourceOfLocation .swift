@@ -19,7 +19,7 @@
  private extension DataSourceOfLocation {
     // MARK: - Creates a new CDLocation
     func createAndReturnCDLocation(location: String) -> CDLocation? {
-        let fetchRequest = NSFetchRequest<CDLocation>(entityName: "CDLocation")
+        let fetchRequest = NSFetchRequest<CDLocation>(entityName: "CDLocation")        
         do {
             let results = try context.fetch(fetchRequest)
             if let fetchedLocation = results.first(where: { $0.location == location }) { return fetchedLocation }

@@ -16,5 +16,4 @@ struct Location {
         self.id = id
         self.location = location
     }
-    //  var games: [GameHistory] = []
-}
+ }
