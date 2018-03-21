@@ -26,7 +26,7 @@ class LocationsViewModel {
     var cache: NSCache<AnyObject, AnyObject>
     
     init(){
-        cache = NSCache<AnyObject, AnyObject>()
+        self.cache = NSCache<AnyObject, AnyObject>()
         cache.countLimit = 20
         dataSourceOfLocation = DataSourceOfLocation()
         self.locations = dataSourceOfLocation.getAllLocations()

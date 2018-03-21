@@ -8,14 +8,17 @@
 
 import UIKit
 import MapKit
+import ReactiveSwift
+import Result
+import ReactiveCocoa
 
 class LocationTableViewCell: UITableViewCell {
     
     @IBOutlet private weak var locationLabel: UILabel!
     @IBOutlet private weak var imageMap: UIImageView!
   
-    
-    
+    var output: Signal<LocationsViewController.Action, NoError> { return _pipe.output }
+    private var _pipe = Signal<LocationsViewController.Action, NoError>.pipe()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -42,7 +45,7 @@ extension LocationTableViewCell {
     }
    // cache: NSCache<AnyObject, AnyObject>,
     
-    func makeSnapShot(latitude: Double, longitude: Double,  key: Int) {
+    func makeSnapShot(latitude: Double, longitude: Double, cache: NSCache<AnyObject, AnyObject>, key: Int) {
         
         let indicator = UIActivityIndicatorView(frame: CGRect(x: self.imageMap.bounds.width/2 - 15, y: self.imageMap.bounds.height/2 - 15, width: 30, height: 30))
         addSubview(indicator)
@@ -112,8 +115,8 @@ extension LocationTableViewCell {
               DispatchQueue.main.async {
                  indicator.stopAnimating()
                 self?.imageMap.image = image
-                
-               // self?.cache.setObject(image, forKey: key as AnyObject)
+              //  self?._pipe.input.send(value: LocationsViewController.Action.saveImageToCache(image: image, key: key))
+                cache.setObject(image, forKey: key as AnyObject)
                 
             }
         }
