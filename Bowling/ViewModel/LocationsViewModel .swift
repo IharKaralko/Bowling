@@ -23,8 +23,11 @@ class LocationsViewModel {
     private var clearHistoryAction: Action<Void, Void, NoError>!
     private var doneBackAction: Action<Void, Void, NoError>!
     private let dataSourceOfLocation: DataSourceOfLocationProtocol!
+    var cache: NSCache<AnyObject, AnyObject>
     
     init(){
+        cache = NSCache<AnyObject, AnyObject>()
+        cache.countLimit = 20
         dataSourceOfLocation = DataSourceOfLocation()
         self.locations = dataSourceOfLocation.getAllLocations()
         
@@ -52,6 +55,9 @@ private extension LocationsViewModel {
 }
 
 extension LocationsViewModel: LocationsViewModelProtocol {
+     
+    
+   // var cacheOne:  NSCache<AnyObject, AnyObject> { return cache }
     var backCancelAction: Action< Void, Void, NoError>  { return doneBackAction }
     var locationsGame: [Location]{ return locations }
     var clearAction: Action<Void, Void, NoError> { return clearHistoryAction }

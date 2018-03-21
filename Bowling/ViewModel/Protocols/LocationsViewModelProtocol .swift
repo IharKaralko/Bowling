@@ -21,4 +21,6 @@ protocol LocationsViewModelProtocol {
     var locationsGame: [Location]{ get }
     var clearAction: Action<Void, Void, NoError> { get }
     func selectLocation(_ currentLocation: Location)
+    var cache:  NSCache<AnyObject, AnyObject> { set get }
+    
 }

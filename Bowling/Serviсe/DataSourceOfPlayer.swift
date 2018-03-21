@@ -52,7 +52,6 @@ private extension DataSourceOfPlayer {
             cdPlayer.id = players[index].id
             cdPlayer.name = players[index].name
             cdPlayer.scoreGame = Int16(players[index].scoreGame)
-            
             cdPlayer.game = cdGameHistory
         }
         CoreDataManager.instance.saveContext()

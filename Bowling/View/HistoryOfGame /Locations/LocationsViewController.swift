@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 import CoreLocation
 import ReactiveSwift
 import Result
@@ -48,6 +49,7 @@ private extension LocationsViewController {
         clear.reactive.pressed = CocoaAction(viewModel.clearAction)
         navigationItem.setRightBarButton(clear, animated: false)
     }
+
 }
 
 // MARK: - UITableViewDataSource
@@ -57,10 +59,40 @@ extension LocationsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let location = viewModel.locationsGame[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "LocationTableViewCell", for: indexPath) as! LocationTableViewCell
-        cell.fillLocationLabel(latitude: location.latitude, longitude:  location.longitude)
+        
+        let location = viewModel.locationsGame[indexPath.row]
+        guard let latitude = Double(location.latitude), let longitude = Double(location.longitude) else { print("error"); return cell }
+        
+        
+        
+        
+        cell.fillLocationLabel(adressLocation: location.adress)
+        
+        if let image = viewModel.cache.object(forKey: indexPath.row as AnyObject) as? UIImage {
+            // если объект есть, то подставляем в изображение
+          cell.fillSnapShot(snapShot: image)
+        } else {
+        
+        
+        
+            cell.makeSnapShot(latitude: latitude, longitude: longitude,  key: indexPath.row)
+         
+            print(cell.cache.object(forKey: 0 as AnyObject))
+            
+           // print(viewModel.cache.object(forKey: 0 as AnyObject))
+        }
+        
+        //        snapShotter.start { (snapshot:MKMapSnapshot?, error:Error?) in
+//            cell.fillSnapShot(snapShot: (snapshot?.image)!)
+           
+            
+            
+            
+            
+     //   }
+        
         
         return cell
     }
@@ -74,6 +106,6 @@ extension LocationsViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 100
     }
 }
