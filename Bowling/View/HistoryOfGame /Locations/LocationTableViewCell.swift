@@ -27,11 +27,11 @@ class LocationTableViewCell: UITableViewCell {
        
         applySnapshot = Action(execute: { [weak self] (image) in
             return SignalProducer { (observer, lifetime) in
-                guard !lifetime.hasEnded else { observer.sendCompleted(); return}
-                self?.imageMap.image = image
+                guard !lifetime.hasEnded else { observer.sendCompleted(); return }
                 self?.activityIndicator.stopAnimating()
                 self?.activityIndicator.isHidden = true
-                observer.sendCompleted()
+                self?.imageMap.image = image
+                 observer.sendCompleted()
             }
         })
     }
@@ -52,6 +52,7 @@ extension LocationTableViewCell {
     }
     
     func startAcitivityIndicator() {
+        activityIndicator.isHidden = false
         activityIndicator.startAnimating()
     }
     

@@ -23,7 +23,7 @@ class LocationsViewModel {
     private var clearHistoryAction: Action<Void, Void, NoError>!
     private var doneBackAction: Action<Void, Void, NoError>!
     private let dataSourceOfLocation: DataSourceOfLocationProtocol!
-    private  var cache: NSCache<NSString, UIImage>
+    private var cache: NSCache<NSString, UIImage>
     
     init(){
         self.cache = NSCache<NSString, UIImage>()
@@ -48,17 +48,22 @@ class LocationsViewModel {
     }
 }
 private extension LocationsViewModel {
-    func makeSnapShot(location: Location, imageRect: CGRect) ->  SignalProducer <UIImage, NoError> {
+    func makeSnapShot(location: Location, imageRect: CGRect) ->  SignalProducer <UIImage?, NoError> {
         
-        return SignalProducer<UIImage, NoError> { observer, _ in
-            if let image = self.cache.object(forKey:  location.id as NSString) {
+        return SignalProducer<UIImage?, NoError> {[weak self] observer, _ in
+            if let image = self?.cache.object(forKey: location.id as NSString) {
                 observer.send(value: image)
                 observer.sendCompleted()
+                return
             }
             
             let mapSnapshotOptions = MKMapSnapshotOptions()
-            guard let latitude = Double(location.latitude), let longitude = Double(location.longitude) else {observer.sendCompleted(); return}
-            let locationCoordinate = CLLocationCoordinate2DMake(latitude, longitude)
+            guard let locationCoordinate = location.coordinate else {
+                observer.send(value: nil)
+                observer.sendCompleted()
+                return
+            }
+            
             let region = MKCoordinateRegionMakeWithDistance(locationCoordinate, 15000, 15000)
             mapSnapshotOptions.region = region
             mapSnapshotOptions.scale = UIScreen.main.scale
@@ -70,6 +75,8 @@ private extension LocationsViewModel {
             snapshot.start {[weak self]  (snapshot, error) in
                 guard let snapshot = snapshot,  error == nil else {
                     print("error")
+                    observer.send(value: nil)
+                    observer.sendCompleted()
                     return
                 }
                 
@@ -88,8 +95,11 @@ private extension LocationsViewModel {
                     point.y += pinCenterOffset.y
                     pinImage?.draw(at: point)
                 }
-                
-                guard  let image = UIGraphicsGetImageFromCurrentImageContext() else {observer.sendCompleted(); return}
+                guard  let image = UIGraphicsGetImageFromCurrentImageContext() else {
+                    observer.send(value: nil)
+                    observer.sendCompleted()
+                    return
+                }
                 self?.cache.setObject(image, forKey: location.id as NSString)
                 observer.send(value: image)
                 observer.sendCompleted()
@@ -105,7 +115,7 @@ private extension LocationsViewModel {
 }
 
 extension LocationsViewModel: LocationsViewModelProtocol {
-    func mapSnapshotForLocation(location: Location, imageRect: CGRect) -> SignalProducer<UIImage, NoError> {
+    func mapSnapshotForLocation(location: Location, imageRect: CGRect) -> SignalProducer<UIImage?, NoError> {
      return  makeSnapShot(location:location, imageRect:imageRect) }
     var backCancelAction: Action< Void, Void, NoError>  { return doneBackAction }
     var locationsGame: [Location]{ return locations }

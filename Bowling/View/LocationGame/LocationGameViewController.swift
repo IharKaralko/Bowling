@@ -64,9 +64,6 @@ private extension LocationGameViewController {
         let coordinates = mapView.convert(location, toCoordinateFrom: mapView)
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinates
-//         let userLatitude = String(format: "%f",  coordinates.latitude)
-//         let userLongitude = String(format: "%f",  coordinates.longitude)
-        
         let coordinateLocation = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
         let service = SettingOfAdress()
         service.fetchAdressLocation(location: coordinateLocation) { [weak annotation] adressLocation  in
