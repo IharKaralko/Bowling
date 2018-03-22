@@ -256,6 +256,7 @@
 				43481CCE2057AFEF005AF47B /* LocationsViewModelProtocol .swift */,
 				43481CED2057CA1F005AF47B /* GameHistoryViewModelProtocol .swift */,
 				43481CF72057E3C1005AF47B /* PlayersViewModelProtocol .swift */,
+				4352D849202359240093011C /* GameViewModel.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -382,7 +383,6 @@
 				433DBA3C200F62CA00732B20 /* Protocols */,
 				433DBA3A200F627400732B20 /* CountOfPlayerViewModel.swift */,
 				4348EC40201885DE00B8E457 /* NamesOfPlayersViewModel .swift */,
-				4352D849202359240093011C /* GameViewModel.swift */,
 				4352D84B2023595D0093011C /* GameSessionViewModel.swift */,
 				437187102024ABE60069645B /* FrameViewModel.swift */,
 				434B08532029C99B00EE5BB3 /* FinalFrameViewModel.swift */,

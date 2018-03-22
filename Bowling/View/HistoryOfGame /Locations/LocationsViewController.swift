@@ -15,13 +15,11 @@ import ReactiveCocoa
 
 class LocationsViewController: UIViewController {
     
-    @IBOutlet weak var tableView: UITableView!
-     var cache = NSCache<AnyObject, AnyObject>()
+    @IBOutlet private weak var tableView: UITableView!
     
     deinit {
         print("\(type(of: self)).\(#function)")
     }
-    
     var viewModel: LocationsViewModelProtocol!
     
     override func viewDidLoad() {
@@ -50,7 +48,6 @@ private extension LocationsViewController {
         clear.reactive.pressed = CocoaAction(viewModel.clearAction)
         navigationItem.setRightBarButton(clear, animated: false)
     }
-
 }
 
 // MARK: - UITableViewDataSource
@@ -60,20 +57,10 @@ extension LocationsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "LocationTableViewCell", for: indexPath) as! LocationTableViewCell
-        
         let location = viewModel.locationsGame[indexPath.row]
-        guard let latitude = Double(location.latitude), let longitude = Double(location.longitude) else { print("error"); return cell }
-        
         cell.fillLocationLabel(adressLocation: location.adress)
-        
-        if let image = viewModel.cache.object(forKey: indexPath.row as AnyObject) as? UIImage {
-              cell.fillSnapShot(snapShot: image)
-        } else {
-            cell.makeSnapShot(latitude: latitude, longitude: longitude, cache: viewModel.cache, key: indexPath.row)
-          }
-       return cell
+        return cell
     }
 }
 
@@ -87,25 +74,15 @@ extension LocationsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath){
-        if let cell = cell as? LocationTableViewCell{
-            cell.output.take(until: cell.reactive.prepareForReuse).observeValues { [weak self] value in
-                switch value {
-                case .saveImageToCache(let image, let key):
-                    self?.saveCache(image: image, key: key)
-                }
-            }
-        }
-}
-}
-extension LocationsViewController {
-    func saveCache(image: UIImage, key: Int){
-        viewModel.cache.setObject(image, forKey: key as AnyObject)
-        
+   
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let locationCell = cell as? LocationTableViewCell else { return }
+        let location = viewModel.locationsGame[indexPath.row]
+        locationCell.startAcitivityIndicator()
+        locationCell.applySnapshot.bindingTarget <~ viewModel.mapSnapshotForLocation(location: location,
+                                                                                     imageRect: locationCell.imageRect)
+            .take(until: locationCell.reactive.prepareForReuse)
     }
 }
-extension  LocationsViewController {
-    enum Action {
-        case saveImageToCache(image: UIImage, key: Int)
-    }
-}
+
+

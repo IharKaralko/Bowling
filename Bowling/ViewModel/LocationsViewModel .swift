@@ -23,10 +23,10 @@ class LocationsViewModel {
     private var clearHistoryAction: Action<Void, Void, NoError>!
     private var doneBackAction: Action<Void, Void, NoError>!
     private let dataSourceOfLocation: DataSourceOfLocationProtocol!
-    var cache: NSCache<AnyObject, AnyObject>
+    private  var cache: NSCache<NSString, UIImage>
     
     init(){
-        self.cache = NSCache<AnyObject, AnyObject>()
+        self.cache = NSCache<NSString, UIImage>()
         cache.countLimit = 20
         dataSourceOfLocation = DataSourceOfLocation()
         self.locations = dataSourceOfLocation.getAllLocations()
@@ -39,9 +39,59 @@ class LocationsViewModel {
         }
         
         self.clearHistoryAction = Action() { [weak self]  in
-            return SignalProducer { observer, _ in
+            return  SignalProducer { observer, _ in
                 self?.dataSourceOfLocation.deleteAllCDLocations()
                 self?._pipe.input.sendCompleted()
+                observer.sendCompleted()
+            }
+        }
+    }
+}
+private extension LocationsViewModel {
+    func makeSnapShot(location: Location, imageRect: CGRect) ->  SignalProducer <UIImage, NoError> {
+        
+        return SignalProducer<UIImage, NoError> { observer, _ in
+            if let image = self.cache.object(forKey:  location.id as NSString) {
+                observer.send(value: image)
+                observer.sendCompleted()
+            }
+            
+            let mapSnapshotOptions = MKMapSnapshotOptions()
+            guard let latitude = Double(location.latitude), let longitude = Double(location.longitude) else {observer.sendCompleted(); return}
+            let locationCoordinate = CLLocationCoordinate2DMake(latitude, longitude)
+            let region = MKCoordinateRegionMakeWithDistance(locationCoordinate, 15000, 15000)
+            mapSnapshotOptions.region = region
+            mapSnapshotOptions.scale = UIScreen.main.scale
+            mapSnapshotOptions.size = CGSize(width: 500, height: 100)
+            mapSnapshotOptions.showsBuildings = true
+            mapSnapshotOptions.showsPointsOfInterest = true
+            let snapshot = MKMapSnapshotter(options: mapSnapshotOptions)
+            
+            snapshot.start {[weak self]  (snapshot, error) in
+                guard let snapshot = snapshot,  error == nil else {
+                    print("error")
+                    return
+                }
+                
+                UIGraphicsBeginImageContextWithOptions(mapSnapshotOptions.size, true, 0)
+                defer {  UIGraphicsEndImageContext() }
+                
+                snapshot.image.draw(at: .zero)
+                let pinView = MKPinAnnotationView(annotation: nil, reuseIdentifier: nil)
+                let pinImage = pinView.image
+                var point = snapshot.point(for: locationCoordinate)
+                if imageRect.contains(point) {
+                    let pinCenterOffset = pinView.centerOffset
+                    point.x -= pinView.bounds.size.width / 2
+                    point.y -= pinView.bounds.size.height / 2
+                    point.x += pinCenterOffset.x
+                    point.y += pinCenterOffset.y
+                    pinImage?.draw(at: point)
+                }
+                
+                guard  let image = UIGraphicsGetImageFromCurrentImageContext() else {observer.sendCompleted(); return}
+                self?.cache.setObject(image, forKey: location.id as NSString)
+                observer.send(value: image)
                 observer.sendCompleted()
             }
         }
@@ -55,9 +105,8 @@ private extension LocationsViewModel {
 }
 
 extension LocationsViewModel: LocationsViewModelProtocol {
-     
-    
-   // var cacheOne:  NSCache<AnyObject, AnyObject> { return cache }
+    func mapSnapshotForLocation(location: Location, imageRect: CGRect) -> SignalProducer<UIImage, NoError> {
+     return  makeSnapShot(location:location, imageRect:imageRect) }
     var backCancelAction: Action< Void, Void, NoError>  { return doneBackAction }
     var locationsGame: [Location]{ return locations }
     var clearAction: Action<Void, Void, NoError> { return clearHistoryAction }

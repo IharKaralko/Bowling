@@ -19,7 +19,7 @@ class NamesOfPlayersViewController: UIViewController {
    
     private let _pipe = Signal<(), NoError>.pipe()
     var collectionOfCell = [Int: String]()
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
     var viewModel: NamesOfPlayersProtocol! {
         didSet { bindViewModel() }

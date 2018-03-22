@@ -28,11 +28,17 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nrI-mm-pr1">
                         <rect key="frame" x="0.0" y="20.5" width="445" height="127.5"/>
                     </imageView>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="eDA-9B-aTy">
+                        <rect key="frame" x="212" y="63" width="20" height="20"/>
+                        <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </activityIndicatorView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="kOh-Q2-Alq" secondAttribute="trailing" id="0nW-ZG-5fD"/>
                     <constraint firstItem="kOh-Q2-Alq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="5Qq-v7-4Ze"/>
                     <constraint firstItem="kOh-Q2-Alq" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="90d-2X-cKD"/>
+                    <constraint firstItem="eDA-9B-aTy" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="DV6-7H-j3d"/>
+                    <constraint firstItem="eDA-9B-aTy" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="FnL-gM-rLH"/>
                     <constraint firstItem="nrI-mm-pr1" firstAttribute="top" secondItem="kOh-Q2-Alq" secondAttribute="bottom" id="WZ1-Qg-c4L"/>
                     <constraint firstItem="nrI-mm-pr1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="aZN-eS-BTK"/>
                     <constraint firstAttribute="trailing" secondItem="nrI-mm-pr1" secondAttribute="trailing" id="dnU-hz-n4s"/>
@@ -41,6 +47,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="activityIndicator" destination="eDA-9B-aTy" id="Dk1-al-f7Q"/>
                 <outlet property="imageMap" destination="nrI-mm-pr1" id="5Mq-nP-C90"/>
                 <outlet property="locationLabel" destination="kOh-Q2-Alq" id="edJ-yd-F4C"/>
             </connections>
