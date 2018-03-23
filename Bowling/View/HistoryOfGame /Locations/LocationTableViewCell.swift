@@ -19,19 +19,21 @@ class LocationTableViewCell: UITableViewCell {
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     var applySnapshot: Action<UIImage?, Void, NoError>!
-    var imageRect: CGRect { return imageMap?.bounds ?? .zero }
+    var imageRect: CGRect {
+        imageMap?.superview?.layoutIfNeeded()
+        return imageMap?.bounds ?? .zero
+    }
  
     override func awakeFromNib() {
         super.awakeFromNib()
-       setupLayout()
-       
+        setupLayout()
         applySnapshot = Action(execute: { [weak self] (image) in
             return SignalProducer { (observer, lifetime) in
                 guard !lifetime.hasEnded else { observer.sendCompleted(); return }
+                
                 self?.activityIndicator.stopAnimating()
-                self?.activityIndicator.isHidden = true
                 self?.imageMap.image = image
-                 observer.sendCompleted()
+                observer.sendCompleted()
             }
         })
     }
@@ -39,12 +41,9 @@ class LocationTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         imageMap.image = nil
-    }    
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
     }
 }
+
 extension LocationTableViewCell {
   private  func setupLayout() {
         layer.borderWidth = 1.5
@@ -52,7 +51,6 @@ extension LocationTableViewCell {
     }
     
     func startAcitivityIndicator() {
-        activityIndicator.isHidden = false
         activityIndicator.startAnimating()
     }
     

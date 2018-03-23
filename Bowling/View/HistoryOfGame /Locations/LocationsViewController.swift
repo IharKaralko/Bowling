@@ -72,11 +72,12 @@ extension LocationsViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 200
     }
    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let locationCell = cell as? LocationTableViewCell else { return }
+        
         let location = viewModel.locationsGame[indexPath.row]
         locationCell.startAcitivityIndicator()
         locationCell.applySnapshot.bindingTarget <~ viewModel.mapSnapshotForLocation(location: location,

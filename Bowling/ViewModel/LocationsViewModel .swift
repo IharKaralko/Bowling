@@ -24,8 +24,12 @@ class LocationsViewModel {
     private var doneBackAction: Action<Void, Void, NoError>!
     private let dataSourceOfLocation: DataSourceOfLocationProtocol!
     private var cache: NSCache<NSString, UIImage>
+    private let latitudinalMeters: Double
+    private let longitudinalMeters: Double
     
     init(){
+        self.latitudinalMeters = 15000
+        self.longitudinalMeters = 15000
         self.cache = NSCache<NSString, UIImage>()
         cache.countLimit = 20
         dataSourceOfLocation = DataSourceOfLocation()
@@ -47,41 +51,47 @@ class LocationsViewModel {
         }
     }
 }
+
 private extension LocationsViewModel {
     func makeSnapShot(location: Location, imageRect: CGRect) ->  SignalProducer <UIImage?, NoError> {
-        
-        return SignalProducer<UIImage?, NoError> {[weak self] observer, _ in
+        return SignalProducer<UIImage?, NoError> { [weak self] observer, _ in
             if let image = self?.cache.object(forKey: location.id as NSString) {
                 observer.send(value: image)
                 observer.sendCompleted()
                 return
             }
             
-            let mapSnapshotOptions = MKMapSnapshotOptions()
             guard let locationCoordinate = location.coordinate else {
                 observer.send(value: nil)
                 observer.sendCompleted()
                 return
             }
             
-            let region = MKCoordinateRegionMakeWithDistance(locationCoordinate, 15000, 15000)
+            
+            guard let latitudMeters = self?.latitudinalMeters, let longitudMeters = self?.longitudinalMeters else {
+                observer.send(value: nil)
+                observer.sendCompleted()
+                return
+            }
+            
+            let mapSnapshotOptions = MKMapSnapshotOptions()
+            let region = MKCoordinateRegionMakeWithDistance(locationCoordinate, latitudMeters, longitudMeters)
             mapSnapshotOptions.region = region
             mapSnapshotOptions.scale = UIScreen.main.scale
-            mapSnapshotOptions.size = CGSize(width: 500, height: 100)
+            mapSnapshotOptions.size = imageRect.size
             mapSnapshotOptions.showsBuildings = true
             mapSnapshotOptions.showsPointsOfInterest = true
             let snapshot = MKMapSnapshotter(options: mapSnapshotOptions)
             
-            snapshot.start {[weak self]  (snapshot, error) in
-                guard let snapshot = snapshot,  error == nil else {
-                    print("error")
+            snapshot.start { [weak self] (snapshot, error) in
+                guard let snapshot = snapshot, error == nil else {
                     observer.send(value: nil)
                     observer.sendCompleted()
                     return
                 }
                 
                 UIGraphicsBeginImageContextWithOptions(mapSnapshotOptions.size, true, 0)
-                defer {  UIGraphicsEndImageContext() }
+                defer { UIGraphicsEndImageContext() }
                 
                 snapshot.image.draw(at: .zero)
                 let pinView = MKPinAnnotationView(annotation: nil, reuseIdentifier: nil)
@@ -95,7 +105,7 @@ private extension LocationsViewModel {
                     point.y += pinCenterOffset.y
                     pinImage?.draw(at: point)
                 }
-                guard  let image = UIGraphicsGetImageFromCurrentImageContext() else {
+                guard let image = UIGraphicsGetImageFromCurrentImageContext() else {
                     observer.send(value: nil)
                     observer.sendCompleted()
                     return
@@ -115,13 +125,16 @@ private extension LocationsViewModel {
 }
 
 extension LocationsViewModel: LocationsViewModelProtocol {
-    func mapSnapshotForLocation(location: Location, imageRect: CGRect) -> SignalProducer<UIImage?, NoError> {
-     return  makeSnapShot(location:location, imageRect:imageRect) }
     var backCancelAction: Action< Void, Void, NoError>  { return doneBackAction }
     var locationsGame: [Location]{ return locations }
     var clearAction: Action<Void, Void, NoError> { return clearHistoryAction }
+    
     func selectLocation(_ currentLocation: Location) {
         locationDidSelect(currentLocation)
+    }
+    
+    func mapSnapshotForLocation(location: Location, imageRect: CGRect) -> SignalProducer<UIImage?, NoError> {
+        return  makeSnapShot(location:location, imageRect:imageRect)
     }
 }
 

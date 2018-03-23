@@ -11,25 +11,25 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="148" id="KGk-i7-Jjw" customClass="LocationTableViewCell" customModule="Bowling" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="445" height="148"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="68" id="KGk-i7-Jjw" customClass="LocationTableViewCell" customModule="Bowling" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="128" height="68"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="445" height="147.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="128" height="67.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.90000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kOh-Q2-Alq">
-                        <rect key="frame" x="0.0" y="0.0" width="445" height="20.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="128" height="20.5"/>
                         <color key="backgroundColor" red="0.0" green="0.99143940210000003" blue="1" alpha="0.51587257922535212" colorSpace="custom" customColorSpace="sRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nrI-mm-pr1">
-                        <rect key="frame" x="0.0" y="20.5" width="445" height="127.5"/>
+                        <rect key="frame" x="0.0" y="20.5" width="128" height="47"/>
                     </imageView>
-                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="eDA-9B-aTy">
-                        <rect key="frame" x="212" y="63" width="20" height="20"/>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="eDA-9B-aTy">
+                        <rect key="frame" x="54" y="24" width="20" height="20"/>
                         <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </activityIndicatorView>
                 </subviews>
@@ -51,7 +51,7 @@
                 <outlet property="imageMap" destination="nrI-mm-pr1" id="5Mq-nP-C90"/>
                 <outlet property="locationLabel" destination="kOh-Q2-Alq" id="edJ-yd-F4C"/>
             </connections>
-            <point key="canvasLocation" x="90.5" y="118"/>
+            <point key="canvasLocation" x="-53" y="52"/>
         </tableViewCell>
     </objects>
 </document>
