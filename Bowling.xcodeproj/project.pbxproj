@@ -89,6 +89,7 @@
 		435FBBD22010EC140087E415 /* CountOfPlayerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435FBBD12010EC140087E415 /* CountOfPlayerCoordinator.swift */; };
 		435FBBD42010F6640087E415 /* NamesOfPlayersCoordinator .swift in Sources */ = {isa = PBXBuildFile; fileRef = 435FBBD32010F6640087E415 /* NamesOfPlayersCoordinator .swift */; };
 		436B6154205C1026001DAB85 /* DataSourceOfLocationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436B6153205C1026001DAB85 /* DataSourceOfLocationProtocol.swift */; };
+		437089982069108B005D5D08 /* Bowling.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 437089972069108B005D5D08 /* Bowling.sqlite */; };
 		437187112024ABE60069645B /* FrameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437187102024ABE60069645B /* FrameViewModel.swift */; };
 		4376D5E0204A87570088AE58 /* SettingOfAdress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4376D5DF204A87570088AE58 /* SettingOfAdress.swift */; };
 		4376D5E6204ABF870088AE58 /* LocationGameCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4376D5E5204ABF870088AE58 /* LocationGameCoordinator.swift */; };
@@ -199,6 +200,7 @@
 		436B6153205C1026001DAB85 /* DataSourceOfLocationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceOfLocationProtocol.swift; sourceTree = "<group>"; };
 		436BA3DE20443DE800C5DF30 /* BowlingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BowlingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		436BA3E220443DE800C5DF30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		437089972069108B005D5D08 /* Bowling.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; name = Bowling.sqlite; path = ../../../../Projects/Bowling.sqlite; sourceTree = "<group>"; };
 		437187102024ABE60069645B /* FrameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameViewModel.swift; sourceTree = "<group>"; };
 		4376D5DF204A87570088AE58 /* SettingOfAdress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOfAdress.swift; sourceTree = "<group>"; };
 		4376D5E5204ABF870088AE58 /* LocationGameCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationGameCoordinator.swift; sourceTree = "<group>"; };
@@ -349,6 +351,7 @@
 		434C7614200E0B7F00879242 /* Bowling */ = {
 			isa = PBXGroup;
 			children = (
+				4370899620691064005D5D08 /* Data */,
 				43F91C86204D93D300659858 /* CoreData */,
 				4376D5DE204A870B0088AE58 /* Serviсe */,
 				435FBBCC2010DB530087E415 /* Coordinators */,
@@ -505,6 +508,14 @@
 			path = BowlingTests;
 			sourceTree = "<group>";
 		};
+		4370899620691064005D5D08 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				437089972069108B005D5D08 /* Bowling.sqlite */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		4376D5DE204A870B0088AE58 /* Serviсe */ = {
 			isa = PBXGroup;
 			children = (
@@ -639,6 +650,7 @@
 				433DBA37200F603800732B20 /* CountOfPlayerView.xib in Resources */,
 				434C7620200E0B8000879242 /* LaunchScreen.storyboard in Resources */,
 				43510253205015D200458095 /* InitialPageViewController.xib in Resources */,
+				437089982069108B005D5D08 /* Bowling.sqlite in Resources */,
 				43481CF22057DE9A005AF47B /* PlayersTableViewCell.xib in Resources */,
 				434C8CB82020A557003D8E42 /* FrameView.xib in Resources */,
 				434BDB062021C8500029BB85 /* GameSessionViewController.xib in Resources */,
