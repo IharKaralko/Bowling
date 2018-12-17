@@ -7,38 +7,13 @@
 //
 
 import Foundation
+
 import CoreData
 
 class CoreDataManager {
-   
-    static let instance = CoreDataManager()
-    let nameDataBase = "Bowling"
     
-    func setupDefaultDataBase() -> Bool {
-        let fileManager = FileManager.default
-        let typeDataBase = "sqlite"
-        var applicationSupportDirectory: URL
-        do {
-            applicationSupportDirectory = try fileManager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        } catch {
-            print(error)
-            return false
-        }
-        let url = applicationSupportDirectory.appendingPathComponent(nameDataBase).appendingPathExtension(typeDataBase)
-        if !fileManager.fileExists(atPath: url.path) {
-            print("Not found, copy one!!!")
-            guard let sourceSqliteURL = Bundle.main.url(forResource: nameDataBase, withExtension: typeDataBase) else { return false }
-            do {
-                try fileManager.copyItem(at: sourceSqliteURL, to: url)
-            } catch {
-                print(error)
-                return false
-            }
-        } else {
-            print("DB file exist")
-        }
-        return true
-    }
+    // Singleton
+    static let instance = CoreDataManager()
     
     // MARK: - Core Data stack
      lazy var persistentContainer: NSPersistentContainer = {
@@ -48,7 +23,7 @@ class CoreDataManager {
          application to it. This property is optional since there are legitimate
          error conditions that could cause the creation of the store to fail.
          */
-        let container = NSPersistentContainer(name: nameDataBase)
+        let container = NSPersistentContainer(name: "Bowling")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
